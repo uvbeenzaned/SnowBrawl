@@ -1,0 +1,6 @@
+#the lobby location that players spawn in (set in game)
+lobby-spawn-location: 0:0:0:0:0:0
+#how many milliseconds until the next round starts (set in game)
+round-start-delay: 10000
+#points given to every player on the winning team for every player on losing team (set in game) 
+team-points: 1

@@ -1,0 +1,69 @@
+#format
+#name of rank:
+#  score-range: 100, 300 (score range that this rank is in)
+#  armor-color: 255,0,0 (rgb formated color code)
+
+Loser:
+  score-range: -1
+  #red
+  armor-color: 255,0,0
+Newbie:
+  score-range: 0,99
+  #dark orange
+  armor-color: 255,74,0
+Beginner:
+  score-range: 100,299
+  #orange
+  armor-color: 255,119,0
+Amature:
+  score-range: 300,699
+  #dark yellow
+  armor-color: 255,195,0
+Intermediate:
+  score-range: 700,1999
+  #yellow
+  armor-color: 255,255,0
+Master:
+  score-range: 2000,4999
+  #yellow green
+  armor-color: 204,255,0
+Boss:
+  score-range: 5000,9999
+  #green
+  armor-color: 0,255,0
+Butch:
+  score-range: 10000,19999
+  #light blue
+  armor-color: 0,255,255
+Rex:
+  score-range: 20000,49999
+  #blue
+  armor-color: 0,0,255
+Killer:
+  score-range: 50000,99999
+  #dark purple
+  armor-color: 89,0,255
+Alpha:
+  score-range: 100000,499999
+  #purple
+  armor-color: 255,0,255
+Hunter:
+  score-range: 500000,999999
+  #magenta
+  armor-color: 255,0,78
+Double:
+  score-range: 1000000,4999999
+  #black
+  armor-color: 0,0,0
+Winner:
+  score-range: 5000000,9999999
+  #gray
+  armor-color: 96,96,96
+Ultimate:
+  score-range: 10000000,99999999
+  #light gray
+  armor-color: 160,160,160
+Chosen:
+  score-range: 100000000
+  #white
+  armor-color: 255,255,255

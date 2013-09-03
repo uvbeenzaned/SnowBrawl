@@ -1,0 +1,11 @@
+#kits players pick to use during rounds
+#example:
+#kit name
+# Speed:
+  # item number for player to receive : damage value of specified item
+  # item: 373:16418
+  # amount to receive
+  # amount: 2
+Speed:
+  item: 373:16418
+  amount: 2
