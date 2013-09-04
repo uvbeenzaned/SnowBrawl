@@ -6,6 +6,10 @@
   # item: 373:16418
   # amount to receive
   # amount: 2
+  # a short description of the kit
+  # description: '2 Speed 2 potions.'
+  
 Speed:
-  item: 373:16418
+  item: '373:16418'
   amount: 2
+  description: '2 Speed 2 potions.'
