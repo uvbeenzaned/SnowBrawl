@@ -1,19 +1,19 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 public class Lobby {
-
-	private SB sb;
-	private Location lobbyspawnlocation;
-	
-	public Lobby(SB sb)
-	{
-		this.sb = sb;
-	}
 	
 	public static Location getLobbyspawnlocation()
 	{
-		return lobbyspawnlocation;
+		return LocationSerializer.str2loc(Configurations.getMainConfig().getString("lobby-spawn-location"));
+	}
+	
+	public static void setLobbyspawnlocation(Location l, Player sender)
+	{
+		Configurations.getMainConfig().set("lobby-spawn-location", LocationSerializer.loc2str(l));
+		if(sender != null)
+		Chat.sendPPM("The lobby's spawn location has changed to " + l.toString() + ".", sender);
 	}
 }

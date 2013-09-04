@@ -10,6 +10,6 @@
   # description: '2 Speed 2 potions.'
   
 Speed:
-  item: '373:16418'
+  item: 373:16418
   amount: 2
-  description: '2 Speed 2 potions.'
+  description: 2 Speed 2 potions.

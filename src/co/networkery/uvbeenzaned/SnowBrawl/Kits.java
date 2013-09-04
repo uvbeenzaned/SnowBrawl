@@ -7,24 +7,21 @@ import org.bukkit.inventory.ItemStack;
 
 public class Kits {
 	
-	private static SB sb;
-	private static Configurations c = new Configurations(sb);
 	private static Map<String, ItemStack> kits = new HashMap<String, ItemStack>();
 	
-	public Kits(SB sb)
+	public Kits()
 	{
-		Kits.sb = sb;
-		initializeKitsFromConfig();
+		loadKitsFromConfig();
 	}
 
-	private void initializeKitsFromConfig()
+	private void loadKitsFromConfig()
 	{
-		for(String kit : c.getKitsconfig().getKeys(false))
+		for(String kit : Configurations.getKitsconfig().getKeys(false))
 		{
-			String[] itemstring = c.getKitsconfig().getConfigurationSection(kit + ".").getString("item").split(":"); 
+			String[] itemstring = Configurations.getKitsconfig().getConfigurationSection(kit + ".").getString("item").split(":"); 
 			int id = Integer.parseInt(itemstring[0]);
 			short durability = Short.parseShort(itemstring[1]);
-			int amount = c.getKitsconfig().getConfigurationSection(kit + ".").getInt("amount");
+			int amount = Configurations.getKitsconfig().getConfigurationSection(kit + ".").getInt("amount");
 			ItemStack is = new ItemStack(id, amount, durability);
 			kits.put(kit, is);
 		}
@@ -42,6 +39,6 @@ public class Kits {
 	
 	public static String getKitDescription(String kit)
 	{
-		return c.getKitsconfig().getConfigurationSection(kit + ".").getString("description");
+		return Configurations.getKitsconfig().getConfigurationSection(kit + ".").getString("description");
 	}
 }
