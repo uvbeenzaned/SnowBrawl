@@ -17,7 +17,7 @@ public class SBCommandExecutor implements CommandExecutor{
 			{
 			case "config":
 				if(p.isOp())
-				{
+				{ 
 					switch(args[1])
 					{
 					case "set-lobby-spawn-location":
