@@ -7,15 +7,17 @@ public class SB extends JavaPlugin{
 	public void onEnable()
 	{
 		getCommand("snowbrawl").setExecutor(new SBCommandExecutor());
-		new Configurations(this);
-		new RoundListener(this);
+		Configurations.loadAllConfigurations(this);
+		new TeamCyan();
+		new TeamLime();
+		new GameListener(this);
 		new ExtrasListener(this);
-		new Kits();
+		Kits.loadAllKitsFromConfig();
 	}
 	
 	public void onDisable()
 	{
-		
+		Configurations.saveAllConfigurations();
 	}
 	
 }

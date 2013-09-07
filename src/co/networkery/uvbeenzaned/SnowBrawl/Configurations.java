@@ -11,11 +11,6 @@ public class Configurations {
 	private static Configuration kitsconfig;
 	private static Configuration statsconfig;
 	
-	public Configurations(SB sb)
-	{
-		loadAllConfigurations(sb);
-	}
-	
 	public static void loadAllConfigurations(SB sb)
 	{
 		config.saveDefaultConfig();
@@ -40,12 +35,26 @@ public class Configurations {
 		kitsconfig.reloadConfig();
 		statsconfig.reloadConfig();
 	}
+	
+	public static void saveAllConfigurations()
+	{
+		config.saveConfig();
+		arenasconfig.saveConfig();
+		playersconfig.saveConfig();
+		ranksconfig.saveConfig();
+		kitsconfig.saveConfig();
+		statsconfig.saveConfig();
+	}
 
 	/**
 	 * @return the config
 	 */
 	public static FileConfiguration getMainConfig() {
 		return config.getConfig();
+	}
+	
+	public static void saveMainConfig() {
+		config.saveConfig();
 	}
 
 	/**
@@ -61,6 +70,10 @@ public class Configurations {
 	public static FileConfiguration getArenasconfig() {
 		return arenasconfig.getConfig();
 	}
+	
+	public static void saveArenasConfig() {
+		config.saveConfig();
+	}
 
 	/**
 	 * @param arenasconfig the arenasconfig to set
@@ -74,6 +87,10 @@ public class Configurations {
 	 */
 	public static FileConfiguration getPlayersconfig() {
 		return playersconfig.getConfig();
+	}
+	
+	public static void savePlayersConfig() {
+		playersconfig.saveConfig();
 	}
 
 	/**
@@ -89,6 +106,10 @@ public class Configurations {
 	public static FileConfiguration getRanksconfig() {
 		return ranksconfig.getConfig();
 	}
+	
+	public static void saveRanksConfig() {
+		ranksconfig.saveConfig();
+	}
 
 	/**
 	 * @param ranksconfig the ranksconfig to set
@@ -103,6 +124,10 @@ public class Configurations {
 	public static FileConfiguration getKitsconfig() {
 		return kitsconfig.getConfig();
 	}
+	
+	public static void saveKitsConfig() {
+		kitsconfig.saveConfig();
+	}
 
 	/**
 	 * @param kitsconfig the kitsconfig to set
@@ -116,6 +141,10 @@ public class Configurations {
 	 */
 	public static FileConfiguration getStatsconfig() {
 		return statsconfig.getConfig();
+	}
+	
+	public static void saveStatsConfig() {
+		statsconfig.saveConfig();
 	}
 
 	/**

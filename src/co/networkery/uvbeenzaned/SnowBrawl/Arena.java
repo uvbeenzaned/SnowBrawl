@@ -15,25 +15,41 @@ public class Arena {
 	private Location cyan_spawn;
 	private Location lime_spawn;	
 	
-	public Arena(Player p, String name, String description)
+	public Arena(Player player, String name, String description, Set<String> authors)
 	{
-		this.sender = p;
-		this.name = name;
-		this.description = description;
+		setSender(player);
+		setName(name);
+		setDescription(description);
+		setAuthors(authors);
 	}
 	
-	public static Arena loadArenaFromFile(String name)
+	public static Arena getInstanceFromConfig(String name)
 	{
-		Arena a = new Arena(null, name, Configurations.getArenasconfig().getString(name + ".description"));
+		Arena a = new Arena(null, name, Configurations.getArenasconfig().getString(name + ".description"), null);
 		a.setCyanSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".cyan-side")));
 		a.setLimeSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".lime-side")));
 		a.setAuthorsFromOtherArray(Configurations.getArenasconfig().getStringList(name + ".authors"));
 		return a;
 	}
 	
-	public String getName()
+	public void setSender(Player p)
 	{
+		sender = p;
+	}
+	
+	public void setName(String n)
+	{
+		name = n;
+	}
+	
+	public String getName()
+	{ 
 		return name;
+	}
+	
+	public void setDescription(String d)
+	{
+		description = d;
 	}
 	
 	public String getDescription()
@@ -59,6 +75,11 @@ public class Arena {
 		authors.add(a);
 	}
 	
+	public Set<String> getAuthors()
+	{
+		return authors;
+	}
+	
 	public Location getCyanSide()
 	{
 		return cyan_spawn;
@@ -77,11 +98,6 @@ public class Arena {
 	public void setLimeSide(Location l)
 	{
 		lime_spawn = l;
-	}
-	
-	public Set<String> getAuthors()
-	{
-		return authors;
 	}
 	
 	private boolean tryPass()
@@ -118,6 +134,7 @@ public class Arena {
 	public void save()
 	{
 		if(tryPass()) {
+			Arenas.addArena(this);
 			Configurations.getArenasconfig().createSection(name);
 			Configurations.getArenasconfig().getConfigurationSection(name).createSection("cyan-spawn");
 			Configurations.getArenasconfig().set(name + ".cyan-spawn", LocationSerializer.loc2str(cyan_spawn));
@@ -127,6 +144,14 @@ public class Arena {
 			Configurations.getArenasconfig().set(name + ".descrition", description);
 			Configurations.getArenasconfig().getConfigurationSection(name).createSection("authors");
 			Configurations.getArenasconfig().set(name + ".authors", authors); //don't know if authors will save properly without serialization
+			Configurations.saveArenasConfig();
 		}
+	}
+	
+	public void delete()
+	{
+		Configurations.getArenasconfig().set(name, null);
+		if(Arenas.getArenas().contains(this))
+		Arenas.removeArena(this);
 	}
 }

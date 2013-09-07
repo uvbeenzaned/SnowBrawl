@@ -3,9 +3,9 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class RoundListener implements Listener{
+public class GameListener implements Listener{
 	
-	public RoundListener(JavaPlugin p)
+	public GameListener(JavaPlugin p)
 	{
 		p.getServer().getPluginManager().registerEvents(this, p);
 	}
