@@ -5,16 +5,3 @@ commands:
    snowbrawl:
        description: Main SnowBrawl command.
        aliases: [sb]
-       usage: |
-         ----SnowBrawl Help----
-         /<command> join - to join the game.
-         /<command> join cyan - to join the cyan team. (requires permissions)
-         /<command> join lime - to join the lime team. (requires permissions)
-         /<command> leave - to leave your current team.
-         /<command> score - to check your current score.
-         /<command> score [player] - to check another players score.
-         /<command> stats - to view Snowballer's collected statistics.
-         /<command> teamstats - to view the current team count and players.
-         /<command> top - shows a list of the best players in order of score.
-         /<command> arenalist - to show a list of all arenas.
-         /<command> warparena [arena name] - to warp to the specified arena. (requires permissions)

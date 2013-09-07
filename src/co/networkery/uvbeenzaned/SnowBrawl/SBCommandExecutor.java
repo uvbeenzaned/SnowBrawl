@@ -13,12 +13,12 @@ public class SBCommandExecutor implements CommandExecutor{
 		if(sender instanceof Player)
 		{
 			Player p = (Player)sender;
-			switch(args[0])
+			switch(args[0].toLowerCase())
 			{
 			case "config":
-				if(p.isOp())
+				if(p.isOp() || p.hasPermission("SnowBrawl.config"))
 				{ 
-					switch(args[1])
+					switch(args[1].toLowerCase())
 					{
 					case "set-lobby-spawn-location":
 						Lobby.setLobbyspawnlocation(p.getLocation(), p);

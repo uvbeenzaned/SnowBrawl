@@ -1,5 +1,6 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SB extends JavaPlugin{
@@ -8,10 +9,16 @@ public class SB extends JavaPlugin{
 	{
 		getCommand("snowbrawl").setExecutor(new SBCommandExecutor());
 		Configurations.loadAllConfigurations(this);
-		new TeamCyan();
-		new TeamLime();
+		new TeamCyan(this);
+		TeamCyan.setName("Cyan");
+		TeamCyan.setColor(ChatColor.AQUA);
+		new TeamLime(this);
+		TeamLime.setName("Lime");
+		TeamLime.setColor(ChatColor.GREEN);
+		new Arenas(this);
 		new GameListener(this);
 		new ExtrasListener(this);
+		Arenas.loadAllArenasFromConfig();
 		Kits.loadAllKitsFromConfig();
 	}
 	

@@ -3,11 +3,19 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Arenas {
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Arenas implements Listener{
 
 	private static Set<Arena> al = new HashSet<Arena>();
 	
-	public static void loadAllArenasFromFile()
+	public Arenas(JavaPlugin p)
+	{
+		p.getServer().getPluginManager().registerEvents(this, p);
+	}
+	
+	public static void loadAllArenasFromConfig()
 	{
 		for(String key : Configurations.getArenasconfig().getKeys(false))
 		{
@@ -30,6 +38,11 @@ public class Arenas {
 		return al;
 	}
 	
+	public static Arena[] getArenasArray()
+	{
+		return al.toArray(new Arena[0]);
+	}
+	
 	public static void addArena(Arena a)
 	{
 		al.add(a);
@@ -38,5 +51,10 @@ public class Arenas {
 	public static void removeArena(Arena a)
 	{
 		al.remove(a);
+	}
+	
+	public static void startArenaWizard()
+	{
+		
 	}
 }

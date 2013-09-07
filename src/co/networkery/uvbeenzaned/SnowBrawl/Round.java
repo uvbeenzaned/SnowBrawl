@@ -1,53 +1,78 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import javax.swing.Timer;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class Round {
 	
-	private Map<String, Integer> hitsperplayer = new HashMap<String, Integer>();
-
-	private static ActionListener taskPerformer = new ActionListener() {
-		public void actionPerformed(ActionEvent evt) {
-			
-		}
-	};
-
-	public static Timer roundtimer;
-
-	public static void startIndependentTimerRound()
-	{
-		roundtimer = new Timer(Configurations.getMainConfig().getInt("round-start-delay"), taskPerformer);
-		roundtimer.setRepeats(false);
-		roundtimer.start();
-	}
-
+	private static Map<String, Integer> leads = new HashMap<String, Integer>();
 	private static Random r = new Random();
 	private static int l = 0;
+	private static boolean gameactive = false;
+	
+	public static void startTimerRound() {
+		Clock.startClock();
+	}
 
-	public static void randomMap()
-	{
+	public static void startRandomMap() {
 		r.setSeed(System.currentTimeMillis());
-		int mapnum = r.nextInt();
+		int mapnum = r.nextInt(Arenas.getArenas().size());
 		while(mapnum == l)
 		{
 			mapnum = r.nextInt();
 		}
-		int i = 0;
-		for(String arena : //iterator here)
-		{
-			if(mapnum == i)
-			{
-				l = mapnum;
-
-			}
-			i++;
-		}
+		Arena a = Arenas.getArenasArray()[mapnum];
+		TeamCyan.teleportAllPlayersToArena(a, Teams.CYAN);
+		TeamLime.teleportAllPlayersToArena(a, Teams.LIME);
+		String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();
+		TeamCyan.sendTeamMsg(arenamsg);
+		TeamCyan.sendTeamMsg(a.getDescription());
+		TeamLime.sendTeamMsg(arenamsg);
+		TeamLime.sendTeamMsg(a.getDescription());
+		setGameActive(true);
 	}
 	
+	public static void startMap(Arena a)
+	{
+		TeamCyan.teleportAllPlayersToArena(a, Teams.CYAN);
+		TeamLime.teleportAllPlayersToArena(a, Teams.LIME);
+		String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();
+		TeamCyan.sendTeamMsg(arenamsg);
+		TeamCyan.sendTeamMsg(a.getDescription());
+		TeamLime.sendTeamMsg(arenamsg);
+		TeamLime.sendTeamMsg(a.getDescription());
+		setGameActive(true);
+	}
+	
+	public static Map<String, Integer> getLeads() {
+		return leads;
+	}
+	
+	public static void setLeads(Map<String, Integer> leads) {
+		Round.leads = leads;
+	}
+	
+	public static void clearLeads() {
+		getLeads().clear();
+	}
+	
+	public static void setPlayerLead(Player p, int pts) {
+		getLeads().put(p.getName(), getLeads().get(p.getName()) + pts);
+	}
+	
+	public static void removePlayerLead(Player p) {
+		getLeads().remove(p.getName());
+	}
+	
+	public static void setGameActive(boolean b) {
+		gameactive = b;
+	}
+
+	public static boolean isGameActive() {
+		return gameactive;
+	}
 }
