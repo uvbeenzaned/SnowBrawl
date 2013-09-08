@@ -13,6 +13,7 @@ public class Lobby {
 	public static void setLobbyspawnlocation(Location l, Player sender)
 	{
 		Configurations.getMainConfig().set("lobby-spawn-location", LocationSerializer.loc2str(l));
+		Configurations.saveMainConfig();
 		if(sender != null)
 		Chat.sendPPM("The lobby's spawn location has changed to " + l.toString() + ".", sender);
 	}

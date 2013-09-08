@@ -15,7 +15,24 @@ public class Chat {
 	
 	public static void sendPPM(String msg, Player p)
 	{
-		p.sendMessage(format + msg);
+		String nmsg = "";
+		if(msg.toLowerCase().contains("cyan") || msg.toLowerCase().contains("lime")) {
+			for(String s : msg.split(" ")) {
+				if(s.equalsIgnoreCase("cyan")) {
+					nmsg = nmsg + ChatColor.AQUA + s + ChatColor.RESET + " ";
+				} else {
+					if(s.equalsIgnoreCase("lime")) {
+						nmsg = nmsg + ChatColor.GREEN + s + ChatColor.RESET + " ";
+					} else {
+						nmsg = nmsg + s + " ";
+					}
+				}
+			}
+		}
+		else {
+			nmsg = msg;
+		}
+		p.sendMessage(format + nmsg);
 	}
 	
 	public static void sendPM(String msg, Player p)

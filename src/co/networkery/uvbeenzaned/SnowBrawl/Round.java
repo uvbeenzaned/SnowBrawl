@@ -19,13 +19,14 @@ public class Round {
 	}
 
 	public static void startRandomMap() {
+		int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
 		r.setSeed(System.currentTimeMillis());
-		int mapnum = r.nextInt(Arenas.getArenas().size());
+		int mapnum = r.nextInt(arenaamount);
 		while(mapnum == l)
 		{
 			mapnum = r.nextInt();
 		}
-		Arena a = Arenas.getArenasArray()[mapnum];
+		Arena a = Arena.getInstanceFromConfig(Configurations.getArenasconfig().getKeys(false).toArray(new String[0])[mapnum]);
 		TeamCyan.teleportAllPlayersToArena(a, Teams.CYAN);
 		TeamLime.teleportAllPlayersToArena(a, Teams.LIME);
 		String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();

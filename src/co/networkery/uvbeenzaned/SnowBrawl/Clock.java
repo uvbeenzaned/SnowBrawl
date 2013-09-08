@@ -11,6 +11,7 @@ public class Clock {
 		public void actionPerformed(ActionEvent evt) {
 			if(currentsec >= Settings.getRoundstartdelay()) {
 				Round.startRandomMap();
+				Round.setGameActive(true);
 				stopClock();
 			}
 			currentsec++;
@@ -39,6 +40,7 @@ public class Clock {
 	public static void stopClock()
 	{
 		clock.stop();
+		setCurrentSeconds(0);
 	}
 	
 	public static boolean isRunning()

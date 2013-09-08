@@ -1,9 +1,9 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,8 +18,8 @@ public class Team implements Listener{
 	
 	private static String name;
 	private static ChatColor color;
-	private static Set<String> players = new HashSet<String>();
-	private static Set<String> playersinarena = new HashSet<String>();
+	private static List<String> players = new ArrayList<String>();
+	private static List<String> playersinarena = new ArrayList<String>();
 	private static Map<String, Teams> deadplayers = new HashMap<String, Teams>();
 	
 	public Team(JavaPlugin p)
@@ -46,7 +46,7 @@ public class Team implements Listener{
 		Team.addPlayer(p);
 	}
 	
-	public static Set<String> getPlayers() {
+	public static List<String> getPlayers() {
 		return players;
 	}
 	
@@ -54,19 +54,21 @@ public class Team implements Listener{
 		Team.players.add(p.getName());
 	}
 	
-	public static void setPlayers(Set<String> players) {
+	public static void setPlayers(List<String> players) {
 		Team.players = players;
 	}
 	
 	public static void removePlayer(Player p) {
-		Team.players.remove(p.getName());
+		getDeadplayers().remove(p.getName());
+		getPlayersinarena().remove(p.getName());
+		getPlayers().remove(p.getName());
 	}
 	
 	public static boolean hasPlayer(Player p) {
-		return getPlayers().contains(p);
+		return getPlayers().contains(p.getName());
 	}
 	
-	public Set<String> getPlayersinarena() {
+	public static List<String> getPlayersinarena() {
 		return playersinarena;
 	}
 	
@@ -74,7 +76,7 @@ public class Team implements Listener{
 		Team.playersinarena.add(p.getName());
 	}
 	
-	public static void setPlayersinarena(Set<String> playersinarena) {
+	public static void setPlayersinarena(List<String> playersinarena) {
 		Team.playersinarena = playersinarena;
 	}
 	
@@ -83,7 +85,11 @@ public class Team implements Listener{
 		p.teleport(Lobby.getLobbyspawnlocation());
 	}
 	
-	public Map<String, Teams> getDeadplayers() {
+	public static boolean hasArenaPlayer(Player p) {
+		return getPlayersinarena().contains(p.getName());
+	}
+	
+	public static Map<String, Teams> getDeadplayers() {
 		return deadplayers;
 	}
 	
@@ -99,6 +105,10 @@ public class Team implements Listener{
 		Team.deadplayers.remove(p.getName());
 	}
 	
+	public static boolean hasDeadPlayer(Player p) {
+		return getDeadplayers().containsKey(p.getName());
+	}
+	
 	public static void teleportAllPlayersToArena(Arena a, Teams t) {
 		for(String p : getPlayers()) {
 			if(t == Teams.CYAN)
@@ -107,6 +117,17 @@ public class Team implements Listener{
 			if(t == Teams.LIME)
 				addArenaPlayer(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).teleport(a.getLimeSide());
+		}
+	}
+	
+	public static void teleportAllPlayersToLobby(Teams t) {
+		for(String p : getPlayers()) {
+			if(t == Teams.CYAN)
+				addArenaPlayer(Bukkit.getServer().getPlayer(p));
+				Bukkit.getServer().getPlayer(p).teleport(Lobby.getLobbyspawnlocation());
+			if(t == Teams.LIME)
+				addArenaPlayer(Bukkit.getServer().getPlayer(p));
+				Bukkit.getServer().getPlayer(p).teleport(Lobby.getLobbyspawnlocation());
 		}
 	}
 	

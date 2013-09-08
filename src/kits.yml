@@ -2,12 +2,12 @@
 #example:
 #kit name
 # Speed:
-  # item number for player to receive : damage value of specified item
-  # item: 373:16418
-  # amount to receive
-  # amount: 2
-  # a short description of the kit
-  # description: '2 Speed 2 potions.'
+# item number for player to receive : damage value of specified item
+# item: 373:16418
+# amount to receive
+# amount: 2
+# a short description of the kit
+# description: '2 Speed 2 potions.'
   
 Speed:
   item: 373:16418

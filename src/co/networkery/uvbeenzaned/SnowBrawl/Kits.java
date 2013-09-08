@@ -16,9 +16,9 @@ public class Kits {
 	{
 		for(String kit : Configurations.getKitsconfig().getKeys(false))
 		{
-			String itemstring = Configurations.getKitsconfig().getConfigurationSection(kit + ".").getString("item");
-			int amount = Configurations.getKitsconfig().getConfigurationSection(kit + ".").getInt("amount");
-			String description = Configurations.getKitsconfig().getConfigurationSection(kit + ".").getString("description");
+			String itemstring = Configurations.getKitsconfig().getConfigurationSection(kit).getString("item");
+			int amount = Configurations.getKitsconfig().getConfigurationSection(kit).getInt("amount");
+			String description = Configurations.getKitsconfig().getConfigurationSection(kit).getString("description");
 			kits.add(new Kit(kit, itemstring, amount, description));
 		}
 	}

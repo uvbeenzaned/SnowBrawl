@@ -18,8 +18,7 @@ public class SB extends JavaPlugin{
 		new Arenas(this);
 		new GameListener(this);
 		new ExtrasListener(this);
-		Arenas.loadAllArenasFromConfig();
-		Kits.loadAllKitsFromConfig();
+		//Kits.loadAllKitsFromConfig();
 	}
 	
 	public void onDisable()

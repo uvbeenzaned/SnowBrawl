@@ -13,17 +13,18 @@ public class Configurations {
 	
 	public static void loadAllConfigurations(SB sb)
 	{
+		setMainConfig(new Configuration(sb, "config.yml"));
+		setArenasconfig(new Configuration(sb, "arenas.yml"));
+		setPlayersconfig(new Configuration(sb, "players.yml"));
+		setRanksconfig(new Configuration(sb, "ranks.yml"));
+		setKitsconfig(new Configuration(sb, "kits.yml"));
+		setStatsconfig(new Configuration(sb, "stats.yml"));
 		config.saveDefaultConfig();
 		arenasconfig.saveDefaultConfig();
 		playersconfig.saveDefaultConfig();
 		ranksconfig.saveDefaultConfig();
 		kitsconfig.saveDefaultConfig();
 		statsconfig.saveDefaultConfig();
-		setMainConfig(new Configuration(sb, "config.yml"));
-		setArenasconfig(new Configuration(sb, "arenas.yml"));
-		setPlayersconfig(new Configuration(sb, "players.yml"));
-		setRanksconfig(new Configuration(sb, "ranks.yml"));
-		setStatsconfig(new Configuration(sb, "stats.yml"));
 	}
 	
 	public static void reloadAllConfigurations()
@@ -72,7 +73,7 @@ public class Configurations {
 	}
 	
 	public static void saveArenasConfig() {
-		config.saveConfig();
+		arenasconfig.saveConfig();
 	}
 
 	/**
