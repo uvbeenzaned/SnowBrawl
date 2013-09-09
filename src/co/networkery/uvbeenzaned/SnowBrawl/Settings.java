@@ -9,12 +9,12 @@ public class Settings {
 		return Configurations.getMainConfig().getInt("round-start-delay");
 	}
 	
-	public static void setRoundstartdelay(int ms, Player sender)
+	public static void setRoundstartdelay(int s, Player sender)
 	{
-		Configurations.getMainConfig().set("round-start-delay", ms);
+		Configurations.getMainConfig().set("round-start-delay", s);
 		Configurations.saveMainConfig();
 		if(sender != null)
-			Chat.sendPPM("Changed round-start-delay to " + String.valueOf(ms) + " milliseconds.", sender);
+			Chat.sendPPM("Changed round-start-delay to " + String.valueOf(s) + " seconds.", sender);
 	}
 	
 	public static int getTeamPoints()
