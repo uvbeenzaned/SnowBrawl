@@ -15,37 +15,46 @@ public class Round {
 	private static boolean gameactive = false;
 	
 	public static void startTimerRound() {
-		Clock.startClock();
+		if(!isGameActive()) {
+			Clock.startClock();
+		}
 	}
 
 	public static void startRandomMap() {
 		int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
 		r.setSeed(System.currentTimeMillis());
-		int mapnum = r.nextInt(arenaamount);
-		while(mapnum == l)
+		int randnum = r.nextInt(arenaamount);
+		while(randnum == l)
 		{
-			mapnum = r.nextInt();
+			randnum = r.nextInt();
 		}
-		Arena a = Arena.getInstanceFromConfig(Configurations.getArenasconfig().getKeys(false).toArray(new String[0])[mapnum]);
-		TeamCyan.teleportAllPlayersToArena(a, Teams.CYAN);
-		TeamLime.teleportAllPlayersToArena(a, Teams.LIME);
-		String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();
-		TeamCyan.sendTeamMsg(arenamsg);
-		TeamCyan.sendTeamMsg(a.getDescription());
-		TeamLime.sendTeamMsg(arenamsg);
-		TeamLime.sendTeamMsg(a.getDescription());
-		setGameActive(true);
+		int mapnum = 0;
+		for(String as : Configurations.getArenasconfig().getKeys(false))
+		{
+			if(mapnum == randnum)
+			{
+				Arena a = Arena.getInstanceFromConfig(as);
+				TeamCyan.teleportAllPlayersToArena(a);
+				TeamLime.teleportAllPlayersToArena(a);
+				String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();
+				Chat.sendAllTeamsMsg(arenamsg);
+				Chat.sendAllTeamsMsg(a.getDescription());
+				Chat.sendAllTeamsMsg(a.getAuthorsString());
+				setGameActive(true);
+				break;
+			}
+			mapnum++;
+		}
 	}
 	
 	public static void startMap(Arena a)
 	{
-		TeamCyan.teleportAllPlayersToArena(a, Teams.CYAN);
-		TeamLime.teleportAllPlayersToArena(a, Teams.LIME);
+		TeamCyan.teleportAllPlayersToArena(a);
+		TeamLime.teleportAllPlayersToArena(a);
 		String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();
-		TeamCyan.sendTeamMsg(arenamsg);
-		TeamCyan.sendTeamMsg(a.getDescription());
-		TeamLime.sendTeamMsg(arenamsg);
-		TeamLime.sendTeamMsg(a.getDescription());
+		Chat.sendAllTeamsMsg(arenamsg);
+		Chat.sendAllTeamsMsg(a.getDescription());
+		Chat.sendAllTeamsMsg(a.getAuthorsString());
 		setGameActive(true);
 	}
 	

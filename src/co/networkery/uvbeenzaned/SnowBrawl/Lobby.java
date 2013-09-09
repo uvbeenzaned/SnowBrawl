@@ -15,6 +15,6 @@ public class Lobby {
 		Configurations.getMainConfig().set("lobby-spawn-location", LocationSerializer.loc2str(l));
 		Configurations.saveMainConfig();
 		if(sender != null)
-		Chat.sendPPM("The lobby's spawn location has changed to " + l.toString() + ".", sender);
+			Chat.sendPPM("The lobby's spawn location has changed to " + LocationSerializer.loc2str(l) + ".", sender);
 	}
 }

@@ -12,8 +12,9 @@ public class Settings {
 	public static void setRoundstartdelay(int ms, Player sender)
 	{
 		Configurations.getMainConfig().set("round-start-delay", ms);
+		Configurations.saveMainConfig();
 		if(sender != null)
-		Chat.sendPPM("Changed round-start-delay to " + String.valueOf(ms) + " milliseconds.", sender);
+			Chat.sendPPM("Changed round-start-delay to " + String.valueOf(ms) + " milliseconds.", sender);
 	}
 	
 	public static int getTeamPoints()
@@ -24,7 +25,8 @@ public class Settings {
 	public static void setTeampoints(int pts, Player sender)
 	{
 		Configurations.getMainConfig().set("team-points", pts);
+		Configurations.saveMainConfig();
 		if(sender != null)
-		Chat.sendPPM("Changed team-points to " + String.valueOf(pts) + " .", sender);
+			Chat.sendPPM("Changed team-points to " + String.valueOf(pts) + " .", sender);
 	}
 }

@@ -86,6 +86,22 @@ public class Arena {
 		return authors;
 	}
 	
+	public String getAuthorsString()
+	{
+		String authorstring = "";
+		boolean first = true;
+		for(String author : getAuthors())
+		{
+			if(!first){
+				authorstring = authorstring + ", " + author;
+			} else {
+				authorstring = authorstring + author;
+				first = false;
+			}
+		}
+		return authorstring.trim();
+	}
+	
 	public Location getCyanSide()
 	{
 		return cyanspawn;

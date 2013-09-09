@@ -54,22 +54,19 @@ public class SBCommandExecutor implements CommandExecutor{
 							return true;
 						case "info":
 							if(args.length > 2) {
-								Arena a = Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args));
+								Arena a = Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2));
 								if(a != null)
 									Chat.sendPPM("Name: " + a.getName(), p);
-									Chat.sendPM("Description: " + a.getDescription(), p);
-									String authors = "Authors: ";
-									for(String s : a.getAuthors()) {
-										authors = authors + s + ", ";
-									}
-									Chat.sendPM("Cyan side: " + LocationSerializer.loc2str(a.getCyanSide()), p);
-									Chat.sendPM("Lime side: " + LocationSerializer.loc2str(a.getLimeSide()), p);
+									Chat.sendPPM("Description: " + a.getDescription(), p);
+									Chat.sendPPM("Authors: " + a.getAuthorsString(), p);
+									Chat.sendPPM("CYAN side: " + LocationSerializer.loc2str(a.getCyanSide()), p);
+									Chat.sendPPM("LIME side: " + LocationSerializer.loc2str(a.getLimeSide()), p);
 							}
 							return true;
 						case "warp":
 							if(args.length > 2) {
-								if(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args)) != null)
-									p.teleport(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args)).getCyanSide());
+								if(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)) != null)
+									p.teleport(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)).getCyanSide());
 							}
 							return true;
 						case "add":
@@ -77,8 +74,8 @@ public class SBCommandExecutor implements CommandExecutor{
 							return true;
 						case "remove":
 							if(args.length > 2) {
-								if(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args)) != null)
-									Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args)).delete();
+								if(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)) != null)
+									Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)).delete();
 									Chat.sendPPM("Removed arena successfully!", p);
 							}
 							return true;
@@ -92,19 +89,21 @@ public class SBCommandExecutor implements CommandExecutor{
 					return true;
 				case "start":
 					if(p.isOp() && args.length > 1) {
-						Round.startMap(Arena.getInstanceFromConfig(args[1]));
+						Round.startMap(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 1)));
 					} else {
 						Round.startTimerRound();
 					}
+					return true;
 				case "stop":
 					if(p.isOp()) {
 						Clock.stopClock();
 					}
+					return true;
 				case "lobby":
 					p.teleport(Lobby.getLobbyspawnlocation());
 					return true;
 				case "join":
-					if((p.isOp() && args.length > 1) && (args[1].equalsIgnoreCase("cyan") || args[1].equalsIgnoreCase("lime"))) {
+					if((p.isOp() && args.length > 1)) {
 						if(args[1].equalsIgnoreCase("cyan")) {
 							TeamCyan.join(p);
 							return true;
@@ -114,16 +113,16 @@ public class SBCommandExecutor implements CommandExecutor{
 							return true;
 						}
 					}
+					if(TeamCyan.getPlayers().size() < TeamLime.getPlayers().size()){TeamCyan.join(p);return true;}
+					if(TeamLime.getPlayers().size() < TeamCyan.getPlayers().size()){TeamLime.join(p);return true;}
 					Random r = new Random(System.currentTimeMillis());
 					int n = r.nextInt(10);
 					if(n <= 5){TeamCyan.join(p);}
 					if(n >= 5){TeamLime.join(p);}
 					return true;
 				case "leave":
-					if(TeamCyan.hasPlayer(p))
-						TeamCyan.removePlayer(p);
-					if(TeamLime.hasPlayer(p))
-						TeamLime.removePlayer(p);
+					TeamCyan.leave(p);
+					TeamLime.leave(p);
 				}
 			}
 			else

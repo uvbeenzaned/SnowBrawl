@@ -5,21 +5,23 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+
 public class Clock {
 	
 	private static ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
-			if(currentsec >= Settings.getRoundstartdelay()) {
+			if(countdown == 0) {
 				Round.startRandomMap();
-				Round.setGameActive(true);
 				stopClock();
+			} else {
+				Chat.sendAllTeamsMsg(String.valueOf(countdown));
+				countdown--;
 			}
-			currentsec++;
 		}
 	};
 	
-	private static Timer clock = new Timer(1000, taskPerformer);
-	private static int currentsec;
+	private static Timer clock;
+	private static int countdown = Settings.getRoundstartdelay();
 	
 	public static void setClock(Timer t)
 	{
@@ -33,14 +35,19 @@ public class Clock {
 	
 	public static void startClock()
 	{
-		clock.setRepeats(false);
-		clock.start();
+		if(!Round.isGameActive()) {
+			setClock(new Timer(1000, taskPerformer));
+			setCountDownSeconds(Settings.getRoundstartdelay());
+			clock.setRepeats(true);
+			clock.start();
+		}
 	}
 	
 	public static void stopClock()
 	{
 		clock.stop();
-		setCurrentSeconds(0);
+		Round.setGameActive(false);
+		setCountDownSeconds(Settings.getRoundstartdelay());
 	}
 	
 	public static boolean isRunning()
@@ -48,13 +55,13 @@ public class Clock {
 		return clock.isRunning();
 	}
 	
-	public static void setCurrentSeconds(int s)
+	public static void setCountDownSeconds(int s)
 	{
-		currentsec = s;
+		countdown = s;
 	}
 	
-	public static int getCurrentSeconds()
+	public static int getCountDownSeconds()
 	{
-		return currentsec;
+		return countdown;
 	}
 }

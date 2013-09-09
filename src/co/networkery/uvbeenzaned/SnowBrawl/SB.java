@@ -5,19 +5,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class SB extends JavaPlugin{
 	
+	@SuppressWarnings("unused")
+	private Arenas as;
+	@SuppressWarnings("unused")
+	private GameListener gl;
+	@SuppressWarnings("unused")
+	private ExtrasListener el;
+	
 	public void onEnable()
 	{
 		getCommand("snowbrawl").setExecutor(new SBCommandExecutor());
 		Configurations.loadAllConfigurations(this);
-		new TeamCyan(this);
 		TeamCyan.setName("Cyan");
 		TeamCyan.setColor(ChatColor.AQUA);
-		new TeamLime(this);
 		TeamLime.setName("Lime");
 		TeamLime.setColor(ChatColor.GREEN);
-		new Arenas(this);
-		new GameListener(this);
-		new ExtrasListener(this);
+		as = new Arenas(this);
+		gl = new GameListener(this);
+		el = new ExtrasListener(this);
 		//Kits.loadAllKitsFromConfig();
 	}
 	

@@ -1,5 +1,6 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -18,10 +19,10 @@ public class Chat {
 		String nmsg = "";
 		if(msg.toLowerCase().contains("cyan") || msg.toLowerCase().contains("lime")) {
 			for(String s : msg.split(" ")) {
-				if(s.equalsIgnoreCase("cyan")) {
+				if(s.toLowerCase().contains("cyan")) {
 					nmsg = nmsg + ChatColor.AQUA + s + ChatColor.RESET + " ";
 				} else {
-					if(s.equalsIgnoreCase("lime")) {
+					if(s.toLowerCase().contains("lime")) {
 						nmsg = nmsg + ChatColor.GREEN + s + ChatColor.RESET + " ";
 					} else {
 						nmsg = nmsg + s + " ";
@@ -43,5 +44,26 @@ public class Chat {
 	public static String standardPermissionErrorMessage()
 	{
 		return nopermissionerrormsg;
+	}
+	
+	public static void sendTeamCyanMsg(String msg) {
+		for(String p : TeamCyan.getPlayers()) {
+			Chat.sendPPM(msg, Bukkit.getServer().getPlayer(p));
+		}
+	}
+	
+	public static void sendTeamLimeMsg(String msg) {
+		for(String p : TeamLime.getPlayers()) {
+			Chat.sendPPM(msg, Bukkit.getServer().getPlayer(p));
+		}
+	}
+	
+	public static void sendAllTeamsMsg(String msg) {
+		for(String p : TeamCyan.getPlayers()) {
+			Chat.sendPPM(msg, Bukkit.getServer().getPlayer(p));
+		}
+		for(String p : TeamLime.getPlayers()) {
+			Chat.sendPPM(msg, Bukkit.getServer().getPlayer(p));
+		}
 	}
 }

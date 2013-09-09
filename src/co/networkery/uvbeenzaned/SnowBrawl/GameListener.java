@@ -1,10 +1,15 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class GameListener implements Listener{
@@ -12,6 +17,48 @@ public class GameListener implements Listener{
 	public GameListener(JavaPlugin p)
 	{
 		p.getServer().getPluginManager().registerEvents(this, p);
+	}
+	
+	@EventHandler
+	public void playerLeave(PlayerQuitEvent e)
+	{
+		Player p = e.getPlayer();
+		TeamCyan.leave(p);
+		TeamLime.leave(p);
+	}
+	
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent e)
+	{
+		if(e.getEntityType() == EntityType.PLAYER) {
+			Player p = (Player)e.getEntity();
+			if(TeamCyan.hasPlayer(p)) {
+				TeamCyan.addDeadPlayer(p);
+			}
+			if(TeamLime.hasPlayer(p)) {
+				TeamLime.addDeadPlayer(p);
+			}
+			TeamCyan.leave(p);
+			TeamLime.leave(p);
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.HIGH)
+	public void playerRespawn(PlayerRespawnEvent e)
+	{
+		Player p = e.getPlayer();
+		if(TeamCyan.hasDeadPlayer(p)) {
+			e.setRespawnLocation(Lobby.getLobbyspawnlocation());
+			TeamCyan.join(p);
+		} else {
+			e.setRespawnLocation(p.getWorld().getSpawnLocation());
+		}
+		if(TeamLime.hasDeadPlayer(p)) {
+			e.setRespawnLocation(Lobby.getLobbyspawnlocation());
+			TeamLime.join(p);
+		} else {
+			e.setRespawnLocation(p.getWorld().getSpawnLocation());
+		}
 	}
 	
 	@EventHandler
@@ -33,8 +80,9 @@ public class GameListener implements Listener{
 							if(!TeamLime.hasArenaPlayer(plhit) || !TeamLime.hasArenaPlayer(plenemy))
 							{
 								//testing teleport here
-								TeamCyan.teleportAllPlayersToLobby(Teams.CYAN);
-								TeamLime.teleportAllPlayersToLobby(Teams.LIME);
+								TeamCyan.teleportAllPlayersToLobby();
+								TeamLime.teleportAllPlayersToLobby();
+								Clock.startClock();
 							}
 						}
 					}
