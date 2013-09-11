@@ -80,9 +80,11 @@ public class GameListener implements Listener{
 							if(!TeamLime.hasArenaPlayer(plhit) || !TeamLime.hasArenaPlayer(plenemy))
 							{
 								//testing teleport here
+								e.setCancelled(true);
 								TeamCyan.teleportAllPlayersToLobby();
 								TeamLime.teleportAllPlayersToLobby();
-								Clock.startClock();
+								Round.setGameActive(false);
+								Round.startTimerRound();
 							}
 						}
 					}

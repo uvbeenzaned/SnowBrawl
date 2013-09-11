@@ -129,6 +129,8 @@ public class TeamLime {
 		for(String p : getPlayers()) {
 			if(!hasArenaPlayer(Bukkit.getServer().getPlayer(p))) {
 				addArenaPlayer(Bukkit.getServer().getPlayer(p));
+				Bukkit.getServer().getPlayer(p).getInventory().clear();
+				Utilities.givePlayerSnowballs(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).teleport(a.getLimeSide());
 			}
 		}

@@ -10,49 +10,53 @@ public class Clock {
 	
 	private static ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
-			if(countdown == 0) {
-				Round.startRandomMap();
-				stopClock();
+			if(!Round.isGameActive()) {
+				if(countdown == 0) {
+					Round.startRandomMap();
+					stopTimer();
+				} else {
+					Chat.sendAllTeamsMsg(String.valueOf(countdown));
+					countdown--;
+				}
 			} else {
-				Chat.sendAllTeamsMsg(String.valueOf(countdown));
-				countdown--;
+				stopTimer();
 			}
 		}
 	};
 	
-	private static Timer clock;
+	private static Timer timer;
 	private static int countdown = Settings.getRoundstartdelay();
 	
-	public static void setClock(Timer t)
+	public static void setTimer(Timer t)
 	{
-		clock = t;
+		timer = t;
 	}
 	
-	public static Timer getClock()
+	public static Timer getTimer()
 	{
-		return clock;
+		return timer;
 	}
 	
-	public static void startClock()
+	public static void startTimer()
 	{
 		if(!Round.isGameActive()) {
-			setClock(new Timer(1000, taskPerformer));
+			setTimer(new Timer(1000, taskPerformer));
 			setCountDownSeconds(Settings.getRoundstartdelay());
-			clock.setRepeats(true);
-			clock.start();
+			timer.setRepeats(true);
+			timer.start();
 		}
 	}
 	
-	public static void stopClock()
+	public static void stopTimer()
 	{
-		clock.stop();
-		Round.setGameActive(false);
+		timer.stop();
+		timer.setRepeats(false);
 		setCountDownSeconds(Settings.getRoundstartdelay());
 	}
 	
 	public static boolean isRunning()
 	{
-		return clock.isRunning();
+		return timer.isRunning();
 	}
 	
 	public static void setCountDownSeconds(int s)

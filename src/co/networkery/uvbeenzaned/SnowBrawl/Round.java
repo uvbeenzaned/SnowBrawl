@@ -16,7 +16,7 @@ public class Round {
 	
 	public static void startTimerRound() {
 		if(!isGameActive()) {
-			Clock.startClock();
+			Clock.startTimer();
 		}
 	}
 

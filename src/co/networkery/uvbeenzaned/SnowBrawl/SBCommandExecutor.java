@@ -96,7 +96,7 @@ public class SBCommandExecutor implements CommandExecutor{
 					return true;
 				case "stop":
 					if(p.isOp()) {
-						Clock.stopClock();
+						Clock.stopTimer();
 					}
 					return true;
 				case "lobby":
