@@ -21,6 +21,7 @@ public class Round {
 	}
 
 	public static void startRandomMap() {
+		Clock.stopTimer();
 		int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
 		r.setSeed(System.currentTimeMillis());
 		int randnum = r.nextInt(arenaamount);
@@ -33,14 +34,7 @@ public class Round {
 		{
 			if(mapnum == randnum)
 			{
-				Arena a = Arena.getInstanceFromConfig(as);
-				TeamCyan.teleportAllPlayersToArena(a);
-				TeamLime.teleportAllPlayersToArena(a);
-				String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();
-				Chat.sendAllTeamsMsg(arenamsg);
-				Chat.sendAllTeamsMsg(a.getDescription());
-				Chat.sendAllTeamsMsg(a.getAuthorsString());
-				setGameActive(true);
+				startMap(Arena.getInstanceFromConfig(as));
 				break;
 			}
 			mapnum++;
@@ -53,8 +47,8 @@ public class Round {
 		TeamLime.teleportAllPlayersToArena(a);
 		String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();
 		Chat.sendAllTeamsMsg(arenamsg);
-		Chat.sendAllTeamsMsg(a.getDescription());
-		Chat.sendAllTeamsMsg(a.getAuthorsString());
+		Chat.sendAllTeamsMsg("    Description: " + a.getDescription());
+		Chat.sendAllTeamsMsg("    Author(s): " + a.getAuthorsString());
 		setGameActive(true);
 	}
 	

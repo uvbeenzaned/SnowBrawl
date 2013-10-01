@@ -11,12 +11,11 @@ public class Clock {
 	private static ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
 			if(!Round.isGameActive()) {
-				if(countdown == 0) {
+				if(getCountDownSeconds() <= 0) {
 					Round.startRandomMap();
-					stopTimer();
 				} else {
-					Chat.sendAllTeamsMsg(String.valueOf(countdown));
-					countdown--;
+					Chat.sendAllTeamsMsg(String.valueOf(getCountDownSeconds()));
+					setCountDownSeconds(getCountDownSeconds() - 1);
 				}
 			} else {
 				stopTimer();
