@@ -1,5 +1,6 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class Kit{
@@ -14,7 +15,7 @@ public class Kit{
 	public Kit(String kitname, String kititem, int kitamount, String kitdescription)
 	{
 		setName(kitname);
-		setItem(Integer.parseInt(kititem.split(":")[0]));
+		setItem(Material.valueOf(kititem.split(":")[0]));
 		setDurability(Short.parseShort(kititem.split(":")[1]));
 		setAmount(kitamount);
 		setDescription(kitdescription);
@@ -58,8 +59,8 @@ public class Kit{
 	/**
 	 * @param item the item to set
 	 */
-	public void setItem(int item) {
-		this.item = new ItemStack(item);
+	public void setItem(Material m) {
+		this.item = new ItemStack(m);
 		this.item.setAmount(getAmount());
 		this.item.setDurability(getDurability());
 	}
