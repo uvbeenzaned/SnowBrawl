@@ -32,7 +32,6 @@ public class Arenas implements Listener{
 		return n;
 	}
 	
-	//wizard stuff
 	public static void startArenaWizard(Player p)
 	{
 		wizardplayers.put(p.getName(), 1);
@@ -41,7 +40,7 @@ public class Arenas implements Listener{
 		arenawizardlist.add(a);
 		Chat.sendPPM("Please type an arena name to use:", p);
 	}
-	
+
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e)
 	{
@@ -50,60 +49,71 @@ public class Arenas implements Listener{
 			e.setCancelled(true);
 			Player p = e.getPlayer();
 			Arena arenatoremove = new Arena();
-			for(Arena a : arenawizardlist) {
-				if(p.getName() == a.getSender().getName()) {
-					switch((int)wizardplayers.get(p.getName()))
-					{
-					case 1:
-						a.setName(e.getMessage());
-						Chat.sendPPM("Added arena name!", p);
-						wizardplayers.put(p.getName(), 2);
-						Chat.sendPPM("Please type a brief description of this new arena:", p);
-						break;
-					case 2:
-						a.setDescription(e.getMessage());
-						Chat.sendPPM("Added arena description!", p);
-						wizardplayers.put(p.getName(), 3);
-						Chat.sendPPM("Please type the author(s) of this arena (space each author out):", p);
-						break;
-					case 3:
-						List<String> authors = new ArrayList<String>();
-						for(String s : e.getMessage().split(" ")) {
-							authors.add(s);
-						}
-						a.setAuthors(authors);
-						wizardplayers.put(p.getName(), 4);
-						Chat.sendPPM("Please locate Cyan's spawn location and stand there, then type the word set.", p);
-						break;
-					case 4:
-						if(e.getMessage().equalsIgnoreCase("set")) {
-							a.setCyanSide(p.getLocation());
-							Chat.sendPPM("Set Cyan's spawn point!", p);
-							wizardplayers.put(p.getName(), 5);
-							Chat.sendPPM("Please locate Lime's spawn location and stand there, then type the word set.", p);
+			if(e.getMessage() != "cancel") {
+				for(Arena a : arenawizardlist) {
+					if(p.getName() == a.getSender().getName()) {
+						switch((int)wizardplayers.get(p.getName()))
+						{
+						case 1:
+							a.setName(e.getMessage());
+							Chat.sendPPM("Added arena name!", p);
+							wizardplayers.put(p.getName(), 2);
+							Chat.sendPPM("Please type a brief description of this new arena:", p);
 							break;
-						} else {
-							Chat.sendPPM("Try typing the word set please!", p);
+						case 2:
+							a.setDescription(e.getMessage());
+							Chat.sendPPM("Added arena description!", p);
+							wizardplayers.put(p.getName(), 3);
+							Chat.sendPPM("Please type the author(s) of this arena (space each author out):", p);
 							break;
-						}
-					case 5:
-						if(e.getMessage().equalsIgnoreCase("set")) {
-							a.setLimeSide(p.getLocation());
-							Chat.sendPPM("Set Lime's spawn point!", p);
-							Chat.sendPPM("Saved arena successfully!", p);
-							a.save();
-							arenatoremove = a;
-							wizardplayers.put(p.getName(), null);
+						case 3:
+							List<String> authors = new ArrayList<String>();
+							for(String s : e.getMessage().split(" ")) {
+								authors.add(s);
+							}
+							a.setAuthors(authors);
+							wizardplayers.put(p.getName(), 4);
+							Chat.sendPPM("Please locate Cyan's spawn location and stand there, then type the word set.", p);
 							break;
-						} else {
-							Chat.sendPPM("Try typing the word set please!", p);
-							break;
+						case 4:
+							if(e.getMessage().equalsIgnoreCase("set")) {
+								a.setCyanSide(p.getLocation());
+								Chat.sendPPM("Set Cyan's spawn point!", p);
+								wizardplayers.put(p.getName(), 5);
+								Chat.sendPPM("Please locate Lime's spawn location and stand there, then type the word set.", p);
+								break;
+							} else {
+								Chat.sendPPM("Try typing the word set please!", p);
+								break;
+							}
+						case 5:
+							if(e.getMessage().equalsIgnoreCase("set")) {
+								a.setLimeSide(p.getLocation());
+								Chat.sendPPM("Set Lime's spawn point!", p);
+								Chat.sendPPM("Saved arena successfully!", p);
+								a.save();
+								arenatoremove = a;
+								wizardplayers.put(p.getName(), null);
+								break;
+							} else {
+								Chat.sendPPM("Try typing the word set please!", p);
+								break;
+							}
 						}
 					}
 				}
+				arenawizardlist.remove(arenatoremove);
+			} else {
+				for(Arena a : arenawizardlist) {
+					if(a.getSender() == e.getPlayer()) {
+						arenatoremove = a;
+					}
+				}
+				arenawizardlist.remove(arenatoremove);
+				wizardplayers.remove(e.getPlayer().getName());
+				Chat.sendPPM("Cancelled arena wizard!", p);
 			}
-			arenawizardlist.remove(arenatoremove);
 		}
 	}
-	
+
 }

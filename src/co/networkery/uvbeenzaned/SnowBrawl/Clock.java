@@ -5,31 +5,15 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-
 public class Clock {
 	
 	private static ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
-			if(!Round.isGameActive()) {
-				if(getCountDownSeconds() <= 0) {
-					Round.startRandomMap();
-				} else {
-					Chat.sendAllTeamsMsg(String.valueOf(getCountDownSeconds()));
-					setCountDownSeconds(getCountDownSeconds() - 1);
-				}
-			} else {
-				stopTimer();
-			}
+			Round.startRandomMap();
 		}
 	};
 	
 	private static Timer timer;
-	private static int countdown = Settings.getRoundstartdelay();
-	
-	public static void setTimer(Timer t)
-	{
-		timer = t;
-	}
 	
 	public static Timer getTimer()
 	{
@@ -39,9 +23,8 @@ public class Clock {
 	public static void startTimer()
 	{
 		if(!Round.isGameActive()) {
-			setTimer(new Timer(1000, taskPerformer));
-			setCountDownSeconds(Settings.getRoundstartdelay());
-			timer.setRepeats(true);
+			timer = new Timer(Settings.getRoundstartdelay(), taskPerformer);
+			timer.setRepeats(false);
 			timer.start();
 		}
 	}
@@ -50,21 +33,10 @@ public class Clock {
 	{
 		timer.stop();
 		timer.setRepeats(false);
-		setCountDownSeconds(Settings.getRoundstartdelay());
 	}
 	
 	public static boolean isRunning()
 	{
 		return timer.isRunning();
-	}
-	
-	public static void setCountDownSeconds(int s)
-	{
-		countdown = s;
-	}
-	
-	public static int getCountDownSeconds()
-	{
-		return countdown;
 	}
 }

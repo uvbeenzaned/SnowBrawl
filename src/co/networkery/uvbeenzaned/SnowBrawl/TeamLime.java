@@ -75,7 +75,6 @@ public class TeamLime {
 	}
 	
 	public static void removePlayer(Player p) {
-		removeDeadPlayer(p);
 		removeArenaPlayer(p);
 		players.remove(p);
 	}

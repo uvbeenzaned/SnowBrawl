@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public class Round {
 	
 	private static Map<String, Integer> leads = new HashMap<String, Integer>();
-	private static Random r = new Random();
+	private static Random r;
 	private static int l = 0;
 	private static boolean gameactive = false;
 	
@@ -21,26 +21,28 @@ public class Round {
 	}
 
 	public static void startRandomMap() {
-		Clock.stopTimer();
-		int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
-		r.setSeed(System.currentTimeMillis());
-		int randnum = r.nextInt(arenaamount);
-		while(randnum == l)
-		{
-			randnum = r.nextInt();
-		}
-		int mapnum = 0;
-		for(String as : Configurations.getArenasconfig().getKeys(false))
-		{
-			if(mapnum == randnum)
-			{
-				startMap(Arena.getInstanceFromConfig(as));
-				break;
+		if(!isGameActive()) {
+			int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
+			r = new Random();
+			r.setSeed(System.currentTimeMillis());
+			int randnum = r.nextInt(arenaamount);
+			if(arenaamount > 1) {
+				while(randnum == l) {
+					randnum = r.nextInt();
+				}
 			}
-			mapnum++;
+			int mapnum = 0;
+			for(String as : Configurations.getArenasconfig().getKeys(false)) {
+				if(mapnum == randnum) {
+					startMap(Arena.getInstanceFromConfig(as));
+					setGameActive(true);
+					break;
+				}
+				mapnum++;
+			}
 		}
 	}
-	
+
 	public static void startMap(Arena a)
 	{
 		TeamCyan.teleportAllPlayersToArena(a);

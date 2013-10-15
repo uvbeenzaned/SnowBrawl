@@ -34,7 +34,7 @@ public class Help {
 			cmds.add(cmd + "join <cyan/lime> - Forces join to selected team.");
 			cmds.add(cmd + "config - Command to access all configuration options.");
 			cmds.add(cmd + "    set-lobby-spawn-location - Set the lobby spawn location to the current standing location.");
-			cmds.add(cmd + "    set-round-start-delay [seconds] - Set wait period in between rounds in seconds.");
+			cmds.add(cmd + "    set-round-start-delay [milliseconds] - Set wait period in between rounds in milliseconds.");
 			cmds.add(cmd + "    set-team-points [points] - Set points received per winning player per round for the winning team.");
 			cmds.add(cmd + "arena - Command to access all arena options.");
 			cmds.add(cmd + "    list - Shows a list of all arenas.");
