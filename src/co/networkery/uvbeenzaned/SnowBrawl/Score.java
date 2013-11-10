@@ -13,6 +13,6 @@ public class Score {
 	public static void removeStandardPoints(Player p) { 
 		int currentpoints = Configurations.getStatsconfig().getConfigurationSection(p.getName()).getInt("points");
 		int standardpoints = Configurations.getMainConfig().getInt("standard-points");
-		Configurations.getStatsconfig().getConfigurationSection(p.getName()).set("points", currentpoints + standardpoints);
+		Configurations.getStatsconfig().getConfigurationSection(p.getName()).set("points", currentpoints - standardpoints);
 	}
 }
