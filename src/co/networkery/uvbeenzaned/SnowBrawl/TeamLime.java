@@ -104,6 +104,14 @@ public class TeamLime {
 		return getPlayersinarena().contains(p.getName());
 	}
 	
+	public static boolean isArenaPlayersEmpty() {
+		if(playersinarena.isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public static List<String> getDeadplayers() {
 		return deadplayers;
 	}

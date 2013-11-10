@@ -79,12 +79,22 @@ public class GameListener implements Listener{
 						{
 							if(!TeamLime.hasArenaPlayer(plhit) || !TeamLime.hasArenaPlayer(plenemy))
 							{
-								//testing teleport here
 								e.setCancelled(true);
-								TeamCyan.teleportAllPlayersToLobby();
-								TeamLime.teleportAllPlayersToLobby();
-								Round.setGameActive(false);
-								Round.startTimerRound();
+								TeamCyan.removeArenaPlayer(plhit);
+								TeamLime.removeArenaPlayer(plhit);
+								if(TeamCyan.isArenaPlayersEmpty()) {
+									Chat.sendAllTeamsMsg("Team LIME wins!");
+									TeamLime.teleportAllPlayersToLobby();
+									Round.setGameActive(false);
+									Round.startTimerRound();
+								} else {
+									if(TeamLime.isArenaPlayersEmpty()) {
+										Chat.sendAllTeamsMsg("Team CYAN wins!");
+										TeamCyan.teleportAllPlayersToLobby();
+										Round.setGameActive(false);
+										Round.startTimerRound();
+									}
+								}
 							}
 						}
 					}
@@ -92,5 +102,4 @@ public class GameListener implements Listener{
 			}
 		}
 	}
-
 }
