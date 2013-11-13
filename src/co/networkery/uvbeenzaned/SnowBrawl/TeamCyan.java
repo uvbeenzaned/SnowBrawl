@@ -151,7 +151,6 @@ public class TeamCyan{
 		for(String p : getPlayers()) {
 			if(hasArenaPlayer(Bukkit.getServer().getPlayer(p))) {
 				removeArenaPlayer(Bukkit.getServer().getPlayer(p));
-				Bukkit.getServer().getPlayer(p).teleport(Lobby.getLobbyspawnlocation());
 			}
 		}
 	}
