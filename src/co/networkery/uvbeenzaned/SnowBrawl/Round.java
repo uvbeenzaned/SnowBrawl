@@ -66,6 +66,10 @@ public class Round {
 		getLeads().clear();
 	}
 	
+	public static int getPlayerLead(Player p) {
+		return getLeads().get(p);
+	}
+	
 	public static void setPlayerLead(Player p, int pts) {
 		getLeads().put(p.getName(), getLeads().get(p.getName()) + pts);
 	}
