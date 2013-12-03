@@ -34,6 +34,10 @@ public class SBCommandExecutor implements CommandExecutor{
 							if(args.length > 2)
 								Settings.setTeampoints(Integer.parseInt(args[2]), p);
 							return true;
+						case "set-snowball-reload-delay":
+							if(args.length > 2)
+								Settings.setSnowballReloadDelay(Integer.parseInt(args[2]), p);
+							return true;
 						}
 						return false;
 					}

@@ -15,13 +15,13 @@ public class Round {
 	private static boolean gameactive = false;
 	
 	public static void startTimerRound() {
-		if(!isGameActive()) {
+		if(!isGameActive() && !Clock.isRunning()) {
 			Clock.startTimer();
 		}
 	}
 
 	public static void startRandomMap() {
-		if(!isGameActive()) {
+		if(!isGameActive() && !Clock.isRunning()) {
 			int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
 			r = new Random();
 			r.setSeed(System.currentTimeMillis());
@@ -35,7 +35,6 @@ public class Round {
 			for(String as : Configurations.getArenasconfig().getKeys(false)) {
 				if(mapnum == randnum) {
 					startMap(Arena.getInstanceFromConfig(as));
-					setGameActive(true);
 					break;
 				}
 				mapnum++;
@@ -80,6 +79,11 @@ public class Round {
 	
 	public static void setGameActive(boolean b) {
 		gameactive = b;
+		if(!b)
+		{
+			TeamCyan.teleportAllPlayersToLobby();
+			TeamLime.teleportAllPlayersToLobby();
+		}
 	}
 
 	public static boolean isGameActive() {

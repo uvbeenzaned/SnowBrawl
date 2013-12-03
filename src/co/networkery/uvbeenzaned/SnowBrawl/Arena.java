@@ -32,13 +32,16 @@ public class Arena {
 	
 	public static Arena getInstanceFromConfig(String name)
 	{
-		Arena a = new Arena();
-		a.setName(name);
-		a.setDescription(Configurations.getArenasconfig().getString(name + ".description"));
-		a.setAuthors(Configurations.getArenasconfig().getStringList(name + ".authors"));
-		a.setCyanSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".cyanspawn")));
-		a.setLimeSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".limespawn")));
-		return a;
+		if(Configurations.getArenasconfig().contains(name)) {
+			Arena a = new Arena();
+			a.setName(name);
+			a.setDescription(Configurations.getArenasconfig().getString(name + ".description"));
+			a.setAuthors(Configurations.getArenasconfig().getStringList(name + ".authors"));
+			a.setCyanSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".cyanspawn")));
+			a.setLimeSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".limespawn")));
+			return a;
+		}
+		return null;
 	}
 	
 	public void setSender(Player p)

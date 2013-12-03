@@ -36,6 +36,7 @@ public class Help {
 			cmds.add(cmd + "    set-lobby-spawn-location - Set the lobby spawn location to the current standing location.");
 			cmds.add(cmd + "    set-round-start-delay [milliseconds] - Set wait period in between rounds in milliseconds.");
 			cmds.add(cmd + "    set-team-points [points] - Set points received per winning player per round for the winning team.");
+			cmds.add(cmd + "    set-snowball-reload-delay [milliseconds] - Set the time it takes to reload a players snowballs in milliseconds.");
 			cmds.add(cmd + "arena - Command to access all arena options.");
 			cmds.add(cmd + "    list - Shows a list of all arenas.");
 			cmds.add(cmd + "    info [arena name] - Shows a list of all arenas.");

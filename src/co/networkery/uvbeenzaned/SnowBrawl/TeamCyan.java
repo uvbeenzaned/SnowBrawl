@@ -55,6 +55,15 @@ public class TeamCyan{
 			Chat.sendPPM("You've left team CYAN.", p);
 			Chat.sendTeamCyanMsg(p.getName() + " has left team CYAN.");
 			p.teleport(Lobby.getLobbyspawnlocation());
+			if(TeamCyan.isEmpty() && !TeamLime.isEmpty())
+			{
+				Round.setGameActive(false);
+				TeamLime.teleportAllPlayersToLobby();
+				for(String tp : TeamLime.getPlayers())
+				{
+					Chat.sendPPM("There are no players on team CYAN anymore.  Please wait for someone to join!", Bukkit.getPlayer(tp));
+				}
+			}
 		}
 	}
 	
@@ -76,7 +85,7 @@ public class TeamCyan{
 	
 	public static void removePlayer(Player p) {
 		removeArenaPlayer(p);
-		players.remove(p);
+		players.remove(p.getName());
 	}
 	
 	public static boolean hasPlayer(Player p) {
@@ -107,11 +116,7 @@ public class TeamCyan{
 	}
 	
 	public static boolean isArenaPlayersEmpty() {
-		if(playersinarena.isEmpty()) {
-			return true;
-		} else {
-			return false;
-		}
+		return playersinarena.isEmpty();
 	}
 	
 	public static List<String> getDeadplayers() {
@@ -141,7 +146,7 @@ public class TeamCyan{
 			if(!hasArenaPlayer(Bukkit.getServer().getPlayer(p))) {
 				addArenaPlayer(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
-				Utilities.givePlayerSnowballs(Bukkit.getServer().getPlayer(p));
+				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).teleport(a.getCyanSide());
 			}
 		}

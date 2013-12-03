@@ -7,13 +7,27 @@ import javax.swing.Timer;
 
 public class Clock {
 	
+	private static int cntdwn = 0;
+	
 	private static ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
-			Round.startRandomMap();
+			if(cntdwn > 0)
+			{
+				Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
+				cntdwn--;
+			}
+			else
+			{
+				if(cntdwn <= 0)
+				{
+					stopTimer();
+					Round.startRandomMap();
+				}
+			}
 		}
 	};
 	
-	private static Timer timer;
+	private static Timer timer = new Timer(1000, taskPerformer);
 	
 	public static Timer getTimer()
 	{
@@ -22,17 +36,17 @@ public class Clock {
 	
 	public static void startTimer()
 	{
-		if(!Round.isGameActive()) {
-			timer = new Timer(Settings.getRoundstartdelay(), taskPerformer);
-			timer.setRepeats(false);
+		if(!Round.isGameActive() && !isRunning()) {
+			cntdwn = Settings.getRoundstartdelay() / 1000;
+			timer.setRepeats(true);
 			timer.start();
+			Chat.sendAllTeamsMsg("Round will start in...");
 		}
 	}
 	
 	public static void stopTimer()
 	{
 		timer.stop();
-		timer.setRepeats(false);
 	}
 	
 	public static boolean isRunning()

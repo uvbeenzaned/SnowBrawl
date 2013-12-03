@@ -29,4 +29,17 @@ public class Settings {
 		if(sender != null)
 			Chat.sendPPM("Changed team-points to " + String.valueOf(pts) + " .", sender);
 	}
+	
+	public static int getSnowballReloadDelay()
+	{
+		return Configurations.getMainConfig().getInt("snowball-reload-delay");
+	}
+	
+	public static void setSnowballReloadDelay(int d, Player sender)
+	{
+		Configurations.getMainConfig().set("snowball-reload-delay", d);
+		Configurations.saveMainConfig();
+		if(sender != null)
+			Chat.sendPPM("Changed snowball-reload-delay to " + String.valueOf(d) + " .", sender);
+	}
 }
