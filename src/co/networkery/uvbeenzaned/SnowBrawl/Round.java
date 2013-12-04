@@ -2,15 +2,17 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class Round {
 	
 	private static Map<String, Integer> leads = new HashMap<String, Integer>();
-	private static Random r;
+	private static Random r = new Random();
 	private static int l = 0;
 	private static boolean gameactive = false;
 	
@@ -23,17 +25,18 @@ public class Round {
 	public static void startRandomMap() {
 		if(!isGameActive() && !Clock.isRunning()) {
 			int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
-			r = new Random();
 			r.setSeed(System.currentTimeMillis());
 			int randnum = r.nextInt(arenaamount);
-			if(arenaamount > 1) {
+			if(arenaamount > 1 && randnum == l) {
 				while(randnum == l) {
-					randnum = r.nextInt();
+					randnum = r.nextInt(arenaamount);
 				}
 			}
 			int mapnum = 0;
 			for(String as : Configurations.getArenasconfig().getKeys(false)) {
-				if(mapnum == randnum) {
+				if(randnum == mapnum) {
+					l = mapnum;
+					Chat.sendAllTeamsMsg("Random number is: " + randnum + " . Mapnum is: " + mapnum);
 					startMap(Arena.getInstanceFromConfig(as));
 					break;
 				}
@@ -57,6 +60,20 @@ public class Round {
 		return leads;
 	}
 	
+	public static void giveLeadPoints() {
+		String winner = "";
+		int pts = 0;
+		for(Entry<String, Integer> p : getLeads().entrySet()) {
+			if(pts < p.getValue())
+				pts = p.getValue();
+				winner = p.getKey();
+		}
+		Stats s = new Stats(Bukkit.getPlayer(winner));
+		s.addPoints(pts * pts);
+		clearLeads();
+		Chat.sendAllTeamsMsg(winner + " got the lead and was awarded " + String.valueOf(pts * pts) + " points.");
+	}
+	
 	public static void setLeads(Map<String, Integer> leads) {
 		Round.leads = leads;
 	}
@@ -66,11 +83,15 @@ public class Round {
 	}
 	
 	public static int getPlayerLead(Player p) {
-		return getLeads().get(p);
+		if(getLeads().containsKey(p.getName()))
+			return getLeads().get(p.getName());
+		if(!getLeads().containsKey(p.getName()))
+			return 0;
+		return 0;
 	}
 	
-	public static void setPlayerLead(Player p, int pts) {
-		getLeads().put(p.getName(), getLeads().get(p.getName()) + pts);
+	public static void addPlayerLead(Player p, int pts) {
+		getLeads().put(p.getName(), getPlayerLead(p) + pts);
 	}
 	
 	public static void removePlayerLead(Player p) {
@@ -79,11 +100,6 @@ public class Round {
 	
 	public static void setGameActive(boolean b) {
 		gameactive = b;
-		if(!b)
-		{
-			TeamCyan.teleportAllPlayersToLobby();
-			TeamLime.teleportAllPlayersToLobby();
-		}
 	}
 
 	public static boolean isGameActive() {

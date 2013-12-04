@@ -80,17 +80,31 @@ public class GameListener implements Listener{
 							if(!TeamLime.hasArenaPlayer(plhit) || !TeamLime.hasArenaPlayer(plenemy))
 							{
 								e.setCancelled(true);
+								Stats s = new Stats(plhit);
+								s.removePoints(1);
+								s.incrementDeathCount();
 								TeamCyan.removeArenaPlayer(plhit);
 								TeamLime.removeArenaPlayer(plhit);
+								s = new Stats(plenemy);
+								s.addPoints(1);
+								s.incrementKillsCount();
+								Round.addPlayerLead(plenemy, 1);
+								Chat.sendAllTeamsMsg(plhit.getName() + " was SNOWBRAWLED by " + plenemy.getName() + ".");
 								if(TeamCyan.isArenaPlayersEmpty()) {
 									Chat.sendAllTeamsMsg("Team LIME wins!");
+									TeamCyan.teleportAllPlayersToLobby();
 									TeamLime.teleportAllPlayersToLobby();
+									TeamLime.awardTeamPoints();
+									Round.giveLeadPoints();
 									Round.setGameActive(false);
 									Round.startTimerRound();
 								} else {
 									if(TeamLime.isArenaPlayersEmpty()) {
 										Chat.sendAllTeamsMsg("Team CYAN wins!");
 										TeamCyan.teleportAllPlayersToLobby();
+										TeamLime.teleportAllPlayersToLobby();
+										TeamCyan.awardTeamPoints();
+										Round.giveLeadPoints();
 										Round.setGameActive(false);
 										Round.startTimerRound();
 									}

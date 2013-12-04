@@ -17,7 +17,7 @@ public class Help {
 		cmds.add(cmd + "lobby - Teleports player to game lobby.");
 		cmds.add(cmd + "join - Joins you to a random team.");
 		cmds.add(cmd + "leave - Removes you from your current team.");
-		cmds.add(cmd + "rank <player> - Shows your rank or another players rank.");
+		cmds.add(cmd + "stats <player> - Shows a players stats.");
 		cmds.add(cmd + "stats - Shows plugin stats.");
 		cmds.add(cmd + "top <amount> - Shows top 5 players unless amount argument is provided.");
 		for(String c : cmds) {

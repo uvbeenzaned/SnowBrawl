@@ -155,4 +155,12 @@ public class TeamLime {
 			}
 		}
 	}
+	
+	public static void awardTeamPoints() {
+		for(String p : getPlayers()) {
+			Stats s = new Stats(Bukkit.getPlayer(p));
+			s.giveTeamPoints();
+		}
+		Chat.sendAllTeamsMsg(String.valueOf(Settings.getTeamPoints()) + " points were awarded to all of team LIME!");
+	}
 }

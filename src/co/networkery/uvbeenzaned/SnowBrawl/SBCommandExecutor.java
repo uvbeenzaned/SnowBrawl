@@ -2,6 +2,7 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,6 +44,14 @@ public class SBCommandExecutor implements CommandExecutor{
 					}
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 					return true;
+				case "stats":
+					if(args.length > 1) {
+						Stats s = new Stats(Bukkit.getPlayer(args[1]));
+						for(String msg : s.getAllStats())
+						{
+							Chat.sendPPM(msg, p);
+						}
+					}
 				case "arena":
 					if(p.isOp() || p.hasPermission("SnowBrawl.arena"))
 					{
