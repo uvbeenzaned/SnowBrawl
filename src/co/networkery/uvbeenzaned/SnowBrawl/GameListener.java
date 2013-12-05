@@ -85,10 +85,12 @@ public class GameListener implements Listener{
 								s.incrementDeathCount();
 								TeamCyan.removeArenaPlayer(plhit);
 								TeamLime.removeArenaPlayer(plhit);
+								Rank.checkRank(plhit.getName());
 								s = new Stats(plenemy);
 								s.addPoints(1);
 								s.incrementKillsCount();
 								Round.addPlayerLead(plenemy, 1);
+								Rank.checkRank(plenemy.getName());
 								Chat.sendAllTeamsMsg(plhit.getName() + " was SNOWBRAWLED by " + plenemy.getName() + ".");
 								if(TeamCyan.isArenaPlayersEmpty()) {
 									Chat.sendAllTeamsMsg("Team LIME wins!");

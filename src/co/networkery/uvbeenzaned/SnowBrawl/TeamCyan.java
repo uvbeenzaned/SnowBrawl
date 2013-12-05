@@ -32,7 +32,7 @@ public class TeamCyan{
 	}
 	
 	public static void join(Player p) {
-		if(!hasPlayer(p) || !TeamLime.hasPlayer(p)) {
+		if(!hasPlayer(p) && !TeamLime.hasPlayer(p)) {
 			if(hasDeadPlayer(p)) {
 				removeDeadPlayer(p);
 			}
@@ -58,6 +58,7 @@ public class TeamCyan{
 			if(TeamCyan.isEmpty() && !TeamLime.isEmpty())
 			{
 				Round.setGameActive(false);
+				Clock.stopTimer();
 				TeamLime.teleportAllPlayersToLobby();
 				for(String tp : TeamLime.getPlayers())
 				{
@@ -90,6 +91,10 @@ public class TeamCyan{
 	
 	public static boolean hasPlayer(Player p) {
 		return getPlayers().contains(p.getName());
+	}
+	
+	public static boolean hasPlayer(String p) {
+		return getPlayers().contains(p);
 	}
 	
 	public static List<String> getPlayersinarena() {
@@ -157,6 +162,7 @@ public class TeamCyan{
 			if(hasArenaPlayer(Bukkit.getServer().getPlayer(p))) {
 				removeArenaPlayer(Bukkit.getServer().getPlayer(p));
 			}
+			Rank.checkRank(p);
 		}
 	}
 	
@@ -166,5 +172,12 @@ public class TeamCyan{
 			s.giveTeamPoints();
 		}
 		Chat.sendAllTeamsMsg(String.valueOf(Settings.getTeamPoints()) + " points were awarded to all of team CYAN!");
+		checkAllPlayersRanks();
+	}
+	
+	private static void checkAllPlayersRanks() {
+		for(String p : getPlayers()) {
+			Rank.checkRank(p);
+		}
 	}
 }

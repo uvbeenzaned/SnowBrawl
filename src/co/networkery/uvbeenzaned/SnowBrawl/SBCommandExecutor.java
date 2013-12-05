@@ -2,7 +2,6 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 
 import java.util.Random;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,12 +45,16 @@ public class SBCommandExecutor implements CommandExecutor{
 					return true;
 				case "stats":
 					if(args.length > 1) {
-						Stats s = new Stats(Bukkit.getPlayer(args[1]));
-						for(String msg : s.getAllStats())
-						{
-							Chat.sendPPM(msg, p);
+						Stats s = new Stats(args[1], p);
+						if(!s.getError()) {
+							for(String msg : s.getAllStats())
+							{
+								Chat.sendPPM(msg, p);
+							}
+							return true;
 						}
 					}
+					return true;
 				case "arena":
 					if(p.isOp() || p.hasPermission("SnowBrawl.arena"))
 					{
@@ -136,6 +139,7 @@ public class SBCommandExecutor implements CommandExecutor{
 				case "leave":
 					TeamCyan.leave(p);
 					TeamLime.leave(p);
+					return true;
 				}
 			}
 			else

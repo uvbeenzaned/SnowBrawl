@@ -27,7 +27,7 @@ public class Round {
 			int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
 			r.setSeed(System.currentTimeMillis());
 			int randnum = r.nextInt(arenaamount);
-			if(arenaamount > 1 && randnum == l) {
+			if(arenaamount > 1) {
 				while(randnum == l) {
 					randnum = r.nextInt(arenaamount);
 				}
@@ -36,7 +36,6 @@ public class Round {
 			for(String as : Configurations.getArenasconfig().getKeys(false)) {
 				if(randnum == mapnum) {
 					l = mapnum;
-					Chat.sendAllTeamsMsg("Random number is: " + randnum + " . Mapnum is: " + mapnum);
 					startMap(Arena.getInstanceFromConfig(as));
 					break;
 				}

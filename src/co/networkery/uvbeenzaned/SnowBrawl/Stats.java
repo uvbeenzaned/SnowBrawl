@@ -7,15 +7,36 @@ import org.bukkit.entity.Player;
 
 public class Stats {
 	
+	private boolean error = false;
 	private String player;
 	
 	public Stats(Player p) {
-		if(Configurations.getPlayersconfig().contains(p.getName())) {
-			player = p.getName();
-		} else {
+		if(!Configurations.getPlayersconfig().contains(p.getName())) {
 			Configurations.getPlayersconfig().createSection(p.getName());
-			player = p.getName();
 		}
+		player = p.getName();
+	}
+	
+	public Stats(String p, Player sender) {
+		if(Configurations.getPlayersconfig().contains(p)) {
+			player = p;
+		} else {
+			error = true;
+			if(sender != null)
+				Chat.sendPPM("There are no players with the name " + p + " in the records.", sender);
+		}
+	}
+	
+	public Stats(String p) {
+		if(Configurations.getPlayersconfig().contains(p)) {
+			player = p;
+		} else {
+			error = true;
+		}
+	}
+	
+	public boolean getError() {
+		return error;
 	}
 	
 	public int getPoints() {
@@ -83,19 +104,45 @@ public class Stats {
 		setSnowballsThrown(getSnowballsThrown() - a);
 	}
 	
+	public String getLastRank() {
+		if(Configurations.getPlayersconfig().getConfigurationSection(player).getString("last-rank") != null) {
+			return Configurations.getPlayersconfig().getConfigurationSection(player).getString("last-rank");
+		} else {
+			return "N/A";
+		}
+	}
+	
+	public void setRank(String r) {
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("last-rank", r);
+	}
+	
 	public ArrayList<String> getAllStats() {
 		ArrayList<String> s = new ArrayList<String>();
-		s.add("Stats for " + player + ".");
-		if(TeamCyan.hasPlayer(Bukkit.getPlayer(player)))
-			s.add("    Team: CYAN");
-		if(TeamLime.hasPlayer(Bukkit.getPlayer(player)))
-			s.add("    Team: LIME");
-		s.add("    Rank: N/A");
+		s.add("Stats for " + player + ":");
+		if(Bukkit.getOfflinePlayer(player).isOnline()) {
+			if(TeamCyan.hasPlayer(player)) {
+				s.add("    Team: CYAN");
+			}
+			if(TeamLime.hasPlayer(player)) {
+				s.add("    Team: LIME");
+			}
+			if(!TeamCyan.hasPlayer(player) && !TeamLime.hasPlayer(player))
+				s.add("    Team: N/A");
+		} else {
+			s.add("    Team: N/A (player offline)");
+		}
+		s.add("    Rank: " + getLastRank());
 		s.add("    Points: " + String.valueOf(getPoints()));
 		s.add("    Kills: " + String.valueOf(getKills()));
 		s.add("    Deaths: " + String.valueOf(getDeaths()));
 		s.add("    Kill to Death ratio: " + String.valueOf(getKDRatio()));
 		s.add("    Snowballs thrown: " + String.valueOf(getSnowballsThrown()));
+		return s;
+	}
+	
+	public static ArrayList<String> getPluginStats() {
+		ArrayList<String> s = new ArrayList<String>();
+		//to be implemented
 		return s;
 	}
 	
