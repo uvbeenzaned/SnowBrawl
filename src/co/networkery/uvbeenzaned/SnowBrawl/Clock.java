@@ -8,12 +8,19 @@ import javax.swing.Timer;
 public class Clock {
 	
 	private static int cntdwn = 0;
+	private static int printerval = 5;
 	
 	private static ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
 			if(cntdwn > 0)
 			{
-				Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
+				if(printerval % cntdwn == 0) {
+					Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
+				} else {
+					if(cntdwn == 3 || cntdwn == 2 || cntdwn == 1) {
+						Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
+					}
+				}
 				cntdwn--;
 			}
 			else
@@ -41,6 +48,7 @@ public class Clock {
 			timer.setRepeats(true);
 			timer.start();
 			Chat.sendAllTeamsMsg("Round will start in...");
+			Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
 		}
 	}
 	

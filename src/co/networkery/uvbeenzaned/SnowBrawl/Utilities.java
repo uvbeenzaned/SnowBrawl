@@ -29,6 +29,9 @@ public class Utilities{
 				}
 				else
 				{
+					if(TeamCyan.hasPlayer(Bukkit.getPlayer(p.getKey())) || TeamLime.hasPlayer(Bukkit.getPlayer(p.getKey()))) {
+						Bukkit.getPlayer(p.getKey()).getInventory().remove(Material.SNOW_BALL);
+					}
 					giveSnowballs(Bukkit.getPlayer(p.getKey()));
 					playerstoremove.add(p.getKey());
 				}

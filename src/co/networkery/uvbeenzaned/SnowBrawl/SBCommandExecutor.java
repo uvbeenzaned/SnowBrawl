@@ -2,6 +2,7 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 
 import java.util.Random;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,17 +28,23 @@ public class SBCommandExecutor implements CommandExecutor{
 							Lobby.setLobbyspawnlocation(p.getLocation(), p);
 							return true;
 						case "set-round-start-delay":
-							if(args.length > 2)
+							if(args.length > 2) {
 								Settings.setRoundstartdelay(Integer.parseInt(args[2]), p);
-							return true;
+								return true;
+							}
+							return false;
 						case "set-team-points":
-							if(args.length > 2)
+							if(args.length > 2) {
 								Settings.setTeampoints(Integer.parseInt(args[2]), p);
-							return true;
+								return true;
+							}
+							return false;
 						case "set-snowball-reload-delay":
-							if(args.length > 2)
+							if(args.length > 2) {
 								Settings.setSnowballReloadDelay(Integer.parseInt(args[2]), p);
-							return true;
+								return true;
+							}
+							return false;
 						}
 						return false;
 					}
@@ -54,6 +61,7 @@ public class SBCommandExecutor implements CommandExecutor{
 							return true;
 						}
 					}
+					Chat.sendPPM("Global plugins stats have not been added yet!  If you mean to get a players score dont forget to add their name after \"/sb stats\"!", p);
 					return true;
 				case "arena":
 					if(p.isOp() || p.hasPermission("SnowBrawl.arena"))
@@ -62,39 +70,48 @@ public class SBCommandExecutor implements CommandExecutor{
 						{
 						case "list":
 							String astring = "";
+							int cnt = 0;
 							Chat.sendPPM("Arena list:", p);
 							for(String name : Arenas.getNameList()) {
 								astring = astring + name + ", ";
+								cnt++;
 							}
+							astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
 							Chat.sendPM(astring, p);
-							return true;
+							return false;
 						case "info":
 							if(args.length > 2) {
 								Arena a = Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2));
-								if(a != null)
+								if(a != null && Configurations.getArenasconfig().contains(Utilities.convertArenaArgsToString(args, 2)))
 									Chat.sendPPM("Name: " + a.getName(), p);
-									Chat.sendPPM("Description: " + a.getDescription(), p);
-									Chat.sendPPM("Authors: " + a.getAuthorsString(), p);
-									Chat.sendPPM("CYAN side: " + LocationSerializer.loc2str(a.getCyanSide()), p);
-									Chat.sendPPM("LIME side: " + LocationSerializer.loc2str(a.getLimeSide()), p);
+								Chat.sendPPM("Description: " + a.getDescription(), p);
+								Chat.sendPPM("Authors: " + a.getAuthorsString(), p);
+								Chat.sendPPM("CYAN side: " + LocationSerializer.loc2str(a.getCyanSide()), p);
+								Chat.sendPPM("LIME side: " + LocationSerializer.loc2str(a.getLimeSide()), p);
+								return true;
 							}
-							return true;
+							return false;
 						case "warp":
 							if(args.length > 2) {
-								if(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)) != null)
+								if(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArenaArgsToString(args, 2))) {
 									p.teleport(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)).getCyanSide());
+									return true;
+								}
 							}
-							return true;
+							return false;
 						case "add":
 							Arenas.startArenaWizard(p);
 							return true;
 						case "remove":
 							if(args.length > 2) {
-								if(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)) != null)
+								if(Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArenaArgsToString(args, 2)))
 									Arena.getInstanceFromConfig(Utilities.convertArenaArgsToString(args, 2)).delete();
-									Chat.sendPPM("Removed arena successfully!", p);
+								Chat.sendPPM("Removed arena successfully!", p);
+								return true;
+							} else {
+								Chat.sendPPM("The arena \"" + Utilities.convertArenaArgsToString(args, 2) + "\" does not exist in the arena list!", p);
 							}
-							return true;
+							return false;
 						}
 					}
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
@@ -109,11 +126,13 @@ public class SBCommandExecutor implements CommandExecutor{
 					} else {
 						Round.startTimerRound();
 					}
-					return true;
+					return false;
 				case "stop":
 					if(p.isOp()) {
 						Clock.stopTimer();
+						return true;
 					}
+					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 					return true;
 				case "lobby":
 					p.teleport(Lobby.getLobbyspawnlocation());

@@ -11,6 +11,8 @@ public class SB extends JavaPlugin{
 	private GameListener gl;
 	@SuppressWarnings("unused")
 	private ExtrasListener el;
+	@SuppressWarnings("unused")
+	private Board b;
 	
 	public void onEnable()
 	{
@@ -23,6 +25,7 @@ public class SB extends JavaPlugin{
 		as = new Arenas(this);
 		gl = new GameListener(this);
 		el = new ExtrasListener(this);
+		b = new Board();
 		//Kits.loadAllKitsFromConfig();
 	}
 	

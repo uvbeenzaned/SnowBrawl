@@ -46,6 +46,7 @@ public class Stats {
 	public void setPoints(int p) {
 		Configurations.getPlayersconfig().getConfigurationSection(player).set("points", p);
 		Configurations.savePlayersConfig();
+		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
 	
 	public void addPoints(int p) {
@@ -73,6 +74,7 @@ public class Stats {
 	public void incrementKillsCount() {
 		Configurations.getPlayersconfig().getConfigurationSection(player).set("kills", getKills() + 1);
 		Configurations.savePlayersConfig();
+		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
 	
 	public int getDeaths() {
@@ -94,6 +96,7 @@ public class Stats {
 	
 	public void setSnowballsThrown(int a) {
 		Configurations.getPlayersconfig().getConfigurationSection(player).set("snowballs-thrown", a);
+		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
 	
 	public void addSnowballsThrown(int a) {

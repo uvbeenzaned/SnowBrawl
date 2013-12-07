@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 
 public class TeamCyan{
@@ -37,8 +40,10 @@ public class TeamCyan{
 				removeDeadPlayer(p);
 			}
 			addPlayer(p);
+			Rank.checkRank(p.getName());
 			Chat.sendAllTeamsMsg(p.getName() + " has joined team CYAN.");
 			p.teleport(Lobby.getLobbyspawnlocation());
+			Board.addPlayer(p);
 			if(!TeamLime.isEmpty()) {
 				Round.startTimerRound();
 			} else {
@@ -51,10 +56,13 @@ public class TeamCyan{
 	
 	public static void leave(Player p) {
 		if(hasPlayer(p)) {
+			p.getInventory().setChestplate(new ItemStack(Material.AIR));
+			p.getInventory().remove(Material.SNOW_BALL);
 			removePlayer(p);
 			Chat.sendPPM("You've left team CYAN.", p);
 			Chat.sendTeamCyanMsg(p.getName() + " has left team CYAN.");
 			p.teleport(Lobby.getLobbyspawnlocation());
+			Board.removePlayer(p);
 			if(TeamCyan.isEmpty() && !TeamLime.isEmpty())
 			{
 				Round.setGameActive(false);
@@ -150,6 +158,7 @@ public class TeamCyan{
 		for(String p : getPlayers()) {
 			if(!hasArenaPlayer(Bukkit.getServer().getPlayer(p))) {
 				addArenaPlayer(Bukkit.getServer().getPlayer(p));
+				Bukkit.getServer().getPlayer(p).setGameMode(GameMode.SURVIVAL);
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).teleport(a.getCyanSide());

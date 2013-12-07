@@ -72,6 +72,7 @@ public class Arenas implements Listener{
 								authors.add(s);
 							}
 							a.setAuthors(authors);
+							Chat.sendPPM("Added authors to arena!", p);
 							wizardplayers.put(p.getName(), 4);
 							Chat.sendPPM("Please locate Cyan's spawn location and stand there, then type the word set.", p);
 							break;
@@ -93,7 +94,7 @@ public class Arenas implements Listener{
 								Chat.sendPPM("Saved arena successfully!", p);
 								a.save();
 								arenatoremove = a;
-								wizardplayers.put(p.getName(), null);
+								wizardplayers.remove(p.getName());
 								break;
 							} else {
 								Chat.sendPPM("Try typing the word set please!", p);

@@ -8,12 +8,12 @@ public class Chat {
 
 	private static String format = ChatColor.GOLD + "[" + ChatColor.AQUA + "SnowBrawl" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	private static String nopermissionerrormsg = "You do not have permission to use that!";
-	
+
 	public static String formatString(String s)
 	{
 		return format + s;
 	}
-	
+
 	public static void sendPPM(String msg, Player p)
 	{
 		String nmsg = "";
@@ -29,35 +29,51 @@ public class Chat {
 					}
 				}
 			}
+			for(Player sp : Bukkit.getServer().getOnlinePlayers()) {
+				for(String s : msg.split(" ")) {
+					if(sp.getName() == s) {
+						if(TeamCyan.hasPlayer(sp)) {
+							nmsg = nmsg + ChatColor.AQUA + s + ChatColor.RESET + " ";
+						} else {
+							if(TeamLime.hasPlayer(sp)) {
+								nmsg = nmsg + ChatColor.AQUA + s + ChatColor.RESET + " ";
+							} else {
+								nmsg = nmsg + s + " ";
+							}
+						}
+					}
+				}
+			}
 		}
-		else {
-			nmsg = msg;
+		if(nmsg != "") {
+			p.sendMessage(format + nmsg);
+		} else {
+			p.sendMessage(format + msg);
 		}
-		p.sendMessage(format + nmsg);
 	}
-	
+
 	public static void sendPM(String msg, Player p)
 	{
 		p.sendMessage(msg);
 	}
-	
+
 	public static String standardPermissionErrorMessage()
 	{
 		return nopermissionerrormsg;
 	}
-	
+
 	public static void sendTeamCyanMsg(String msg) {
 		for(String p : TeamCyan.getPlayers()) {
 			Chat.sendPPM(msg, Bukkit.getServer().getPlayer(p));
 		}
 	}
-	
+
 	public static void sendTeamLimeMsg(String msg) {
 		for(String p : TeamLime.getPlayers()) {
 			Chat.sendPPM(msg, Bukkit.getServer().getPlayer(p));
 		}
 	}
-	
+
 	public static void sendAllTeamsMsg(String msg) {
 		for(String p : TeamCyan.getPlayers()) {
 			Chat.sendPPM(msg, Bukkit.getServer().getPlayer(p));

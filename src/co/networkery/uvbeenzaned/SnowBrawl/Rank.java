@@ -1,6 +1,7 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -193,7 +194,7 @@ public class Rank {
 		Stats s = new Stats(p);
 		if(rank != s.getLastRank()) {
 			s.setRank(rank);
-			Chat.sendAllTeamsMsg(p + "'s rank has changed to " + rank + ".");
+			Chat.sendAllTeamsMsg(p + "'s rank has changed to " + ChatColor.BLUE + rank + ChatColor.RESET + ".");
 		}
 	}
 	public static String getRankName(String p)

@@ -163,7 +163,7 @@ public class Arena {
 			Configurations.getArenasconfig().set(name + ".cyanspawn", LocationSerializer.loc2str(cyanspawn));
 			Configurations.getArenasconfig().set(name + ".limespawn", LocationSerializer.loc2str(limespawn));
 			Configurations.getArenasconfig().set(name + ".description", description);
-			Configurations.getArenasconfig().set(name + ".authors", authors); //don't know if authors will save properly without serialization
+			Configurations.getArenasconfig().set(name + ".authors", authors);
 			Configurations.saveArenasConfig();
 		}
 	}
