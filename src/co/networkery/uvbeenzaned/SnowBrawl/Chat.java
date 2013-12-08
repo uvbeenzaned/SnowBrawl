@@ -17,38 +17,34 @@ public class Chat {
 	public static void sendPPM(String msg, Player p)
 	{
 		String nmsg = "";
-		if(msg.toLowerCase().contains("cyan") || msg.toLowerCase().contains("lime")) {
-			for(String s : msg.split(" ")) {
-				if(s.toLowerCase().contains("cyan")) {
-					nmsg = nmsg + ChatColor.AQUA + s + ChatColor.RESET + " ";
-				} else {
-					if(s.toLowerCase().contains("lime")) {
-						nmsg = nmsg + ChatColor.GREEN + s + ChatColor.RESET + " ";
-					} else {
-						nmsg = nmsg + s + " ";
-					}
-				}
+		for(String s : msg.split(" ")) {
+			if(s.toLowerCase().contains("cyan")) {
+				nmsg = nmsg + ChatColor.AQUA + s  + " ";
 			}
-			for(Player sp : Bukkit.getServer().getOnlinePlayers()) {
-				for(String s : msg.split(" ")) {
-					if(sp.getName() == s) {
-						if(TeamCyan.hasPlayer(sp)) {
-							nmsg = nmsg + ChatColor.AQUA + s + ChatColor.RESET + " ";
-						} else {
-							if(TeamLime.hasPlayer(sp)) {
-								nmsg = nmsg + ChatColor.AQUA + s + ChatColor.RESET + " ";
-							} else {
-								nmsg = nmsg + s + " ";
-							}
-						}
-					}
-				}
+			if(s.toLowerCase().contains("lime")) {
+				nmsg = nmsg + ChatColor.GREEN + s + " ";
+			}
+			if(TeamCyan.stringContainsPlayer(s)) {
+				nmsg = nmsg + ChatColor.AQUA + s + " ";
+			}
+			if(TeamLime.stringContainsPlayer(s)) {
+				nmsg = nmsg + ChatColor.GREEN + s + " ";
+			}
+			if(!s.toLowerCase().contains("cyan")
+					&& !s.toLowerCase().contains("lime")
+					&& !TeamCyan.stringContainsPlayer(s)
+					&& !TeamLime.stringContainsPlayer(s)) {
+				nmsg = nmsg + s + " ";
 			}
 		}
-		if(nmsg != "") {
-			p.sendMessage(format + nmsg);
-		} else {
-			p.sendMessage(format + msg);
+		if(p.equals(null)) {
+			if(p.isValid()) {
+				try {
+					p.sendMessage(format + nmsg);	
+				} finally {
+					//nothing
+				}
+			}
 		}
 	}
 

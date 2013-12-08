@@ -41,13 +41,13 @@ public class TeamLime {
 			}
 			addPlayer(p);
 			Rank.checkRank(p.getName());
-			Chat.sendAllTeamsMsg(p.getName() + " has joined team LIME.");
+			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has joined team LIME.");
 			p.teleport(Lobby.getLobbyspawnlocation());
 			Board.addPlayer(p);
 			if(!TeamCyan.isEmpty()) {
 				Round.startTimerRound();
 			} else {
-				Chat.sendPPM("Team CYAN has no players! Please wait until someone joins to play.", p);
+				Chat.sendPPM("Team CYAN" + ChatColor.RESET + " has no players! Please wait until someone joins to play.", p);
 			}
 		} else {
 			Chat.sendPPM("You're already on a team!  Please leave to join another.", p);
@@ -58,19 +58,19 @@ public class TeamLime {
 		if(hasPlayer(p)) {
 			p.getInventory().setChestplate(new ItemStack(Material.AIR));
 			p.getInventory().remove(Material.SNOW_BALL);
+			Board.removePlayer(p);
 			removePlayer(p);
 			Chat.sendPPM("You've left team LIME.", p);
-			Chat.sendTeamCyanMsg(p.getName() + " has left team LIME.");
+			Chat.sendTeamCyanMsg(p.getName() + ChatColor.RESET + " has left team LIME.");
 			p.teleport(Lobby.getLobbyspawnlocation());
-			Board.removePlayer(p);
 			if(TeamLime.isEmpty() && !TeamCyan.isEmpty())
 			{
 				Round.setGameActive(false);
 				Clock.stopTimer();
-				TeamLime.teleportAllPlayersToLobby();
-				for(String tp : TeamLime.getPlayers())
+				TeamCyan.teleportAllPlayersToLobby();
+				for(String tp : TeamCyan.getPlayers())
 				{
-					Chat.sendPPM("There are no players on team LIME anymore.  Please wait for someone to join!", Bukkit.getPlayer(tp));
+					Chat.sendPPM("There are no players on team LIME" + ChatColor.RESET + " anymore.  Please wait for someone to join!", Bukkit.getPlayer(tp));
 				}
 			}
 		}
@@ -105,6 +105,15 @@ public class TeamLime {
 		return getPlayers().contains(p);
 	}
 	
+	public static boolean stringContainsPlayer(String s) {
+		for(String p : getPlayers()) {
+			if(s.toLowerCase().contains(p.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static List<String> getPlayersinarena() {
 		return playersinarena;
 	}
@@ -136,6 +145,8 @@ public class TeamLime {
 	
 	public static void addDeadPlayer(Player p) {
 		deadplayers.add(p.getName());
+		removePlayer(p);
+		leave(p);
 	}
 	
 	public static void setDeadplayers(List<String> deadplayers) {
@@ -176,7 +187,7 @@ public class TeamLime {
 			Stats s = new Stats(Bukkit.getPlayer(p));
 			s.giveTeamPoints();
 		}
-		Chat.sendAllTeamsMsg(String.valueOf(Settings.getTeamPoints()) + " points were awarded to all of team LIME!");
+		Chat.sendAllTeamsMsg(ChatColor.RED + "+" + String.valueOf(Settings.getTeamPoints()) + ChatColor.RESET + " points for all of team LIME!");
 		checkAllPlayersRanks();
 	}
 	

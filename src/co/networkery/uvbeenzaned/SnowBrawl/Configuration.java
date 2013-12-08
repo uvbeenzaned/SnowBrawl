@@ -84,7 +84,7 @@ public class Configuration {
 	}
 
 	public void saveDefaultConfig() {
-		//if (!configFile.exists()) {            
+		//if (!configFile.exists()) {
 			this.plugin.saveResource(fileName, false);
 		//}
 	}

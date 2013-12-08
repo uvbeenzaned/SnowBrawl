@@ -54,6 +54,7 @@ public class Board {
 			cyan.removePlayer(p);
 		if(TeamLime.hasPlayer(p))
 			lime.removePlayer(p);
+		board.resetScores(p);
 		p.setScoreboard(manager.getNewScoreboard());
 	}
 

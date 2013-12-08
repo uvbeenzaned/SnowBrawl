@@ -86,8 +86,8 @@ public class SBCommandExecutor implements CommandExecutor{
 									Chat.sendPPM("Name: " + a.getName(), p);
 								Chat.sendPPM("Description: " + a.getDescription(), p);
 								Chat.sendPPM("Authors: " + a.getAuthorsString(), p);
-								Chat.sendPPM("CYAN side: " + LocationSerializer.loc2str(a.getCyanSide()), p);
-								Chat.sendPPM("LIME side: " + LocationSerializer.loc2str(a.getLimeSide()), p);
+								Chat.sendPPM("CYAN" + ChatColor.RESET + " side: " + LocationSerializer.loc2str(a.getCyanSide()), p);
+								Chat.sendPPM("LIME" + ChatColor.RESET + " side: " + LocationSerializer.loc2str(a.getLimeSide()), p);
 								return true;
 							}
 							return false;

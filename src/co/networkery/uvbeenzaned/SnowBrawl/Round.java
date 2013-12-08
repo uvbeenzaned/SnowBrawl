@@ -70,7 +70,7 @@ public class Round {
 		Stats s = new Stats(Bukkit.getPlayer(winner));
 		s.addPoints(pts * pts);
 		clearLeads();
-		Chat.sendAllTeamsMsg(winner + " got the lead and was awarded " + String.valueOf(pts * pts) + " points.");
+		Chat.sendAllTeamsMsg(winner + ChatColor.RESET + " got the lead and was awarded " + ChatColor.RED + String.valueOf(pts * pts) + ChatColor.RESET + " points.");
 	}
 	
 	public static void setLeads(Map<String, Integer> leads) {
