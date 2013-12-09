@@ -13,6 +13,8 @@ public class SB extends JavaPlugin{
 	private ExtrasListener el;
 	@SuppressWarnings("unused")
 	private Board b;
+	@SuppressWarnings("unused")
+	private TeleportFixThree tpf;
 	
 	public void onEnable()
 	{
@@ -26,6 +28,8 @@ public class SB extends JavaPlugin{
 		gl = new GameListener(this);
 		el = new ExtrasListener(this);
 		b = new Board();
+		tpf = new TeleportFixThree(this);
+		
 		//Kits.loadAllKitsFromConfig();
 	}
 	
