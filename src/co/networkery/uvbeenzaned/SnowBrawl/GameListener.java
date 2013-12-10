@@ -19,30 +19,27 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class GameListener implements Listener{
+public class GameListener implements Listener {
 
-	public GameListener(JavaPlugin p)
-	{
+	public GameListener(JavaPlugin p) {
 		p.getServer().getPluginManager().registerEvents(this, p);
 	}
 
 	@EventHandler
-	public void playerLeave(PlayerQuitEvent e)
-	{
+	public void playerLeave(PlayerQuitEvent e) {
 		Player p = e.getPlayer();
 		TeamCyan.leave(p);
 		TeamLime.leave(p);
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerDeath(PlayerDeathEvent e)
-	{
-		if(e.getEntityType() == EntityType.PLAYER) {
-			Player p = (Player)e.getEntity();
-			if(TeamCyan.hasPlayer(p)) {
+	public void onPlayerDeath(PlayerDeathEvent e) {
+		if (e.getEntityType() == EntityType.PLAYER) {
+			Player p = (Player) e.getEntity();
+			if (TeamCyan.hasPlayer(p)) {
 				TeamCyan.addDeadPlayer(p);
 			} else {
-				if(TeamLime.hasPlayer(p)) {
+				if (TeamLime.hasPlayer(p)) {
 					TeamLime.addDeadPlayer(p);
 				}
 			}
@@ -50,14 +47,13 @@ public class GameListener implements Listener{
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void playerRespawn(PlayerRespawnEvent e)
-	{
+	public void playerRespawn(PlayerRespawnEvent e) {
 		Player p = e.getPlayer();
-		if(TeamCyan.hasDeadPlayer(p)) {
+		if (TeamCyan.hasDeadPlayer(p)) {
 			e.setRespawnLocation(Lobby.getLobbyspawnlocation());
 			TeamCyan.join(p);
 		} else {
-			if(TeamLime.hasDeadPlayer(p)) {
+			if (TeamLime.hasDeadPlayer(p)) {
 				e.setRespawnLocation(Lobby.getLobbyspawnlocation());
 				TeamLime.join(p);
 			} else {
@@ -67,28 +63,26 @@ public class GameListener implements Listener{
 	}
 
 	@EventHandler
-	public void onEntityDamage(EntityDamageByEntityEvent e)
-	{
+	public void onEntityDamage(EntityDamageByEntityEvent e) {
 		Player plhit = null;
-		if(e.getEntity() instanceof Player) {
-			plhit = (Player)e.getEntity();
+		if (e.getEntity() instanceof Player) {
+			plhit = (Player) e.getEntity();
 		}
-		if(e.getDamager() instanceof Snowball) {
-			if(((Snowball)e.getDamager()).getShooter() instanceof Player) {
-				Snowball sb = (Snowball)e.getDamager();
-				Player plenemy = (Player)sb.getShooter();
-				if(plhit != plenemy && plhit != null)
-				{
-					if(TeamCyan.hasArenaPlayer(plhit) || TeamLime.hasArenaPlayer(plhit))
-					{
-						if(TeamCyan.hasArenaPlayer(plenemy) || TeamLime.hasArenaPlayer(plenemy))
-						{
-							if(!TeamCyan.hasArenaPlayer(plhit) || !TeamCyan.hasArenaPlayer(plenemy))
-							{
-								if(!TeamLime.hasArenaPlayer(plhit) || !TeamLime.hasArenaPlayer(plenemy))
-								{
-									if((e.getEntity() instanceof Player && e.getDamager() instanceof Snowball))
-									{
+		if (e.getDamager() instanceof Snowball) {
+			if (((Snowball) e.getDamager()).getShooter() instanceof Player) {
+				Snowball sb = (Snowball) e.getDamager();
+				Player plenemy = (Player) sb.getShooter();
+				if (plhit != plenemy && plhit != null) {
+					if (TeamCyan.hasArenaPlayer(plhit)
+							|| TeamLime.hasArenaPlayer(plhit)) {
+						if (TeamCyan.hasArenaPlayer(plenemy)
+								|| TeamLime.hasArenaPlayer(plenemy)) {
+							if (!TeamCyan.hasArenaPlayer(plhit)
+									|| !TeamCyan.hasArenaPlayer(plenemy)) {
+								if (!TeamLime.hasArenaPlayer(plhit)
+										|| !TeamLime.hasArenaPlayer(plenemy)) {
+									if ((e.getEntity() instanceof Player && e
+											.getDamager() instanceof Snowball)) {
 										e.setCancelled(true);
 										Stats s = new Stats(plhit);
 										s.removePoints(1);
@@ -101,9 +95,14 @@ public class GameListener implements Listener{
 										s.incrementKillsCount();
 										Round.addPlayerLead(plenemy, 1);
 										Rank.checkRank(plenemy.getName());
-										Chat.sendAllTeamsMsg(plenemy.getName() + ChatColor.RED + " SNOWBRAWLED " + plhit.getName() + ".");
-										if(TeamCyan.isArenaPlayersEmpty()) {
-											Chat.sendAllTeamsMsg("Team LIME" + ChatColor.RESET + " wins!");
+										Chat.sendAllTeamsMsg(plenemy.getName()
+												+ ChatColor.RED
+												+ " SNOWBRAWLED "
+												+ plhit.getName() + ".");
+										if (TeamCyan.isArenaPlayersEmpty()) {
+											Chat.sendAllTeamsMsg("Team LIME"
+													+ ChatColor.RESET
+													+ " wins!");
 											TeamCyan.teleportAllPlayersToLobby();
 											TeamLime.teleportAllPlayersToLobby();
 											TeamLime.awardTeamPoints();
@@ -111,8 +110,10 @@ public class GameListener implements Listener{
 											Round.setGameActive(false);
 											Round.startTimerRound();
 										} else {
-											if(TeamLime.isArenaPlayersEmpty()) {
-												Chat.sendAllTeamsMsg("Team CYAN" + ChatColor.RESET + " wins!");
+											if (TeamLime.isArenaPlayersEmpty()) {
+												Chat.sendAllTeamsMsg("Team CYAN"
+														+ ChatColor.RESET
+														+ " wins!");
 												TeamCyan.teleportAllPlayersToLobby();
 												TeamLime.teleportAllPlayersToLobby();
 												TeamCyan.awardTeamPoints();
@@ -122,8 +123,8 @@ public class GameListener implements Listener{
 											}
 										}
 									}
-									if((e.getEntity() instanceof Player && e.getDamager() instanceof Player))
-									{
+									if ((e.getEntity() instanceof Player && e
+											.getDamager() instanceof Player)) {
 										e.setCancelled(true);
 									}
 								}
@@ -131,29 +132,41 @@ public class GameListener implements Listener{
 						}
 					}
 				}
-				if(e.getEntity() instanceof Entity && e.getDamager() instanceof Snowball && !(e.getEntity() instanceof Player))
-				{
-					if(TeamCyan.hasArenaPlayer(plenemy) || TeamLime.hasArenaPlayer(plenemy))
-					{
+				if (e.getEntity() instanceof Entity
+						&& e.getDamager() instanceof Snowball
+						&& !(e.getEntity() instanceof Player)) {
+					if (TeamCyan.hasArenaPlayer(plenemy)
+							|| TeamLime.hasArenaPlayer(plenemy)) {
 						Entity mob = e.getEntity();
 						mob.remove();
-						Firework fw = mob.getWorld().spawn(mob.getLocation(), Firework.class);
+						Firework fw = mob.getWorld().spawn(mob.getLocation(),
+								Firework.class);
 						FireworkMeta fwm = fw.getFireworkMeta();
-						FireworkEffect effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL_LARGE).build();
-						if(TeamCyan.hasArenaPlayer(plenemy))
-						{
-							effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL_LARGE).withFlicker().withTrail().build();
+						FireworkEffect effect = FireworkEffect.builder()
+								.withColor(Color.AQUA).with(Type.BALL_LARGE)
+								.build();
+						if (TeamCyan.hasArenaPlayer(plenemy)) {
+							effect = FireworkEffect.builder()
+									.withColor(Color.AQUA)
+									.with(Type.BALL_LARGE).withFlicker()
+									.withTrail().build();
 						}
-						if(TeamLime.hasArenaPlayer(plenemy))
-						{
-							effect = FireworkEffect.builder().withColor(Color.GREEN).with(Type.BALL_LARGE).withFlicker().withTrail().build();
+						if (TeamLime.hasArenaPlayer(plenemy)) {
+							effect = FireworkEffect.builder()
+									.withColor(Color.GREEN)
+									.with(Type.BALL_LARGE).withFlicker()
+									.withTrail().build();
 						}
 						fwm.addEffects(effect);
 						fwm.setPower(1);
 						fw.setFireworkMeta(fwm);
 						Stats s = new Stats(plenemy);
 						s.addPoints(1);
-						Chat.sendAllTeamsMsg(ChatColor.GOLD + "+1" + ChatColor.RESET + " bonus point for " + plenemy.getName() + ChatColor.RESET + "! Type: " + mob.getType().toString().toLowerCase());
+						Chat.sendAllTeamsMsg(ChatColor.GOLD + "+1"
+								+ ChatColor.RESET + " bonus point for "
+								+ plenemy.getName() + ChatColor.RESET
+								+ "! Type: "
+								+ mob.getType().toString().toLowerCase());
 					}
 				}
 			}

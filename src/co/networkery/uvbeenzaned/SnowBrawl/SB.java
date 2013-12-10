@@ -3,8 +3,8 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SB extends JavaPlugin{
-	
+public class SB extends JavaPlugin {
+
 	@SuppressWarnings("unused")
 	private Arenas as;
 	@SuppressWarnings("unused")
@@ -15,9 +15,8 @@ public class SB extends JavaPlugin{
 	private Board b;
 	@SuppressWarnings("unused")
 	private TeleportFixThree tpf;
-	
-	public void onEnable()
-	{
+
+	public void onEnable() {
 		getCommand("snowbrawl").setExecutor(new SBCommandExecutor());
 		Configurations.loadAllConfigurations(this);
 		TeamCyan.setName("Cyan");
@@ -29,13 +28,12 @@ public class SB extends JavaPlugin{
 		el = new ExtrasListener(this);
 		b = new Board();
 		tpf = new TeleportFixThree(this);
-		
-		//Kits.loadAllKitsFromConfig();
+
+		// Kits.loadAllKitsFromConfig();
 	}
-	
-	public void onDisable()
-	{
+
+	public void onDisable() {
 		Configurations.saveAllConfigurations();
 	}
-	
+
 }

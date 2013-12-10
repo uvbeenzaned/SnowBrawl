@@ -6,44 +6,38 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 public class Clock {
-	
+
 	private static int cntdwn = 0;
 	private static int printerval = 5;
-	
+
 	private static ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
-			if(cntdwn > 0)
-			{
-				if(printerval % cntdwn == 0) {
+			if (cntdwn > 0) {
+				if (printerval % cntdwn == 0) {
 					Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
 				} else {
-					if(cntdwn == 3 || cntdwn == 2 || cntdwn == 1) {
+					if (cntdwn == 3 || cntdwn == 2 || cntdwn == 1) {
 						Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
 					}
 				}
 				cntdwn--;
-			}
-			else
-			{
-				if(cntdwn <= 0)
-				{
+			} else {
+				if (cntdwn <= 0) {
 					stopTimer();
 					Round.startRandomMap();
 				}
 			}
 		}
 	};
-	
+
 	private static Timer timer = new Timer(1000, taskPerformer);
-	
-	public static Timer getTimer()
-	{
+
+	public static Timer getTimer() {
 		return timer;
 	}
-	
-	public static void startTimer()
-	{
-		if(!Round.isGameActive() && !isRunning()) {
+
+	public static void startTimer() {
+		if (!Round.isGameActive() && !isRunning()) {
 			cntdwn = Settings.getRoundstartdelay() / 1000;
 			timer.setRepeats(true);
 			timer.start();
@@ -51,14 +45,12 @@ public class Clock {
 			Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
 		}
 	}
-	
-	public static void stopTimer()
-	{
+
+	public static void stopTimer() {
 		timer.stop();
 	}
-	
-	public static boolean isRunning()
-	{
+
+	public static boolean isRunning() {
 		return timer.isRunning();
 	}
 }

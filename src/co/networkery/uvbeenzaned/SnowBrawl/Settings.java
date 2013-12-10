@@ -4,42 +4,41 @@ import org.bukkit.entity.Player;
 
 public class Settings {
 
-	public static int getRoundstartdelay()
-	{
+	public static int getRoundstartdelay() {
 		return Configurations.getMainConfig().getInt("round-start-delay");
 	}
-	
-	public static void setRoundstartdelay(int s, Player sender)
-	{
+
+	public static void setRoundstartdelay(int s, Player sender) {
 		Configurations.getMainConfig().set("round-start-delay", s);
 		Configurations.saveMainConfig();
-		if(sender != null)
-			Chat.sendPPM("Changed round-start-delay to " + String.valueOf(s) + " seconds.", sender);
+		if (sender != null)
+			Chat.sendPPM("Changed round-start-delay to " + String.valueOf(s)
+					+ " seconds.", sender);
 	}
-	
-	public static int getTeamPoints()
-	{
+
+	public static int getTeamPoints() {
 		return Configurations.getMainConfig().getInt("team-points");
 	}
-	
-	public static void setTeampoints(int pts, Player sender)
-	{
+
+	public static void setTeampoints(int pts, Player sender) {
 		Configurations.getMainConfig().set("team-points", pts);
 		Configurations.saveMainConfig();
-		if(sender != null)
-			Chat.sendPPM("Changed team-points to " + String.valueOf(pts) + " .", sender);
+		if (sender != null)
+			Chat.sendPPM(
+					"Changed team-points to " + String.valueOf(pts) + " .",
+					sender);
 	}
-	
-	public static int getSnowballReloadDelay()
-	{
+
+	public static int getSnowballReloadDelay() {
 		return Configurations.getMainConfig().getInt("snowball-reload-delay");
 	}
-	
-	public static void setSnowballReloadDelay(int d, Player sender)
-	{
+
+	public static void setSnowballReloadDelay(int d, Player sender) {
 		Configurations.getMainConfig().set("snowball-reload-delay", d);
 		Configurations.saveMainConfig();
-		if(sender != null)
-			Chat.sendPPM("Changed snowball-reload-delay to " + String.valueOf(d) + " .", sender);
+		if (sender != null)
+			Chat.sendPPM(
+					"Changed snowball-reload-delay to " + String.valueOf(d)
+							+ " .", sender);
 	}
 }

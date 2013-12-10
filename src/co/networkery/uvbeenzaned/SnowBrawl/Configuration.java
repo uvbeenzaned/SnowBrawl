@@ -59,7 +59,8 @@ public class Configuration {
 		// Look for defaults in the jar
 		InputStream defConfigStream = plugin.getResource(fileName);
 		if (defConfigStream != null) {
-			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+			YamlConfiguration defConfig = YamlConfiguration
+					.loadConfiguration(defConfigStream);
 			fileConfiguration.setDefaults(defConfig);
 		}
 	}
@@ -78,14 +79,15 @@ public class Configuration {
 			try {
 				getConfig().save(configFile);
 			} catch (IOException ex) {
-				plugin.getLogger().log(Level.SEVERE, "Could not save config to " + configFile, ex);
+				plugin.getLogger().log(Level.SEVERE,
+						"Could not save config to " + configFile, ex);
 			}
 		}
 	}
 
 	public void saveDefaultConfig() {
-		//if (!configFile.exists()) {
-			this.plugin.saveResource(fileName, false);
-		//}
+		// if (!configFile.exists()) {
+		this.plugin.saveResource(fileName, false);
+		// }
 	}
 }

@@ -6,130 +6,143 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class Stats {
-	
+
 	private boolean error = false;
 	private String player;
-	
+
 	public Stats(Player p) {
-		if(!Configurations.getPlayersconfig().contains(p.getName())) {
+		if (!Configurations.getPlayersconfig().contains(p.getName())) {
 			Configurations.getPlayersconfig().createSection(p.getName());
 		}
 		player = p.getName();
 	}
-	
+
 	public Stats(String p, Player sender) {
-		if(Configurations.getPlayersconfig().contains(p)) {
+		if (Configurations.getPlayersconfig().contains(p)) {
 			player = p;
 		} else {
 			error = true;
-			if(sender != null)
-				Chat.sendPPM("There are no players with the name " + p + " in the records.", sender);
+			if (sender != null)
+				Chat.sendPPM("There are no players with the name " + p
+						+ " in the records.", sender);
 		}
 	}
-	
+
 	public Stats(String p) {
-		if(Configurations.getPlayersconfig().contains(p)) {
+		if (Configurations.getPlayersconfig().contains(p)) {
 			player = p;
 		} else {
 			error = true;
 		}
 	}
-	
+
 	public boolean getError() {
 		return error;
 	}
-	
+
 	public int getPoints() {
-		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("points");
+		return Configurations.getPlayersconfig()
+				.getConfigurationSection(player).getInt("points");
 	}
-	
+
 	public void setPoints(int p) {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("points", p);
+		Configurations.getPlayersconfig().getConfigurationSection(player)
+				.set("points", p);
 		Configurations.savePlayersConfig();
 		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
-	
+
 	public void addPoints(int p) {
 		setPoints(getPoints() + p);
 	}
-	
+
 	public void removePoints(int p) {
 		setPoints(getPoints() - p);
 	}
-	
+
 	public void giveTeamPoints() {
-		int standardpoints = Configurations.getMainConfig().getInt("team-points");
+		int standardpoints = Configurations.getMainConfig().getInt(
+				"team-points");
 		int multiply = 0;
-		if(TeamCyan.hasPlayer(Bukkit.getPlayer(player)))
+		if (TeamCyan.hasPlayer(Bukkit.getPlayer(player)))
 			multiply = TeamLime.getPlayers().size();
-		if(TeamLime.hasPlayer(Bukkit.getPlayer(player)))
+		if (TeamLime.hasPlayer(Bukkit.getPlayer(player)))
 			multiply = TeamCyan.getPlayers().size();
 		addPoints(standardpoints * multiply);
 	}
-	
+
 	public int getKills() {
-		 return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("kills");
+		return Configurations.getPlayersconfig()
+				.getConfigurationSection(player).getInt("kills");
 	}
-	
+
 	public void incrementKillsCount() {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("kills", getKills() + 1);
+		Configurations.getPlayersconfig().getConfigurationSection(player)
+				.set("kills", getKills() + 1);
 		Configurations.savePlayersConfig();
 		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
-	
+
 	public int getDeaths() {
-		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("deaths");
+		return Configurations.getPlayersconfig()
+				.getConfigurationSection(player).getInt("deaths");
 	}
-	
+
 	public void incrementDeathCount() {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("deaths", getDeaths() + 1);
+		Configurations.getPlayersconfig().getConfigurationSection(player)
+				.set("deaths", getDeaths() + 1);
 		Configurations.savePlayersConfig();
 	}
-	
+
 	public float getKDRatio() {
 		return (float) getKills() / getDeaths();
 	}
-	
+
 	public int getSnowballsThrown() {
-		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("snowballs-thrown");
+		return Configurations.getPlayersconfig()
+				.getConfigurationSection(player).getInt("snowballs-thrown");
 	}
-	
+
 	public void setSnowballsThrown(int a) {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("snowballs-thrown", a);
+		Configurations.getPlayersconfig().getConfigurationSection(player)
+				.set("snowballs-thrown", a);
 		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
-	
+
 	public void addSnowballsThrown(int a) {
 		setSnowballsThrown(getSnowballsThrown() + a);
 	}
-	
+
 	public void removeSnowballsThrown(int a) {
 		setSnowballsThrown(getSnowballsThrown() - a);
 	}
-	
+
 	public String getLastRank() {
-		if(Configurations.getPlayersconfig().getConfigurationSection(player).getString("last-rank") != null) {
-			return Configurations.getPlayersconfig().getConfigurationSection(player).getString("last-rank");
+		if (Configurations.getPlayersconfig().getConfigurationSection(player)
+				.getString("last-rank") != null) {
+			return Configurations.getPlayersconfig()
+					.getConfigurationSection(player).getString("last-rank");
 		} else {
 			return "N/A";
 		}
 	}
-	
+
 	public void setRank(String r) {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("last-rank", r);
+		Configurations.getPlayersconfig().getConfigurationSection(player)
+				.set("last-rank", r);
 	}
-	
+
 	public ArrayList<String> getAllStats() {
 		ArrayList<String> s = new ArrayList<String>();
 		s.add("Stats for " + player + ":");
-		if(Bukkit.getOfflinePlayer(player).isOnline()) {
-			if(TeamCyan.hasPlayer(player)) {
+		if (Bukkit.getOfflinePlayer(player).isOnline()) {
+			if (TeamCyan.hasPlayer(player)) {
 				s.add("    Team: CYAN");
 			}
-			if(TeamLime.hasPlayer(player)) {
+			if (TeamLime.hasPlayer(player)) {
 				s.add("    Team: LIME");
 			}
-			if(!TeamCyan.hasPlayer(player) && !TeamLime.hasPlayer(player))
+			if (!TeamCyan.hasPlayer(player) && !TeamLime.hasPlayer(player))
 				s.add("    Team: N/A");
 		} else {
 			s.add("    Team: N/A (player offline)");
@@ -142,11 +155,11 @@ public class Stats {
 		s.add("    Snowballs thrown: " + String.valueOf(getSnowballsThrown()));
 		return s;
 	}
-	
+
 	public static ArrayList<String> getPluginStats() {
 		ArrayList<String> s = new ArrayList<String>();
-		//to be implemented
+		// to be implemented
 		return s;
 	}
-	
+
 }

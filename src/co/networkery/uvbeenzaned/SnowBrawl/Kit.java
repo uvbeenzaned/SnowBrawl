@@ -3,17 +3,17 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class Kit{
-	
+public class Kit {
+
 	private String name;
 	private int itemnumber;
 	private short durability;
 	private ItemStack item;
 	private int amount;
 	private String description;
-	
-	public Kit(String kitname, String kititem, int kitamount, String kitdescription)
-	{
+
+	public Kit(String kitname, String kititem, int kitamount,
+			String kitdescription) {
 		setName(kitname);
 		setItem(Material.valueOf(kititem.split(":")[0]));
 		setDurability(Short.parseShort(kititem.split(":")[1]));
@@ -29,7 +29,8 @@ public class Kit{
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -43,7 +44,8 @@ public class Kit{
 	}
 
 	/**
-	 * @param itemnumber the itemnumber to set
+	 * @param itemnumber
+	 *            the itemnumber to set
 	 */
 	public void setItemnumber(int itemnumber) {
 		this.itemnumber = itemnumber;
@@ -57,7 +59,8 @@ public class Kit{
 	}
 
 	/**
-	 * @param item the item to set
+	 * @param item
+	 *            the item to set
 	 */
 	public void setItem(Material m) {
 		this.item = new ItemStack(m);
@@ -73,7 +76,8 @@ public class Kit{
 	}
 
 	/**
-	 * @param durability the durability to set
+	 * @param durability
+	 *            the durability to set
 	 */
 	public void setDurability(short durability) {
 		this.durability = durability;
@@ -88,7 +92,8 @@ public class Kit{
 	}
 
 	/**
-	 * @param amount the amount to set
+	 * @param amount
+	 *            the amount to set
 	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
@@ -103,11 +108,11 @@ public class Kit{
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
 }

@@ -10,9 +10,8 @@ public class Configurations {
 	private static Configuration ranksconfig;
 	private static Configuration kitsconfig;
 	private static Configuration statsconfig;
-	
-	public static void loadAllConfigurations(SB sb)
-	{
+
+	public static void loadAllConfigurations(SB sb) {
 		setMainConfig(new Configuration(sb, "config.yml"));
 		setArenasconfig(new Configuration(sb, "arenas.yml"));
 		setPlayersconfig(new Configuration(sb, "players.yml"));
@@ -26,9 +25,8 @@ public class Configurations {
 		kitsconfig.saveDefaultConfig();
 		statsconfig.saveDefaultConfig();
 	}
-	
-	public static void reloadAllConfigurations()
-	{
+
+	public static void reloadAllConfigurations() {
 		config.reloadConfig();
 		arenasconfig.reloadConfig();
 		playersconfig.reloadConfig();
@@ -36,9 +34,8 @@ public class Configurations {
 		kitsconfig.reloadConfig();
 		statsconfig.reloadConfig();
 	}
-	
-	public static void saveAllConfigurations()
-	{
+
+	public static void saveAllConfigurations() {
 		config.saveConfig();
 		arenasconfig.saveConfig();
 		playersconfig.saveConfig();
@@ -53,13 +50,14 @@ public class Configurations {
 	public static FileConfiguration getMainConfig() {
 		return config.getConfig();
 	}
-	
+
 	public static void saveMainConfig() {
 		config.saveConfig();
 	}
 
 	/**
-	 * @param config the config to set
+	 * @param config
+	 *            the config to set
 	 */
 	public static void setMainConfig(Configuration config) {
 		Configurations.config = config;
@@ -71,13 +69,14 @@ public class Configurations {
 	public static FileConfiguration getArenasconfig() {
 		return arenasconfig.getConfig();
 	}
-	
+
 	public static void saveArenasConfig() {
 		arenasconfig.saveConfig();
 	}
 
 	/**
-	 * @param arenasconfig the arenasconfig to set
+	 * @param arenasconfig
+	 *            the arenasconfig to set
 	 */
 	public static void setArenasconfig(Configuration arenasconfig) {
 		Configurations.arenasconfig = arenasconfig;
@@ -89,13 +88,14 @@ public class Configurations {
 	public static FileConfiguration getPlayersconfig() {
 		return playersconfig.getConfig();
 	}
-	
+
 	public static void savePlayersConfig() {
 		playersconfig.saveConfig();
 	}
 
 	/**
-	 * @param playersconfig the playersconfig to set
+	 * @param playersconfig
+	 *            the playersconfig to set
 	 */
 	public static void setPlayersconfig(Configuration playersconfig) {
 		Configurations.playersconfig = playersconfig;
@@ -107,13 +107,14 @@ public class Configurations {
 	public static FileConfiguration getRanksconfig() {
 		return ranksconfig.getConfig();
 	}
-	
+
 	public static void saveRanksConfig() {
 		ranksconfig.saveConfig();
 	}
 
 	/**
-	 * @param ranksconfig the ranksconfig to set
+	 * @param ranksconfig
+	 *            the ranksconfig to set
 	 */
 	public static void setRanksconfig(Configuration ranksconfig) {
 		Configurations.ranksconfig = ranksconfig;
@@ -125,13 +126,14 @@ public class Configurations {
 	public static FileConfiguration getKitsconfig() {
 		return kitsconfig.getConfig();
 	}
-	
+
 	public static void saveKitsConfig() {
 		kitsconfig.saveConfig();
 	}
 
 	/**
-	 * @param kitsconfig the kitsconfig to set
+	 * @param kitsconfig
+	 *            the kitsconfig to set
 	 */
 	public static void setKitsconfig(Configuration kitsconfig) {
 		Configurations.kitsconfig = kitsconfig;
@@ -143,13 +145,14 @@ public class Configurations {
 	public static FileConfiguration getStatsconfig() {
 		return statsconfig.getConfig();
 	}
-	
+
 	public static void saveStatsConfig() {
 		statsconfig.saveConfig();
 	}
 
 	/**
-	 * @param statsconfig the statsconfig to set
+	 * @param statsconfig
+	 *            the statsconfig to set
 	 */
 	public static void setStatsconfig(Configuration statsconfig) {
 		Configurations.statsconfig = statsconfig;
