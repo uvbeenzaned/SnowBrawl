@@ -97,6 +97,7 @@ public class Arena {
 	}
 
 	public Location getCyanSide() {
+		cyanspawn.setY(cyanspawn.getY() + 2);
 		return cyanspawn;
 	}
 
@@ -105,6 +106,7 @@ public class Arena {
 	}
 
 	public Location getLimeSide() {
+		limespawn.setY(limespawn.getY() + 2);
 		return limespawn;
 	}
 

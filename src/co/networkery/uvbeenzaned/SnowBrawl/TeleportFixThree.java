@@ -37,7 +37,7 @@ public class TeleportFixThree implements Listener {
 				final List<Player> nearby = getPlayersWithin(player,
 						visibleDistance);
 
-				System.out.println("Applying fix ... " + visibleDistance);
+				//System.out.println("Applying fix ... " + visibleDistance);
 
 				// Hide every player
 				updateEntities(player, nearby, false);

@@ -36,8 +36,8 @@ public class Chat {
 				nmsg = nmsg + s + " ";
 			}
 		}
-		if (!p.equals(null)) {
-			if (p.isValid()) {
+		if (p != null) {
+			if (p.isValid() && !p.isDead()) {
 				p.sendMessage(format + nmsg);
 			}
 		}

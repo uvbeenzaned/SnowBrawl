@@ -5,17 +5,14 @@ import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,33 +29,19 @@ public class GameListener implements Listener {
 		TeamLime.leave(p);
 	}
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e) {
-		if (e.getEntityType() == EntityType.PLAYER) {
-			Player p = (Player) e.getEntity();
-			if (TeamCyan.hasPlayer(p)) {
-				TeamCyan.addDeadPlayer(p);
-			} else {
-				if (TeamLime.hasPlayer(p)) {
-					TeamLime.addDeadPlayer(p);
-				}
-			}
-		}
-	}
-
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void playerRespawn(PlayerRespawnEvent e) {
-		Player p = e.getPlayer();
-		if (TeamCyan.hasDeadPlayer(p)) {
-			e.setRespawnLocation(Lobby.getLobbyspawnlocation());
-			TeamCyan.join(p);
-		} else {
-			if (TeamLime.hasDeadPlayer(p)) {
-				e.setRespawnLocation(Lobby.getLobbyspawnlocation());
-				TeamLime.join(p);
-			} else {
-				e.setRespawnLocation(p.getWorld().getSpawnLocation());
-			}
+		Player p = (Player) e.getEntity();
+		if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+			e.getDrops().clear();
+			p.setHealth(p.getMaxHealth());
+			TeamCyan.removeArenaPlayer(p);
+			TeamLime.removeArenaPlayer(p);
+			Utilities.checkTeams();
+			Rank.checkRank(p.getName());
+		} else if (TeamCyan.hasPlayer(p) || TeamLime.hasPlayer(p)) {
+			TeamCyan.removePlayer(p);
+			TeamLime.removePlayer(p);
 		}
 	}
 
@@ -99,29 +82,7 @@ public class GameListener implements Listener {
 												+ ChatColor.RED
 												+ " SNOWBRAWLED "
 												+ plhit.getName() + ".");
-										if (TeamCyan.isArenaPlayersEmpty()) {
-											Chat.sendAllTeamsMsg("Team LIME"
-													+ ChatColor.RESET
-													+ " wins!");
-											TeamCyan.teleportAllPlayersToLobby();
-											TeamLime.teleportAllPlayersToLobby();
-											TeamLime.awardTeamPoints();
-											Round.giveLeadPoints();
-											Round.setGameActive(false);
-											Round.startTimerRound();
-										} else {
-											if (TeamLime.isArenaPlayersEmpty()) {
-												Chat.sendAllTeamsMsg("Team CYAN"
-														+ ChatColor.RESET
-														+ " wins!");
-												TeamCyan.teleportAllPlayersToLobby();
-												TeamLime.teleportAllPlayersToLobby();
-												TeamCyan.awardTeamPoints();
-												Round.giveLeadPoints();
-												Round.setGameActive(false);
-												Round.startTimerRound();
-											}
-										}
+										Utilities.checkTeams();
 									}
 									if ((e.getEntity() instanceof Player && e
 											.getDamager() instanceof Player)) {

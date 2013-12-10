@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import javax.swing.Timer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -64,6 +65,32 @@ public class Utilities {
 
 	public static void giveSnowballs(Player p) {
 		p.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
+	}
+	
+	public static void checkTeams() {
+		if (TeamCyan.isArenaPlayersEmpty()) {
+			Chat.sendAllTeamsMsg("Team LIME"
+					+ ChatColor.RESET
+					+ " wins!");
+			TeamCyan.teleportAllPlayersToLobby();
+			TeamLime.teleportAllPlayersToLobby();
+			TeamLime.awardTeamPoints();
+			Round.giveLeadPoints();
+			Round.setGameActive(false);
+			Round.startTimerRound();
+		} else {
+			if (TeamLime.isArenaPlayersEmpty()) {
+				Chat.sendAllTeamsMsg("Team CYAN"
+						+ ChatColor.RESET
+						+ " wins!");
+				TeamCyan.teleportAllPlayersToLobby();
+				TeamLime.teleportAllPlayersToLobby();
+				TeamCyan.awardTeamPoints();
+				Round.giveLeadPoints();
+				Round.setGameActive(false);
+				Round.startTimerRound();
+			}
+		}
 	}
 
 	public static String convertArenaArgsToString(String[] args, int startpoint) {
