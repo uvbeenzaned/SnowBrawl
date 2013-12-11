@@ -70,6 +70,7 @@ public class GameListener implements Listener {
 										Stats s = new Stats(plhit);
 										s.removePoints(1);
 										s.incrementDeathCount();
+										Utilities.playEffects(plenemy, plhit);
 										TeamCyan.removeArenaPlayer(plhit);
 										TeamLime.removeArenaPlayer(plhit);
 										Rank.checkRank(plhit.getName());
@@ -95,7 +96,7 @@ public class GameListener implements Listener {
 				}
 				if (e.getEntity() instanceof Entity
 						&& e.getDamager() instanceof Snowball
-						&& !(e.getEntity() instanceof Player)) {
+						&& !(e.getEntity() instanceof Player) && e.getEntityType().isAlive()) {
 					if (TeamCyan.hasArenaPlayer(plenemy)
 							|| TeamLime.hasArenaPlayer(plenemy)) {
 						Entity mob = e.getEntity();

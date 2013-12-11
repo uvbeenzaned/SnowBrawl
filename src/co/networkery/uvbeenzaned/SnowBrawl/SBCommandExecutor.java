@@ -60,7 +60,7 @@ public class SBCommandExecutor implements CommandExecutor {
 						}
 					}
 					Chat.sendPPM(
-							"Global plugins stats have not been added yet!  If you mean to get a players score dont forget to add their name after \"/sb stats\"!",
+							"Global plugins stats have not been added yet!  If you mean to get a player's score, don't forget to add their name after \"/sb stats\"!",
 							p);
 					return true;
 				case "arena":
@@ -165,15 +165,22 @@ public class SBCommandExecutor implements CommandExecutor {
 					return true;
 				case "start":
 					if (p.isOp() && args.length > 1) {
+						Chat.sendPPM("Manually starting map...", p);
 						Round.startMap(Arena.getInstanceFromConfig(Utilities
 								.convertArenaArgsToString(args, 1)));
 					} else {
 						Round.startTimerRound();
+						Chat.sendPPM("Manually starting timer round...", p);
 					}
 					return false;
 				case "stop":
 					if (p.isOp()) {
 						Clock.stopTimer();
+						Round.setGameActive(false);
+						TeamCyan.teleportAllPlayersToLobby();
+						TeamLime.teleportAllPlayersToLobby();
+						Chat.sendAllTeamsMsg(p.getName()
+								+ " has manually stopped all round progress!");
 						return true;
 					}
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);

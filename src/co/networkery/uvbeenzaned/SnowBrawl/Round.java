@@ -46,15 +46,17 @@ public class Round {
 	}
 
 	public static void startMap(Arena a) {
-		TeamCyan.teleportAllPlayersToArena(a);
-		TeamLime.teleportAllPlayersToArena(a);
-		String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE
-				+ "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET
-				+ a.getName();
-		Chat.sendAllTeamsMsg(arenamsg);
-		Chat.sendAllTeamsMsg("    Description: " + a.getDescription());
-		Chat.sendAllTeamsMsg("    Author(s): " + a.getAuthorsString());
-		setGameActive(true);
+		if (!isGameActive() && !Clock.isRunning()) {
+			TeamCyan.teleportAllPlayersToArena(a);
+			TeamLime.teleportAllPlayersToArena(a);
+			String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE
+					+ "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET
+					+ a.getName();
+			Chat.sendAllTeamsMsg(arenamsg);
+			Chat.sendAllTeamsMsg("    Description: " + a.getDescription());
+			Chat.sendAllTeamsMsg("    Author(s): " + a.getAuthorsString());
+			setGameActive(true);
+		}
 	}
 
 	public static Map<String, Integer> getLeads() {
@@ -65,9 +67,10 @@ public class Round {
 		String winner = "";
 		int pts = 0;
 		for (Entry<String, Integer> p : getLeads().entrySet()) {
-			if (pts < p.getValue())
+			if (pts < p.getValue()) {
 				pts = p.getValue();
-			winner = p.getKey();
+				winner = p.getKey();
+			}
 		}
 		Stats s = new Stats(Bukkit.getPlayer(winner));
 		s.addPoints(pts * pts);

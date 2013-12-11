@@ -180,10 +180,12 @@ public class TeamCyan {
 				Bukkit.getServer().getPlayer(p).setGameMode(GameMode.SURVIVAL);
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
+				Rank.checkRank(p);
 				a.getCyanSide().getChunk().load();
 				while (!a.getCyanSide().getChunk().isLoaded()) {
 				}
 				Bukkit.getServer().getPlayer(p).teleport(a.getCyanSide());
+				ChunkStuckFix.checkPlayerStuck(300);
 			}
 		}
 	}

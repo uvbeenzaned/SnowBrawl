@@ -30,6 +30,14 @@ public class ExtrasListener implements Listener {
 				Utilities.reloadSnowballs(e.getPlayer());
 			}
 		}
+		if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
+			if (TeamCyan.hasArenaPlayer(e.getPlayer())
+					|| TeamLime.hasArenaPlayer(e.getPlayer())) {
+				if (e.getClickedBlock().getType() != Material.AIR) {
+					e.setCancelled(true);
+				}
+			}
+		}
 	}
 
 	@EventHandler

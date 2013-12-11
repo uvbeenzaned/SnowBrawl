@@ -10,7 +10,10 @@ import javax.swing.Timer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -54,10 +57,15 @@ public class Utilities {
 			timer.start();
 		}
 		if (!reloadplayers.containsKey(p.getName())) {
-			p.getInventory().remove(Material.SNOW_BALL);
-			reloadplayers.put(p.getName(),
-					Settings.getSnowballReloadDelay() / 1000);
-			Chat.sendPPM("Reloading in...", p);
+			if (!p.getInventory().containsAtLeast(
+					new ItemStack(Material.SNOW_BALL), 64)) {
+				p.getInventory().remove(Material.SNOW_BALL);
+				reloadplayers.put(p.getName(),
+						Settings.getSnowballReloadDelay() / 1000);
+				Chat.sendPPM("Reloading in...", p);
+			} else {
+				Chat.sendPPM("Your snowball stack is already full!", p);
+			}
 		} else {
 			Chat.sendPPM("You are already reloading, please wait!", p);
 		}
@@ -66,12 +74,10 @@ public class Utilities {
 	public static void giveSnowballs(Player p) {
 		p.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
 	}
-	
+
 	public static void checkTeams() {
 		if (TeamCyan.isArenaPlayersEmpty()) {
-			Chat.sendAllTeamsMsg("Team LIME"
-					+ ChatColor.RESET
-					+ " wins!");
+			Chat.sendAllTeamsMsg("Team LIME" + ChatColor.RESET + " wins!");
 			TeamCyan.teleportAllPlayersToLobby();
 			TeamLime.teleportAllPlayersToLobby();
 			TeamLime.awardTeamPoints();
@@ -80,9 +86,7 @@ public class Utilities {
 			Round.startTimerRound();
 		} else {
 			if (TeamLime.isArenaPlayersEmpty()) {
-				Chat.sendAllTeamsMsg("Team CYAN"
-						+ ChatColor.RESET
-						+ " wins!");
+				Chat.sendAllTeamsMsg("Team CYAN" + ChatColor.RESET + " wins!");
 				TeamCyan.teleportAllPlayersToLobby();
 				TeamLime.teleportAllPlayersToLobby();
 				TeamCyan.awardTeamPoints();
@@ -91,6 +95,17 @@ public class Utilities {
 				Round.startTimerRound();
 			}
 		}
+	}
+
+	public static void playEffects(Player hit, Player dead) {
+		hit.getWorld().playSound(hit.getLocation(), Sound.NOTE_PIANO, 10, 1);
+		hit.getWorld().playSound(hit.getLocation(), Sound.NOTE_PIANO, 10, 2);
+		hit.getWorld().playSound(hit.getLocation(), Sound.NOTE_PIANO, 10, 3);
+		hit.getWorld().playSound(hit.getLocation(), Sound.NOTE_PIANO, 10, 4);
+		Location l = dead.getLocation();
+		dead.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 0);
+		l.setY(dead.getLocation().getY() + 1);
+		dead.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 0);
 	}
 
 	public static String convertArenaArgsToString(String[] args, int startpoint) {
