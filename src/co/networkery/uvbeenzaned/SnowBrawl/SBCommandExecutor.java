@@ -180,7 +180,7 @@ public class SBCommandExecutor implements CommandExecutor {
 						TeamCyan.teleportAllPlayersToLobby();
 						TeamLime.teleportAllPlayersToLobby();
 						Chat.sendAllTeamsMsg(p.getName()
-								+ " has manually stopped all round progress!");
+								+ ChatColor.RESET + " has manually stopped all round progress!");
 						return true;
 					}
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);

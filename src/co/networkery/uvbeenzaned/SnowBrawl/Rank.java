@@ -1,13 +1,13 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class Rank {
-	public static void checkRank(String p) {
+	public static void checkRank(Player p) {
 		Stats s = new Stats(p);
 		int score = s.getPoints();
 		String rank = "";
@@ -62,128 +62,112 @@ public class Rank {
 		switch (rank) {
 		case "Loser":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(255, 0, 0));
+				p.getInventory().setChestplate(colorArmor(255, 0, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Newbie":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(255, 74, 0));
+				p.getInventory().setChestplate(colorArmor(255, 74, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Beginner":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(255, 119, 0));
+				p.getInventory().setChestplate(colorArmor(255, 119, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Amature":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(255, 195, 0));
+				p.getInventory().setChestplate(colorArmor(255, 195, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Intermediate":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(255, 255, 0));
+				p.getInventory().setChestplate(colorArmor(255, 255, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Master":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(204, 255, 0));
+				p.getInventory().setChestplate(colorArmor(204, 255, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Boss":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(0, 255, 0));
+				p.getInventory().setChestplate(colorArmor(0, 255, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Butch":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(0, 255, 255));
+				p.getInventory().setChestplate(colorArmor(0, 255, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Rex":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(0, 0, 255));
+				p.getInventory().setChestplate(colorArmor(0, 0, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Killer":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(89, 0, 255));
+				p.getInventory().setChestplate(colorArmor(89, 0, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Alpha":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(255, 0, 255));
+				p.getInventory().setChestplate(colorArmor(255, 0, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Hunter":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(255, 0, 78));
+				p.getInventory().setChestplate(colorArmor(255, 0, 78));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Double":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(0, 0, 0));
+				p.getInventory().setChestplate(colorArmor(0, 0, 0));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Winner":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(96, 96, 96));
+				p.getInventory().setChestplate(colorArmor(96, 96, 96));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Ultimate":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(160, 160, 160));
+				p.getInventory().setChestplate(colorArmor(160, 160, 160));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			break;
 		case "Chosen":
 			try {
-				Bukkit.getPlayer(p).getInventory()
-						.setChestplate(colorArmor(255, 255, 255));
+				p.getInventory().setChestplate(colorArmor(255, 255, 255));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

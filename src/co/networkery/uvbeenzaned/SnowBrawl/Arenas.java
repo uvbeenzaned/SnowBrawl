@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -72,7 +73,7 @@ public class Arenas implements Listener {
 							Chat.sendPPM("Added authors to arena!", p);
 							wizardplayers.put(p.getName(), 4);
 							Chat.sendPPM(
-									"Please locate Cyan's spawn location and stand there, then type the word set.",
+									"Please locate Cyan's" + ChatColor.RESET + " spawn location and stand there, then type the word set.",
 									p);
 							break;
 						case 4:
@@ -81,7 +82,7 @@ public class Arenas implements Listener {
 								Chat.sendPPM("Set Cyan's spawn point!", p);
 								wizardplayers.put(p.getName(), 5);
 								Chat.sendPPM(
-										"Please locate Lime's spawn location and stand there, then type the word set.",
+										"Please locate Lime's" + ChatColor.RESET + " spawn location and stand there, then type the word set.",
 										p);
 								break;
 							} else {

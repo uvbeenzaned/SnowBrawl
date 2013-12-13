@@ -76,6 +76,12 @@ public class Stats {
 				.getConfigurationSection(player).getInt("kills");
 	}
 
+	public void setKills(int k) {
+		Configurations.getPlayersconfig().getConfigurationSection(player)
+				.set("kills", k);
+		Configurations.savePlayersConfig();
+	}
+
 	public void incrementKillsCount() {
 		Configurations.getPlayersconfig().getConfigurationSection(player)
 				.set("kills", getKills() + 1);
@@ -86,6 +92,12 @@ public class Stats {
 	public int getDeaths() {
 		return Configurations.getPlayersconfig()
 				.getConfigurationSection(player).getInt("deaths");
+	}
+	
+	public void setDeaths(int d) {
+		Configurations.getPlayersconfig().getConfigurationSection(player)
+				.set("deaths", d);
+		Configurations.savePlayersConfig();
 	}
 
 	public void incrementDeathCount() {

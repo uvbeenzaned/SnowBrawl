@@ -38,7 +38,7 @@ public class GameListener implements Listener {
 			TeamCyan.removeArenaPlayer(p);
 			TeamLime.removeArenaPlayer(p);
 			Utilities.checkTeams();
-			Rank.checkRank(p.getName());
+			Rank.checkRank(p);
 		} else if (TeamCyan.hasPlayer(p) || TeamLime.hasPlayer(p)) {
 			TeamCyan.removePlayer(p);
 			TeamLime.removePlayer(p);
@@ -73,12 +73,12 @@ public class GameListener implements Listener {
 										Utilities.playEffects(plenemy, plhit);
 										TeamCyan.removeArenaPlayer(plhit);
 										TeamLime.removeArenaPlayer(plhit);
-										Rank.checkRank(plhit.getName());
+										Rank.checkRank(plhit);
 										s = new Stats(plenemy);
 										s.addPoints(1);
 										s.incrementKillsCount();
 										Round.addPlayerLead(plenemy, 1);
-										Rank.checkRank(plenemy.getName());
+										Rank.checkRank(plenemy);
 										Chat.sendAllTeamsMsg(plenemy.getName()
 												+ ChatColor.RED
 												+ " SNOWBRAWLED "

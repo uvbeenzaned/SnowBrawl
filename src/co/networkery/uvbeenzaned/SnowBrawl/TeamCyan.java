@@ -40,7 +40,7 @@ public class TeamCyan {
 				removeDeadPlayer(p);
 			}
 			addPlayer(p);
-			Rank.checkRank(p.getName());
+			Rank.checkRank(p);
 			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET
 					+ " has joined team CYAN.");
 			p.teleport(Lobby.getLobbyspawnlocation());
@@ -180,12 +180,12 @@ public class TeamCyan {
 				Bukkit.getServer().getPlayer(p).setGameMode(GameMode.SURVIVAL);
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
-				Rank.checkRank(p);
+				Rank.checkRank(Bukkit.getPlayer(p));
 				a.getCyanSide().getChunk().load();
 				while (!a.getCyanSide().getChunk().isLoaded()) {
 				}
 				Bukkit.getServer().getPlayer(p).teleport(a.getCyanSide());
-				ChunkStuckFix.checkPlayerStuck(300);
+				ChunkStuckFix.checkPlayerStuck(350);
 			}
 		}
 	}
@@ -195,7 +195,7 @@ public class TeamCyan {
 			if (hasArenaPlayer(Bukkit.getServer().getPlayer(p))) {
 				removeArenaPlayer(Bukkit.getServer().getPlayer(p));
 			}
-			Rank.checkRank(p);
+			Rank.checkRank(Bukkit.getPlayer(p));
 		}
 	}
 
@@ -212,7 +212,7 @@ public class TeamCyan {
 
 	private static void checkAllPlayersRanks() {
 		for (String p : getPlayers()) {
-			Rank.checkRank(p);
+			Rank.checkRank(Bukkit.getPlayer(p));
 		}
 	}
 }
