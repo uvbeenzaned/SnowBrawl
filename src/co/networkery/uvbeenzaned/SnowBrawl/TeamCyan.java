@@ -176,11 +176,14 @@ public class TeamCyan {
 	public static void teleportAllPlayersToArena(Arena a) {
 		for (String p : getPlayers()) {
 			if (!hasArenaPlayer(Bukkit.getServer().getPlayer(p))) {
+				Stats s = new Stats(Bukkit.getServer().getPlayer(p));
 				addArenaPlayer(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).setGameMode(GameMode.SURVIVAL);
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Rank.checkRank(Bukkit.getPlayer(p));
+				Power pw = new Power(s.getPower(), Bukkit.getServer().getPlayer(p));
+				pw.apply();
 				a.getCyanSide().getChunk().load();
 				while (!a.getCyanSide().getChunk().isLoaded()) {
 				}

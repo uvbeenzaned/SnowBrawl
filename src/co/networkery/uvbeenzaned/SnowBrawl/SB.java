@@ -28,8 +28,6 @@ public class SB extends JavaPlugin {
 		el = new ExtrasListener(this);
 		b = new Board();
 		tpf = new TeleportFixThree(this);
-
-		// Kits.loadAllKitsFromConfig();
 	}
 
 	public void onDisable() {

@@ -63,6 +63,32 @@ public class SBCommandExecutor implements CommandExecutor {
 							"Global plugins stats have not been added yet!  If you mean to get a player's score, don't forget to add their name after \"/sb stats\"!",
 							p);
 					return true;
+				case "power":
+					if (args.length > 1) {
+						switch (args[1].toLowerCase()) {
+						case "list":
+							Chat.sendPPM("List of powers:", p);
+							String pws = "";
+							for (Powers pw : Powers.values()) {
+								pws = pws + pw.toString() + ", ";
+							}
+							Chat.sendPM(pws, p);
+							return true;
+						case "set":
+							if(args.length > 2) {
+								if (Utilities.getPowersList().contains(args[2].toLowerCase())) {
+									Stats s = new Stats(p);
+									s.setPower(Powers.valueOf(args[2].toUpperCase()));
+									Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), p);
+									return true;
+								}
+								Chat.sendPPM("That power does not exist!  Please check /sb power list.", p);
+								return true;
+							}
+							return false;
+						}
+					}
+					return false;
 				case "arena":
 					if (p.isOp() || p.hasPermission("SnowBrawl.arena")) {
 						switch (args[1].toLowerCase()) {
@@ -82,13 +108,13 @@ public class SBCommandExecutor implements CommandExecutor {
 						case "info":
 							if (args.length > 2) {
 								Arena a = Arena.getInstanceFromConfig(Utilities
-										.convertArenaArgsToString(args, 2));
+										.convertArgsToString(args, 2));
 								if (a != null
 										&& Configurations
 												.getArenasconfig()
 												.contains(
 														Utilities
-																.convertArenaArgsToString(
+																.convertArgsToString(
 																		args, 2)))
 									Chat.sendPPM("Name: " + a.getName(), p);
 								Chat.sendPPM(
@@ -113,16 +139,16 @@ public class SBCommandExecutor implements CommandExecutor {
 						case "warp":
 							if (args.length > 2) {
 								if (Arena.getInstanceFromConfig(Utilities
-										.convertArenaArgsToString(args, 2)) != null
+										.convertArgsToString(args, 2)) != null
 										&& Configurations
 												.getArenasconfig()
 												.contains(
 														Utilities
-																.convertArenaArgsToString(
+																.convertArgsToString(
 																		args, 2))) {
 									p.teleport(Arena.getInstanceFromConfig(
-											Utilities.convertArenaArgsToString(
-													args, 2)).getCyanSide());
+											Utilities.convertArgsToString(args,
+													2)).getCyanSide());
 									return true;
 								}
 							}
@@ -133,23 +159,23 @@ public class SBCommandExecutor implements CommandExecutor {
 						case "remove":
 							if (args.length > 2) {
 								if (Arena.getInstanceFromConfig(Utilities
-										.convertArenaArgsToString(args, 2)) != null
+										.convertArgsToString(args, 2)) != null
 										&& Configurations
 												.getArenasconfig()
 												.contains(
 														Utilities
-																.convertArenaArgsToString(
+																.convertArgsToString(
 																		args, 2)))
 									Arena.getInstanceFromConfig(
-											Utilities.convertArenaArgsToString(
-													args, 2)).delete();
+											Utilities.convertArgsToString(args,
+													2)).delete();
 								Chat.sendPPM("Removed arena successfully!", p);
 								return true;
 							} else {
 								Chat.sendPPM(
 										"The arena \""
 												+ Utilities
-														.convertArenaArgsToString(
+														.convertArgsToString(
 																args, 2)
 												+ "\" does not exist in the arena list!",
 										p);
@@ -167,7 +193,7 @@ public class SBCommandExecutor implements CommandExecutor {
 					if (p.isOp() && args.length > 1) {
 						Chat.sendPPM("Manually starting map...", p);
 						Round.startMap(Arena.getInstanceFromConfig(Utilities
-								.convertArenaArgsToString(args, 1)));
+								.convertArgsToString(args, 1)));
 					} else {
 						Round.startTimerRound();
 						Chat.sendPPM("Manually starting timer round...", p);
@@ -179,8 +205,8 @@ public class SBCommandExecutor implements CommandExecutor {
 						Round.setGameActive(false);
 						TeamCyan.teleportAllPlayersToLobby();
 						TeamLime.teleportAllPlayersToLobby();
-						Chat.sendAllTeamsMsg(p.getName()
-								+ ChatColor.RESET + " has manually stopped all round progress!");
+						Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET
+								+ " has manually stopped all round progress!");
 						return true;
 					}
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);

@@ -3,6 +3,7 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -108,11 +109,19 @@ public class Utilities {
 		dead.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 0);
 	}
 
-	public static String convertArenaArgsToString(String[] args, int startpoint) {
+	public static String convertArgsToString(String[] args, int startpoint) {
 		String aname = "";
 		for (int i = startpoint; i < args.length; i++) {
 			aname = aname + args[i] + " ";
 		}
 		return aname.trim();
+	}
+
+	public static List<String> getPowersList() {
+		List<String> pwl = new ArrayList<String>();
+		for (Powers pw : Powers.values()) {
+			pwl.add(pw.toString().toLowerCase());
+		}
+		return pwl;
 	}
 }

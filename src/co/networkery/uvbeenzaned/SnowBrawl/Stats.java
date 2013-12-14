@@ -93,7 +93,7 @@ public class Stats {
 		return Configurations.getPlayersconfig()
 				.getConfigurationSection(player).getInt("deaths");
 	}
-	
+
 	public void setDeaths(int d) {
 		Configurations.getPlayersconfig().getConfigurationSection(player)
 				.set("deaths", d);
@@ -142,6 +142,22 @@ public class Stats {
 	public void setRank(String r) {
 		Configurations.getPlayersconfig().getConfigurationSection(player)
 				.set("last-rank", r);
+	}
+
+	public Powers getPower() {
+		if (Configurations.getPlayersconfig().getConfigurationSection(player)
+				.getString("power") != null) {
+			return Powers.valueOf(Configurations.getPlayersconfig()
+					.getConfigurationSection(player).getString("power"));
+		} else {
+			return Powers.NONE;
+		}
+	}
+
+	public void setPower(Powers p) {
+		Configurations.getPlayersconfig().getConfigurationSection(player)
+				.set("power", p.toString());
+		Configurations.savePlayersConfig();
 	}
 
 	public ArrayList<String> getAllStats() {

@@ -7,41 +7,31 @@ public class Configurations {
 	private static Configuration config;
 	private static Configuration arenasconfig;
 	private static Configuration playersconfig;
-	private static Configuration ranksconfig;
-	private static Configuration kitsconfig;
-	private static Configuration statsconfig;
+	private static Configuration powersconfig;
 
 	public static void loadAllConfigurations(SB sb) {
 		setMainConfig(new Configuration(sb, "config.yml"));
 		setArenasconfig(new Configuration(sb, "arenas.yml"));
 		setPlayersconfig(new Configuration(sb, "players.yml"));
-		setRanksconfig(new Configuration(sb, "ranks.yml"));
-		setKitsconfig(new Configuration(sb, "kits.yml"));
-		setStatsconfig(new Configuration(sb, "stats.yml"));
+		setPowersconfig(new Configuration(sb, "powers.yml"));
 		config.saveDefaultConfig();
 		arenasconfig.saveDefaultConfig();
 		playersconfig.saveDefaultConfig();
-		ranksconfig.saveDefaultConfig();
-		kitsconfig.saveDefaultConfig();
-		statsconfig.saveDefaultConfig();
+		powersconfig.saveDefaultConfig();
 	}
 
 	public static void reloadAllConfigurations() {
 		config.reloadConfig();
 		arenasconfig.reloadConfig();
 		playersconfig.reloadConfig();
-		ranksconfig.reloadConfig();
-		kitsconfig.reloadConfig();
-		statsconfig.reloadConfig();
+		powersconfig.reloadConfig();
 	}
 
 	public static void saveAllConfigurations() {
 		config.saveConfig();
 		arenasconfig.saveConfig();
 		playersconfig.saveConfig();
-		ranksconfig.saveConfig();
-		kitsconfig.saveConfig();
-		statsconfig.saveConfig();
+		powersconfig.saveConfig();
 	}
 
 	/**
@@ -102,59 +92,21 @@ public class Configurations {
 	}
 
 	/**
-	 * @return the ranksconfig
+	 * @return the powersconfig
 	 */
-	public static FileConfiguration getRanksconfig() {
-		return ranksconfig.getConfig();
+	public static FileConfiguration getPowersconfig() {
+		return powersconfig.getConfig();
 	}
 
-	public static void saveRanksConfig() {
-		ranksconfig.saveConfig();
+	public static void savePowersConfig() {
+		powersconfig.saveConfig();
 	}
 
 	/**
-	 * @param ranksconfig
-	 *            the ranksconfig to set
+	 * @param powersconfig
+	 *            the powersconfig to set
 	 */
-	public static void setRanksconfig(Configuration ranksconfig) {
-		Configurations.ranksconfig = ranksconfig;
-	}
-
-	/**
-	 * @return the kitsconfig
-	 */
-	public static FileConfiguration getKitsconfig() {
-		return kitsconfig.getConfig();
-	}
-
-	public static void saveKitsConfig() {
-		kitsconfig.saveConfig();
-	}
-
-	/**
-	 * @param kitsconfig
-	 *            the kitsconfig to set
-	 */
-	public static void setKitsconfig(Configuration kitsconfig) {
-		Configurations.kitsconfig = kitsconfig;
-	}
-
-	/**
-	 * @return the statsconfig
-	 */
-	public static FileConfiguration getStatsconfig() {
-		return statsconfig.getConfig();
-	}
-
-	public static void saveStatsConfig() {
-		statsconfig.saveConfig();
-	}
-
-	/**
-	 * @param statsconfig
-	 *            the statsconfig to set
-	 */
-	public static void setStatsconfig(Configuration statsconfig) {
-		Configurations.statsconfig = statsconfig;
+	public static void setPowersconfig(Configuration powersconfig) {
+		Configurations.powersconfig = powersconfig;
 	}
 }
