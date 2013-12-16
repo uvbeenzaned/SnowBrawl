@@ -195,6 +195,7 @@ public class TeamLime {
 			if (hasArenaPlayer(Bukkit.getServer().getPlayer(p))) {
 				removeArenaPlayer(Bukkit.getServer().getPlayer(p));
 			}
+			Bukkit.getServer().getPlayer(p).getInventory().clear();
 			Rank.checkRank(Bukkit.getPlayer(p));
 		}
 	}

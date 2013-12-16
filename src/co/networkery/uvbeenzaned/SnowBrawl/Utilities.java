@@ -50,7 +50,7 @@ public class Utilities {
 		}
 	};
 
-	private static Timer timer = new Timer(1000, reloadTaskPerformer);;
+	private static Timer timer = new Timer(1000, reloadTaskPerformer);
 
 	public static void reloadSnowballs(Player p) {
 		if (!timer.isRunning()) {

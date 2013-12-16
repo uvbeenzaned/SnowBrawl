@@ -144,6 +144,18 @@ public class Stats {
 				.set("last-rank", r);
 	}
 
+	public boolean hasPower(Powers p) {
+		if (Configurations.getPlayersconfig().getConfigurationSection(player)
+				.getString("power") != null) {
+			if (Powers.valueOf(Configurations.getPlayersconfig()
+					.getConfigurationSection(player).getString("power")) == p) {
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
 	public Powers getPower() {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player)
 				.getString("power") != null) {

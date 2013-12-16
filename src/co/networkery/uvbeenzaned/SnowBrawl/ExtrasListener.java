@@ -11,6 +11,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -64,6 +65,19 @@ public class ExtrasListener implements Listener {
 		if (TeamCyan.hasPlayer(e.getWhoClicked().getName())
 				|| TeamLime.hasPlayer(e.getWhoClicked().getName())) {
 			if (e.getSlotType() == SlotType.ARMOR) {
+				e.setCancelled(true);
+			}
+			if (e.getCurrentItem().getType() == Material.SNOW_BALL) {
+				e.setCancelled(true);
+			}
+		}
+	}
+
+	@EventHandler
+	public void playerDropItem(PlayerDropItemEvent e) {
+		if (TeamCyan.hasPlayer(e.getPlayer().getName())
+				|| TeamLime.hasPlayer(e.getPlayer().getName())) {
+			if (e.getItemDrop().getItemStack().getType() == Material.SNOW_BALL) {
 				e.setCancelled(true);
 			}
 		}

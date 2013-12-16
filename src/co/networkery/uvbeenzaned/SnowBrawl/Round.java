@@ -64,20 +64,22 @@ public class Round {
 	}
 
 	public static void giveLeadPoints() {
-		String winner = "";
-		int pts = 0;
-		for (Entry<String, Integer> p : getLeads().entrySet()) {
-			if (pts < p.getValue()) {
-				pts = p.getValue();
-				winner = p.getKey();
+		if (!getLeads().isEmpty()) {
+			String winner = "";
+			int pts = 0;
+			for (Entry<String, Integer> p : getLeads().entrySet()) {
+				if (pts < p.getValue()) {
+					pts = p.getValue();
+					winner = p.getKey();
+				}
 			}
+			Stats s = new Stats(Bukkit.getPlayer(winner));
+			s.addPoints(pts * pts);
+			clearLeads();
+			Chat.sendAllTeamsMsg(winner + ChatColor.RESET
+					+ " got the lead and was awarded " + ChatColor.RED
+					+ String.valueOf(pts * pts) + ChatColor.RESET + " points.");
 		}
-		Stats s = new Stats(Bukkit.getPlayer(winner));
-		s.addPoints(pts * pts);
-		clearLeads();
-		Chat.sendAllTeamsMsg(winner + ChatColor.RESET
-				+ " got the lead and was awarded " + ChatColor.RED
-				+ String.valueOf(pts * pts) + ChatColor.RESET + " points.");
 	}
 
 	public static void setLeads(Map<String, Integer> leads) {
