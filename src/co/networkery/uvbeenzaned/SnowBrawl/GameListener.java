@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -66,6 +67,19 @@ public class GameListener implements Listener {
 					for (int i = 0; i < 8; i++)
 						p.getWorld().playEffect(smoke, Effect.SMOKE, i);
 					PowerCoolDown.start(p, 30000);
+				}
+			}
+		}
+	}
+
+	@EventHandler
+	public void onArrowHit(ProjectileHitEvent e) {
+		if (e.getEntity() instanceof Arrow) {
+			Arrow arrow = (Arrow) e.getEntity();
+			if (arrow.getShooter() instanceof Player) {
+				if (TeamCyan.hasArenaPlayer((Player) arrow.getShooter())
+						|| TeamLime.hasArenaPlayer((Player) arrow.getShooter())) {
+					arrow.remove();
 				}
 			}
 		}

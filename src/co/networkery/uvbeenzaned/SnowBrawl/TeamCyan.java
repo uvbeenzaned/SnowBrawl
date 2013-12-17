@@ -103,6 +103,9 @@ public class TeamCyan {
 
 	public static void removePlayer(Player p) {
 		removeArenaPlayer(p);
+		if(PowerCoolDown.hasCoolDownPlayer(p)) {
+			PowerCoolDown.removeCoolDownPlayer(p);
+		}
 		players.remove(p.getName());
 	}
 
@@ -138,6 +141,9 @@ public class TeamCyan {
 	public static void removeArenaPlayer(Player p) {
 		if (hasArenaPlayer(p)) {
 			playersinarena.remove(p.getName());
+			if(PowerCoolDown.hasCoolDownPlayer(p)) {
+				PowerCoolDown.removeCoolDownPlayer(p);
+			}
 			p.teleport(Lobby.getLobbyspawnlocation());
 		}
 	}

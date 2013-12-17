@@ -53,4 +53,14 @@ public class PowerCoolDown {
 			Chat.sendPPM("Please wait until the cooldown process is over!", p);
 		}
 	}
+	
+	public static boolean hasCoolDownPlayer(Player p) {
+		return cooldownplayers.containsKey(p.getName());
+	}
+	
+	public static void removeCoolDownPlayer(Player p) {
+		if(hasCoolDownPlayer(p)) {
+			cooldownplayers.remove(p.getName());
+		}
+	}
 }

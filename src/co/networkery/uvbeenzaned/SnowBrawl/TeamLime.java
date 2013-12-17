@@ -103,6 +103,9 @@ public class TeamLime {
 
 	public static void removePlayer(Player p) {
 		removeArenaPlayer(p);
+		if(PowerCoolDown.hasCoolDownPlayer(p)) {
+			PowerCoolDown.removeCoolDownPlayer(p);
+		}
 		players.remove(p.getName());
 	}
 
@@ -137,6 +140,9 @@ public class TeamLime {
 
 	public static void removeArenaPlayer(Player p) {
 		playersinarena.remove(p.getName());
+		if(PowerCoolDown.hasCoolDownPlayer(p)) {
+			PowerCoolDown.removeCoolDownPlayer(p);
+		}
 		p.teleport(Lobby.getLobbyspawnlocation());
 	}
 

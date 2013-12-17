@@ -62,7 +62,7 @@ public class Power {
 	private void sniper() {
 		ItemStack i = new ItemStack(Material.BOW);
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName("Gun");
+		im.setDisplayName("Paintball Gun");
 		i.setItemMeta(im);
 		if (getPlayer().getInventory().contains(i.getType())) {
 			getPlayer().getInventory().remove(i.getType());
@@ -70,7 +70,7 @@ public class Power {
 		getPlayer().getInventory().addItem(i);
 		ItemStack i1 = new ItemStack(Material.ARROW);
 		ItemMeta im1 = i1.getItemMeta();
-		im1.setDisplayName("Bullet");
+		im1.setDisplayName("Paintball");
 		i1.setItemMeta(im1);
 		if (getPlayer().getInventory().contains(i1.getType())) {
 			getPlayer().getInventory().remove(i1.getType());

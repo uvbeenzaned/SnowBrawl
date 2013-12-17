@@ -192,6 +192,7 @@ public class Stats {
 		s.add("    Kills: " + String.valueOf(getKills()));
 		s.add("    Deaths: " + String.valueOf(getDeaths()));
 		s.add("    Kill to Death ratio: " + String.valueOf(getKDRatio()));
+		s.add("    Power: " + getPower().toString().toLowerCase());
 		s.add("    Snowballs thrown: " + String.valueOf(getSnowballsThrown()));
 		return s;
 	}
