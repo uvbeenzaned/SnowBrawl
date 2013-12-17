@@ -38,6 +38,12 @@ public class Power {
 		case SPEED:
 			speed();
 			break;
+		case INVISIBILITY:
+			invisibility();
+			break;
+		case INSTA_RELOAD:
+			// no function required
+			break;
 		case SNIPER:
 			sniper();
 			break;
@@ -57,6 +63,19 @@ public class Power {
 			getPlayer().getInventory().remove(i.getType());
 		}
 		getPlayer().getInventory().addItem(i);
+	}
+
+	private void invisibility() {
+		ItemStack i = new ItemStack(Material.POTION, 2);
+		Potion p = new Potion(PotionType.INVISIBILITY);
+		p.setLevel(1);
+		p.apply(i);
+		if (getPlayer().getInventory().contains(i.getType())) {
+			getPlayer().getInventory().remove(i.getType());
+		}
+		getPlayer().getInventory().addItem(i);
+		Chat.sendPPM("Removing chestplate for invisibility...", player);
+		getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
 	}
 
 	private void sniper() {

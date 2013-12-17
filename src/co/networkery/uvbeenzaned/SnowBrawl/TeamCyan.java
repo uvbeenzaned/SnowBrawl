@@ -9,6 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 
 public class TeamCyan {
 
@@ -143,6 +144,9 @@ public class TeamCyan {
 			playersinarena.remove(p.getName());
 			if(PowerCoolDown.hasCoolDownPlayer(p)) {
 				PowerCoolDown.removeCoolDownPlayer(p);
+			}
+			for(PotionEffectType pe : PotionEffectType.values()) {
+				p.removePotionEffect(pe);
 			}
 			p.teleport(Lobby.getLobbyspawnlocation());
 		}

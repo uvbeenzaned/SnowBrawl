@@ -61,9 +61,14 @@ public class Utilities {
 			if (!p.getInventory().containsAtLeast(
 					new ItemStack(Material.SNOW_BALL), 64)) {
 				p.getInventory().remove(Material.SNOW_BALL);
-				reloadplayers.put(p.getName(),
-						Settings.getSnowballReloadDelay() / 1000);
-				Chat.sendPPM("Reloading in...", p);
+				if (new Stats(p).getPower() != Powers.INSTA_RELOAD) {
+					reloadplayers.put(p.getName(),
+							Settings.getSnowballReloadDelay() / 1000);
+					Chat.sendPPM("Reloading in...", p);
+				} else {
+					giveSnowballs(p);
+					Chat.sendPPM("Insta-reloaded!", p);
+				}
 			} else {
 				Chat.sendPPM("Your snowball stack is already full!", p);
 			}
