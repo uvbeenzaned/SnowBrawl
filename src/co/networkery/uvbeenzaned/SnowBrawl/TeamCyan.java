@@ -148,6 +148,7 @@ public class TeamCyan {
 			for (PotionEffect pe : p.getActivePotionEffects()) {
 				p.removePotionEffect(pe.getType());
 			}
+			p.setHealth(p.getMaxHealth());
 			p.getInventory().clear();
 			Rank.checkRank(p);
 			p.teleport(Lobby.getLobbyspawnlocation());

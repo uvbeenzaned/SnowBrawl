@@ -57,7 +57,7 @@ public class Power {
 
 	// power functions
 	private void speed() {
-		ItemStack i = new ItemStack(Material.POTION, 2);
+		ItemStack i = new ItemStack(Material.POTION, 1);
 		Potion p = new Potion(PotionType.SPEED);
 		p.splash();
 		p.setLevel(2);
@@ -69,12 +69,12 @@ public class Power {
 	}
 	
 	private void slowdown() {
-		ItemStack i = new ItemStack(Material.POTION, 1);
+		ItemStack i = new ItemStack(Material.POTION, 2);
 		Potion po = new Potion(PotionType.SLOWNESS);
 		po.splash();
 		po.apply(i);
 		PotionMeta pm = (PotionMeta)i.getItemMeta();
-		PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, 200, 1);
+		PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, 300, 2);
 		pm.addCustomEffect(pe, true);
 		i.setItemMeta(pm);
 		if (getPlayer().getInventory().contains(i.getType())) {

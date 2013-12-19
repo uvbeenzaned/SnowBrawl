@@ -54,12 +54,17 @@ public class PowerListener implements Listener {
 							if (en.getType() == EntityType.PLAYER) {
 								if (TeamCyan.hasArenaPlayer((Player) en)
 										|| TeamLime.hasArenaPlayer((Player) en))
-									Chat.sendPM("    " + (Player) en, p);
+									Chat.sendPM("    " + ((Player) en).getName(), p);
 							}
 						}
 					} else {
 						Chat.sendPPM("Slowdown affected no players!", p);
 					}
+				}
+			}
+			if(Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.SPEED) {
+				if(TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+					PowerCoolDown.start(p, 30000);
 				}
 			}
 		}
@@ -87,7 +92,7 @@ public class PowerListener implements Listener {
 	}
 
 	@EventHandler
-	public void onArrowHit(ProjectileHitEvent e) {
+	public void onProjectileHit(ProjectileHitEvent e) {
 		if (e.getEntity() instanceof Arrow) {
 			Arrow arrow = (Arrow) e.getEntity();
 			if (arrow.getShooter() instanceof Player) {
