@@ -4,7 +4,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 public class Power {
@@ -38,8 +41,8 @@ public class Power {
 		case SPEED:
 			speed();
 			break;
-		case INVISIBILITY:
-			invisibility();
+		case SLOWDOWN:
+			slowdown();
 			break;
 		case INSTA_RELOAD:
 			// no function required
@@ -64,24 +67,26 @@ public class Power {
 		}
 		getPlayer().getInventory().addItem(i);
 	}
-
-	private void invisibility() {
-		ItemStack i = new ItemStack(Material.POTION, 2);
-		Potion p = new Potion(PotionType.INVISIBILITY);
-		p.setLevel(1);
-		p.apply(i);
+	
+	private void slowdown() {
+		ItemStack i = new ItemStack(Material.POTION, 1);
+		Potion po = new Potion(PotionType.SLOWNESS);
+		po.splash();
+		po.apply(i);
+		PotionMeta pm = (PotionMeta)i.getItemMeta();
+		PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, 200, 1);
+		pm.addCustomEffect(pe, true);
+		i.setItemMeta(pm);
 		if (getPlayer().getInventory().contains(i.getType())) {
 			getPlayer().getInventory().remove(i.getType());
 		}
 		getPlayer().getInventory().addItem(i);
-		Chat.sendPPM("Removing chestplate for invisibility...", player);
-		getPlayer().getInventory().setChestplate(new ItemStack(Material.AIR));
 	}
 
 	private void sniper() {
 		ItemStack i = new ItemStack(Material.BOW);
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName("Paintball Gun");
+		im.setDisplayName("Sniper Rifle");
 		i.setItemMeta(im);
 		if (getPlayer().getInventory().contains(i.getType())) {
 			getPlayer().getInventory().remove(i.getType());
@@ -89,7 +94,7 @@ public class Power {
 		getPlayer().getInventory().addItem(i);
 		ItemStack i1 = new ItemStack(Material.ARROW);
 		ItemMeta im1 = i1.getItemMeta();
-		im1.setDisplayName("Paintball");
+		im1.setDisplayName("Ammo");
 		i1.setItemMeta(im1);
 		if (getPlayer().getInventory().contains(i1.getType())) {
 			getPlayer().getInventory().remove(i1.getType());

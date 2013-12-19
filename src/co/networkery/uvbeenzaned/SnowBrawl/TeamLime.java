@@ -9,7 +9,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionEffect;
 
 public class TeamLime {
 
@@ -104,7 +104,7 @@ public class TeamLime {
 
 	public static void removePlayer(Player p) {
 		removeArenaPlayer(p);
-		if(PowerCoolDown.hasCoolDownPlayer(p)) {
+		if (PowerCoolDown.hasCoolDownPlayer(p)) {
 			PowerCoolDown.removeCoolDownPlayer(p);
 		}
 		players.remove(p.getName());
@@ -141,12 +141,14 @@ public class TeamLime {
 
 	public static void removeArenaPlayer(Player p) {
 		playersinarena.remove(p.getName());
-		if(PowerCoolDown.hasCoolDownPlayer(p)) {
+		if (PowerCoolDown.hasCoolDownPlayer(p)) {
 			PowerCoolDown.removeCoolDownPlayer(p);
 		}
-		for(PotionEffectType pe : PotionEffectType.values()) {
-			p.removePotionEffect(pe);
+		for (PotionEffect pe : p.getActivePotionEffects()) {
+			p.removePotionEffect(pe.getType());
 		}
+		p.getInventory().clear();
+		Rank.checkRank(p);
 		p.teleport(Lobby.getLobbyspawnlocation());
 	}
 
@@ -189,7 +191,8 @@ public class TeamLime {
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Rank.checkRank(Bukkit.getPlayer(p));
-				Power pw = new Power(s.getPower(), Bukkit.getServer().getPlayer(p));
+				Power pw = new Power(s.getPower(), Bukkit.getServer()
+						.getPlayer(p));
 				pw.apply();
 				a.getCyanSide().getChunk().load();
 				while (!a.getCyanSide().getChunk().isLoaded()) {
@@ -205,8 +208,6 @@ public class TeamLime {
 			if (hasArenaPlayer(Bukkit.getServer().getPlayer(p))) {
 				removeArenaPlayer(Bukkit.getServer().getPlayer(p));
 			}
-			Bukkit.getServer().getPlayer(p).getInventory().clear();
-			Rank.checkRank(Bukkit.getPlayer(p));
 		}
 	}
 

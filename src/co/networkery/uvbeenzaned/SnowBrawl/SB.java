@@ -12,6 +12,8 @@ public class SB extends JavaPlugin {
 	@SuppressWarnings("unused")
 	private ExtrasListener el;
 	@SuppressWarnings("unused")
+	private PowerListener pl;
+	@SuppressWarnings("unused")
 	private Board b;
 	@SuppressWarnings("unused")
 	private TeleportFixThree tpf;
@@ -26,6 +28,7 @@ public class SB extends JavaPlugin {
 		as = new Arenas(this);
 		gl = new GameListener(this);
 		el = new ExtrasListener(this);
+		pl = new PowerListener(this);
 		b = new Board();
 		tpf = new TeleportFixThree(this);
 	}

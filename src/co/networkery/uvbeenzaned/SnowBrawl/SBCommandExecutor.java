@@ -70,19 +70,26 @@ public class SBCommandExecutor implements CommandExecutor {
 							Chat.sendPPM("List of powers:", p);
 							String pws = "";
 							for (Powers pw : Powers.values()) {
-								pws = pws + pw.toString() + ", ";
+								pws = pws + pw.toString().toLowerCase() + ", ";
 							}
 							Chat.sendPM(pws, p);
 							return true;
 						case "set":
-							if(args.length > 2) {
-								if (Utilities.getPowersList().contains(args[2].toLowerCase())) {
+							if (args.length > 2) {
+								if (Utilities.getPowersList().contains(
+										args[2].toLowerCase())) {
 									Stats s = new Stats(p);
-									s.setPower(Powers.valueOf(args[2].toUpperCase()));
-									Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), p);
+									s.setPower(Powers.valueOf(args[2]
+											.toUpperCase()));
+									Chat.sendPPM(
+											"Your power has been changed to: "
+													+ s.getPower().toString()
+															.toLowerCase(), p);
 									return true;
 								}
-								Chat.sendPPM("That power does not exist!  Please check /sb power list.", p);
+								Chat.sendPPM(
+										"That power does not exist!  Please check /sb power list.",
+										p);
 								return true;
 							}
 							return false;

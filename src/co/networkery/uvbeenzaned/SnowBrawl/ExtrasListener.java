@@ -75,11 +75,9 @@ public class ExtrasListener implements Listener {
 
 	@EventHandler
 	public void playerDropItem(PlayerDropItemEvent e) {
-		if (TeamCyan.hasPlayer(e.getPlayer().getName())
-				|| TeamLime.hasPlayer(e.getPlayer().getName())) {
-			if (e.getItemDrop().getItemStack().getType() == Material.SNOW_BALL) {
-				e.setCancelled(true);
-			}
+		if (TeamCyan.hasArenaPlayer(e.getPlayer())
+				|| TeamLime.hasArenaPlayer(e.getPlayer())) {
+			e.setCancelled(true);
 		}
 	}
 

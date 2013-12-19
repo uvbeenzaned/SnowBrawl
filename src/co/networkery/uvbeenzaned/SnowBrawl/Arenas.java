@@ -73,7 +73,9 @@ public class Arenas implements Listener {
 							Chat.sendPPM("Added authors to arena!", p);
 							wizardplayers.put(p.getName(), 4);
 							Chat.sendPPM(
-									"Please locate Cyan's" + ChatColor.RESET + " spawn location and stand there, then type the word set.",
+									"Please locate Cyan's"
+											+ ChatColor.RESET
+											+ " spawn location and stand there, then type the word set.",
 									p);
 							break;
 						case 4:
@@ -82,7 +84,9 @@ public class Arenas implements Listener {
 								Chat.sendPPM("Set Cyan's spawn point!", p);
 								wizardplayers.put(p.getName(), 5);
 								Chat.sendPPM(
-										"Please locate Lime's" + ChatColor.RESET + " spawn location and stand there, then type the word set.",
+										"Please locate Lime's"
+												+ ChatColor.RESET
+												+ " spawn location and stand there, then type the word set.",
 										p);
 								break;
 							} else {

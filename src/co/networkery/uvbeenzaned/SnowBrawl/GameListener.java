@@ -2,22 +2,17 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
-import org.bukkit.Effect;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
-import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -48,40 +43,6 @@ public class GameListener implements Listener {
 		} else if (TeamCyan.hasPlayer(p) || TeamLime.hasPlayer(p)) {
 			TeamCyan.removePlayer(p);
 			TeamLime.removePlayer(p);
-		}
-	}
-
-	@EventHandler
-	public void onPlayerShootBow(EntityShootBowEvent e) {
-		if (e.getEntity().getType() == EntityType.PLAYER) {
-			Player p = (Player) e.getEntity();
-			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-				if (new Stats(p).hasPower(Powers.SNIPER)) {
-					e.getProjectile().setVelocity(
-							p.getLocation().getDirection().normalize()
-									.multiply(20));
-					p.getLocation().getWorld()
-							.createExplosion(p.getLocation(), 0F);
-					Location smoke = p.getLocation();
-					smoke.setY(smoke.getY() + 1);
-					for (int i = 0; i < 8; i++)
-						p.getWorld().playEffect(smoke, Effect.SMOKE, i);
-					PowerCoolDown.start(p, 30000);
-				}
-			}
-		}
-	}
-
-	@EventHandler
-	public void onArrowHit(ProjectileHitEvent e) {
-		if (e.getEntity() instanceof Arrow) {
-			Arrow arrow = (Arrow) e.getEntity();
-			if (arrow.getShooter() instanceof Player) {
-				if (TeamCyan.hasArenaPlayer((Player) arrow.getShooter())
-						|| TeamLime.hasArenaPlayer((Player) arrow.getShooter())) {
-					arrow.remove();
-				}
-			}
 		}
 	}
 
