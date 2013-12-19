@@ -54,8 +54,7 @@ public class PowerListener implements Listener {
 							if (en.getType() == EntityType.PLAYER) {
 								if (TeamCyan.hasArenaPlayer((Player) en)
 										|| TeamLime.hasArenaPlayer((Player) en))
-									Chat.sendPM("    " + p.getName(),
-											(Player) en);
+									Chat.sendPM("    " + (Player) en, p);
 							}
 						}
 					} else {
