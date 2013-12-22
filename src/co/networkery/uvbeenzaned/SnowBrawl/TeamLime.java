@@ -42,23 +42,16 @@ public class TeamLime {
 			}
 			addPlayer(p);
 			Rank.checkRank(p);
-			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET
-					+ " has joined team LIME.");
+			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has joined team LIME.");
 			p.teleport(Lobby.getLobbyspawnlocation());
 			Board.addPlayer(p);
 			if (!TeamCyan.isEmpty()) {
 				Round.startTimerRound();
 			} else {
-				Chat.sendPPM(
-						"Team CYAN"
-								+ ChatColor.RESET
-								+ " has no players! Please wait until someone joins to play.",
-						p);
+				Chat.sendPPM("Team CYAN" + ChatColor.RESET + " has no players! Please wait until someone joins to play.", p);
 			}
 		} else {
-			Chat.sendPPM(
-					"You're already on a team!  Please leave to join another.",
-					p);
+			Chat.sendPPM("You're already on a team!  Please leave to join another.", p);
 		}
 	}
 
@@ -69,18 +62,14 @@ public class TeamLime {
 			Board.removePlayer(p);
 			removePlayer(p);
 			Chat.sendPPM("You've left team LIME.", p);
-			Chat.sendTeamCyanMsg(p.getName() + ChatColor.RESET
-					+ " has left team LIME.");
+			Chat.sendTeamCyanMsg(p.getName() + ChatColor.RESET + " has left team LIME.");
 			p.teleport(Lobby.getLobbyspawnlocation());
 			if (TeamLime.isEmpty() && !TeamCyan.isEmpty()) {
 				Round.setGameActive(false);
 				Clock.stopTimer();
 				TeamCyan.teleportAllPlayersToLobby();
 				for (String tp : TeamCyan.getPlayers()) {
-					Chat.sendPPM("There are no players on team LIME"
-							+ ChatColor.RESET
-							+ " anymore.  Please wait for someone to join!",
-							Bukkit.getPlayer(tp));
+					Chat.sendPPM("There are no players on team LIME" + ChatColor.RESET + " anymore.  Please wait for someone to join!", Bukkit.getPlayer(tp));
 				}
 			}
 		}
@@ -192,8 +181,7 @@ public class TeamLime {
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Rank.checkRank(Bukkit.getPlayer(p));
-				Power pw = new Power(s.getPower(), Bukkit.getServer()
-						.getPlayer(p));
+				Power pw = new Power(s.getPower(), Bukkit.getServer().getPlayer(p));
 				pw.apply();
 				a.getCyanSide().getChunk().load();
 				while (!a.getCyanSide().getChunk().isLoaded()) {
@@ -217,9 +205,7 @@ public class TeamLime {
 			Stats s = new Stats(Bukkit.getPlayer(p));
 			s.giveTeamPoints();
 		}
-		Chat.sendAllTeamsMsg(ChatColor.RED + "+"
-				+ String.valueOf(Settings.getTeamPoints()) + ChatColor.RESET
-				+ " points for all of team LIME!");
+		Chat.sendAllTeamsMsg(ChatColor.GOLD + "+" + String.valueOf(Settings.getTeamPoints()) + ChatColor.RESET + " points for all of team LIME!");
 		checkAllPlayersRanks();
 	}
 

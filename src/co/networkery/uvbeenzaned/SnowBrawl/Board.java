@@ -31,16 +31,13 @@ public class Board {
 		lime.setPrefix(ChatColor.GREEN + "");
 		scores = board.registerNewObjective("score", "dummy");
 		scores.setDisplaySlot(DisplaySlot.SIDEBAR);
-		scores.setDisplayName(ChatColor.LIGHT_PURPLE + "[" + ChatColor.GREEN
-				+ "Score" + ChatColor.LIGHT_PURPLE + "]");
+		scores.setDisplayName(ChatColor.LIGHT_PURPLE + "[" + ChatColor.GREEN + "Score" + ChatColor.LIGHT_PURPLE + "]");
 		kills = board.registerNewObjective("kills", "dummy");
 		kills.setDisplaySlot(DisplaySlot.PLAYER_LIST);
-		kills.setDisplayName(ChatColor.LIGHT_PURPLE + "[" + ChatColor.RED
-				+ "Kills" + ChatColor.LIGHT_PURPLE + "]");
+		kills.setDisplayName(ChatColor.LIGHT_PURPLE + "[" + ChatColor.RED + "Kills" + ChatColor.LIGHT_PURPLE + "]");
 		snowballs = board.registerNewObjective("snowballs", "dummy");
 		snowballs.setDisplaySlot(DisplaySlot.BELOW_NAME);
-		snowballs.setDisplayName(ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD
-				+ "Snowballs Thrown" + ChatColor.LIGHT_PURPLE + "]");
+		snowballs.setDisplayName(ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + "Snowballs Thrown" + ChatColor.LIGHT_PURPLE + "]");
 	}
 
 	public static void addPlayer(Player p) {

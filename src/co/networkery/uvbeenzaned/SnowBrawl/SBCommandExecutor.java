@@ -11,8 +11,7 @@ import org.bukkit.entity.Player;
 public class SBCommandExecutor implements CommandExecutor {
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (sender instanceof Player) {
 			Player p = (Player) sender;
 			if (args.length > 0) {
@@ -25,22 +24,19 @@ public class SBCommandExecutor implements CommandExecutor {
 							return true;
 						case "set-round-start-delay":
 							if (args.length > 2) {
-								Settings.setRoundstartdelay(
-										Integer.parseInt(args[2]), p);
+								Settings.setRoundstartdelay(Integer.parseInt(args[2]), p);
 								return true;
 							}
 							return false;
 						case "set-team-points":
 							if (args.length > 2) {
-								Settings.setTeampoints(
-										Integer.parseInt(args[2]), p);
+								Settings.setTeampoints(Integer.parseInt(args[2]), p);
 								return true;
 							}
 							return false;
 						case "set-snowball-reload-delay":
 							if (args.length > 2) {
-								Settings.setSnowballReloadDelay(
-										Integer.parseInt(args[2]), p);
+								Settings.setSnowballReloadDelay(Integer.parseInt(args[2]), p);
 								return true;
 							}
 							return false;
@@ -59,9 +55,7 @@ public class SBCommandExecutor implements CommandExecutor {
 							return true;
 						}
 					}
-					Chat.sendPPM(
-							"Global plugins stats have not been added yet!  If you mean to get a player's score, don't forget to add their name after \"/sb stats\"!",
-							p);
+					Chat.sendPPM("Global plugins stats have not been added yet!  If you mean to get a player's score, don't forget to add their name after \"/sb stats\"!", p);
 					return true;
 				case "power":
 					if (args.length > 1) {
@@ -76,20 +70,13 @@ public class SBCommandExecutor implements CommandExecutor {
 							return true;
 						case "set":
 							if (args.length > 2) {
-								if (Utilities.getPowersList().contains(
-										args[2].toLowerCase())) {
+								if (Utilities.getPowersList().contains(args[2].toLowerCase())) {
 									Stats s = new Stats(p);
-									s.setPower(Powers.valueOf(args[2]
-											.toUpperCase()));
-									Chat.sendPPM(
-											"Your power has been changed to: "
-													+ s.getPower().toString()
-															.toLowerCase(), p);
+									s.setPower(Powers.valueOf(args[2].toUpperCase()));
+									Chat.sendPPM("Your power has been changed to: " + s.getPower().toString().toLowerCase(), p);
 									return true;
 								}
-								Chat.sendPPM(
-										"That power does not exist!  Please check /sb power list.",
-										p);
+								Chat.sendPPM("That power does not exist!  Please check /sb power list.", p);
 								return true;
 							}
 							return false;
@@ -107,55 +94,25 @@ public class SBCommandExecutor implements CommandExecutor {
 								astring = astring + name + ", ";
 								cnt++;
 							}
-							astring = astring + ChatColor.LIGHT_PURPLE + "["
-									+ ChatColor.GOLD + cnt
-									+ ChatColor.LIGHT_PURPLE + "]";
+							astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
 							Chat.sendPM(astring, p);
 							return false;
 						case "info":
 							if (args.length > 2) {
-								Arena a = Arena.getInstanceFromConfig(Utilities
-										.convertArgsToString(args, 2));
-								if (a != null
-										&& Configurations
-												.getArenasconfig()
-												.contains(
-														Utilities
-																.convertArgsToString(
-																		args, 2)))
+								Arena a = Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2));
+								if (a != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2)))
 									Chat.sendPPM("Name: " + a.getName(), p);
-								Chat.sendPPM(
-										"Description: " + a.getDescription(), p);
-								Chat.sendPPM(
-										"Authors: " + a.getAuthorsString(), p);
-								Chat.sendPPM(
-										"CYAN"
-												+ ChatColor.RESET
-												+ " side: "
-												+ LocationSerializer.loc2str(a
-														.getCyanSide()), p);
-								Chat.sendPPM(
-										"LIME"
-												+ ChatColor.RESET
-												+ " side: "
-												+ LocationSerializer.loc2str(a
-														.getLimeSide()), p);
+								Chat.sendPPM("Description: " + a.getDescription(), p);
+								Chat.sendPPM("Authors: " + a.getAuthorsString(), p);
+								Chat.sendPPM("CYAN" + ChatColor.RESET + " side: " + LocationSerializer.loc2str(a.getCyanSide()), p);
+								Chat.sendPPM("LIME" + ChatColor.RESET + " side: " + LocationSerializer.loc2str(a.getLimeSide()), p);
 								return true;
 							}
 							return false;
 						case "warp":
 							if (args.length > 2) {
-								if (Arena.getInstanceFromConfig(Utilities
-										.convertArgsToString(args, 2)) != null
-										&& Configurations
-												.getArenasconfig()
-												.contains(
-														Utilities
-																.convertArgsToString(
-																		args, 2))) {
-									p.teleport(Arena.getInstanceFromConfig(
-											Utilities.convertArgsToString(args,
-													2)).getCyanSide());
+								if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
+									p.teleport(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getCyanSide());
 									return true;
 								}
 							}
@@ -165,27 +122,12 @@ public class SBCommandExecutor implements CommandExecutor {
 							return true;
 						case "remove":
 							if (args.length > 2) {
-								if (Arena.getInstanceFromConfig(Utilities
-										.convertArgsToString(args, 2)) != null
-										&& Configurations
-												.getArenasconfig()
-												.contains(
-														Utilities
-																.convertArgsToString(
-																		args, 2)))
-									Arena.getInstanceFromConfig(
-											Utilities.convertArgsToString(args,
-													2)).delete();
+								if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2)))
+									Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).delete();
 								Chat.sendPPM("Removed arena successfully!", p);
 								return true;
 							} else {
-								Chat.sendPPM(
-										"The arena \""
-												+ Utilities
-														.convertArgsToString(
-																args, 2)
-												+ "\" does not exist in the arena list!",
-										p);
+								Chat.sendPPM("The arena \"" + Utilities.convertArgsToString(args, 2) + "\" does not exist in the arena list!", p);
 							}
 							return false;
 						}
@@ -199,8 +141,7 @@ public class SBCommandExecutor implements CommandExecutor {
 				case "start":
 					if (p.isOp() && args.length > 1) {
 						Chat.sendPPM("Manually starting map...", p);
-						Round.startMap(Arena.getInstanceFromConfig(Utilities
-								.convertArgsToString(args, 1)));
+						Round.startMap(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 1)));
 					} else {
 						Round.startTimerRound();
 						Chat.sendPPM("Manually starting timer round...", p);
@@ -212,8 +153,7 @@ public class SBCommandExecutor implements CommandExecutor {
 						Round.setGameActive(false);
 						TeamCyan.teleportAllPlayersToLobby();
 						TeamLime.teleportAllPlayersToLobby();
-						Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET
-								+ " has manually stopped all round progress!");
+						Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has manually stopped all round progress!");
 						return true;
 					}
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
@@ -232,13 +172,11 @@ public class SBCommandExecutor implements CommandExecutor {
 							return true;
 						}
 					}
-					if (TeamCyan.getPlayers().size() < TeamLime.getPlayers()
-							.size()) {
+					if (TeamCyan.getPlayers().size() < TeamLime.getPlayers().size()) {
 						TeamCyan.join(p);
 						return true;
 					}
-					if (TeamLime.getPlayers().size() < TeamCyan.getPlayers()
-							.size()) {
+					if (TeamLime.getPlayers().size() < TeamCyan.getPlayers().size()) {
 						TeamLime.join(p);
 						return true;
 					}
@@ -262,8 +200,7 @@ public class SBCommandExecutor implements CommandExecutor {
 				return true;
 			}
 		} else {
-			sender.sendMessage(Chat
-					.formatString("You have to be a player to run commands here."));
+			sender.sendMessage(Chat.formatString("You have to be a player to run commands here."));
 			return true;
 		}
 		return false;

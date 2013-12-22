@@ -19,8 +19,7 @@ public class Help {
 		cmds.add(cmd + "leave - Removes you from your current team.");
 		cmds.add(cmd + "stats <player> - Shows a players stats.");
 		cmds.add(cmd + "stats - Shows plugin stats.");
-		cmds.add(cmd
-				+ "top <amount> - Shows top 5 players unless amount argument is provided.");
+		cmds.add(cmd + "top <amount> - Shows top 5 players unless amount argument is provided.");
 		for (String c : cmds) {
 			Chat.sendPM(c, p);
 		}
@@ -30,30 +29,20 @@ public class Help {
 		if (p.isOp()) {
 			List<String> cmds = new ArrayList<String>();
 			cmds.add(cmd + "----Op commands----");
-			cmds.add(cmd
-					+ "start <\"arena name\"> - Starts a new timer round unless map name is provided.");
-			cmds.add(cmd
-					+ "stop - Halts all round progress and shuts down game clock.");
+			cmds.add(cmd + "start <\"arena name\"> - Starts a new timer round unless map name is provided.");
+			cmds.add(cmd + "stop - Halts all round progress and shuts down game clock.");
 			cmds.add(cmd + "join <cyan/lime> - Forces join to selected team.");
-			cmds.add(cmd
-					+ "config - Command to access all configuration options.");
-			cmds.add(cmd
-					+ "    set-lobby-spawn-location - Set the lobby spawn location to the current standing location.");
-			cmds.add(cmd
-					+ "    set-round-start-delay [milliseconds] - Set wait period in between rounds in milliseconds.");
-			cmds.add(cmd
-					+ "    set-team-points [points] - Set points received per winning player per round for the winning team.");
-			cmds.add(cmd
-					+ "    set-snowball-reload-delay [milliseconds] - Set the time it takes to reload a players snowballs in milliseconds.");
+			cmds.add(cmd + "config - Command to access all configuration options.");
+			cmds.add(cmd + "    set-lobby-spawn-location - Set the lobby spawn location to the current standing location.");
+			cmds.add(cmd + "    set-round-start-delay [milliseconds] - Set wait period in between rounds in milliseconds.");
+			cmds.add(cmd + "    set-team-points [points] - Set points received per winning player per round for the winning team.");
+			cmds.add(cmd + "    set-snowball-reload-delay [milliseconds] - Set the time it takes to reload a players snowballs in milliseconds.");
 			cmds.add(cmd + "arena - Command to access all arena options.");
 			cmds.add(cmd + "    list - Shows a list of all arenas.");
-			cmds.add(cmd
-					+ "    info [arena name] - Shows a list of all arenas.");
-			cmds.add(cmd
-					+ "    warp [arena name] - Teleports you to the specified arena.");
+			cmds.add(cmd + "    info [arena name] - Shows a list of all arenas.");
+			cmds.add(cmd + "    warp [arena name] - Teleports you to the specified arena.");
 			cmds.add(cmd + "    add - Starts arena wizard.");
-			cmds.add(cmd
-					+ "    remove [arena name] - Removes specified arena from configuration.");
+			cmds.add(cmd + "    remove [arena name] - Removes specified arena from configuration.");
 			for (String c : cmds) {
 				Chat.sendPM(c, p);
 			}

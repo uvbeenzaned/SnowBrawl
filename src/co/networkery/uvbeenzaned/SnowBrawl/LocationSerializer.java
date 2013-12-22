@@ -7,8 +7,7 @@ public final class LocationSerializer {
 
 	public static Location str2loc(String str) {
 		String str2loc[] = str.split("\\:");
-		Location loc = new Location(Bukkit.getServer().getWorld(str2loc[0]), 0,
-				0, 0);
+		Location loc = new Location(Bukkit.getServer().getWorld(str2loc[0]), 0, 0, 0);
 		loc.setX(Double.parseDouble(str2loc[1]));
 		loc.setY(Double.parseDouble(str2loc[2]));
 		loc.setZ(Double.parseDouble(str2loc[3]));
@@ -18,7 +17,6 @@ public final class LocationSerializer {
 	}
 
 	public static String loc2str(Location loc) {
-		return loc.getWorld().getName() + ":" + loc.getX() + ":" + loc.getY()
-				+ ":" + loc.getZ() + ":" + loc.getPitch() + ":" + loc.getYaw();
+		return loc.getWorld().getName() + ":" + loc.getX() + ":" + loc.getY() + ":" + loc.getZ() + ":" + loc.getPitch() + ":" + loc.getYaw();
 	}
 }

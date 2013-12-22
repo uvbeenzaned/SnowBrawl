@@ -23,8 +23,7 @@ public class Stats {
 		} else {
 			error = true;
 			if (sender != null)
-				Chat.sendPPM("There are no players with the name " + p
-						+ " in the records.", sender);
+				Chat.sendPPM("There are no players with the name " + p + " in the records.", sender);
 		}
 	}
 
@@ -41,13 +40,11 @@ public class Stats {
 	}
 
 	public int getPoints() {
-		return Configurations.getPlayersconfig()
-				.getConfigurationSection(player).getInt("points");
+		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("points");
 	}
 
 	public void setPoints(int p) {
-		Configurations.getPlayersconfig().getConfigurationSection(player)
-				.set("points", p);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("points", p);
 		Configurations.savePlayersConfig();
 		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
@@ -61,8 +58,7 @@ public class Stats {
 	}
 
 	public void giveTeamPoints() {
-		int standardpoints = Configurations.getMainConfig().getInt(
-				"team-points");
+		int standardpoints = Configurations.getMainConfig().getInt("team-points");
 		int multiply = 0;
 		if (TeamCyan.hasPlayer(Bukkit.getPlayer(player)))
 			multiply = TeamLime.getPlayers().size();
@@ -72,37 +68,31 @@ public class Stats {
 	}
 
 	public int getKills() {
-		return Configurations.getPlayersconfig()
-				.getConfigurationSection(player).getInt("kills");
+		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("kills");
 	}
 
 	public void setKills(int k) {
-		Configurations.getPlayersconfig().getConfigurationSection(player)
-				.set("kills", k);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("kills", k);
 		Configurations.savePlayersConfig();
 	}
 
 	public void incrementKillsCount() {
-		Configurations.getPlayersconfig().getConfigurationSection(player)
-				.set("kills", getKills() + 1);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("kills", getKills() + 1);
 		Configurations.savePlayersConfig();
 		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
 
 	public int getDeaths() {
-		return Configurations.getPlayersconfig()
-				.getConfigurationSection(player).getInt("deaths");
+		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("deaths");
 	}
 
 	public void setDeaths(int d) {
-		Configurations.getPlayersconfig().getConfigurationSection(player)
-				.set("deaths", d);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("deaths", d);
 		Configurations.savePlayersConfig();
 	}
 
 	public void incrementDeathCount() {
-		Configurations.getPlayersconfig().getConfigurationSection(player)
-				.set("deaths", getDeaths() + 1);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("deaths", getDeaths() + 1);
 		Configurations.savePlayersConfig();
 	}
 
@@ -111,13 +101,11 @@ public class Stats {
 	}
 
 	public int getSnowballsThrown() {
-		return Configurations.getPlayersconfig()
-				.getConfigurationSection(player).getInt("snowballs-thrown");
+		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("snowballs-thrown");
 	}
 
 	public void setSnowballsThrown(int a) {
-		Configurations.getPlayersconfig().getConfigurationSection(player)
-				.set("snowballs-thrown", a);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("snowballs-thrown", a);
 		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
 
@@ -130,25 +118,20 @@ public class Stats {
 	}
 
 	public String getLastRank() {
-		if (Configurations.getPlayersconfig().getConfigurationSection(player)
-				.getString("last-rank") != null) {
-			return Configurations.getPlayersconfig()
-					.getConfigurationSection(player).getString("last-rank");
+		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("last-rank") != null) {
+			return Configurations.getPlayersconfig().getConfigurationSection(player).getString("last-rank");
 		} else {
 			return "N/A";
 		}
 	}
 
 	public void setRank(String r) {
-		Configurations.getPlayersconfig().getConfigurationSection(player)
-				.set("last-rank", r);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("last-rank", r);
 	}
 
 	public boolean hasPower(Powers p) {
-		if (Configurations.getPlayersconfig().getConfigurationSection(player)
-				.getString("power") != null) {
-			if (Powers.valueOf(Configurations.getPlayersconfig()
-					.getConfigurationSection(player).getString("power")) == p) {
+		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power") != null) {
+			if (Powers.valueOf(Configurations.getPlayersconfig().getConfigurationSection(player).getString("power")) == p) {
 				return true;
 			}
 			return false;
@@ -157,18 +140,15 @@ public class Stats {
 	}
 
 	public Powers getPower() {
-		if (Configurations.getPlayersconfig().getConfigurationSection(player)
-				.getString("power") != null) {
-			return Powers.valueOf(Configurations.getPlayersconfig()
-					.getConfigurationSection(player).getString("power"));
+		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power") != null) {
+			return Powers.valueOf(Configurations.getPlayersconfig().getConfigurationSection(player).getString("power"));
 		} else {
 			return Powers.NONE;
 		}
 	}
 
 	public void setPower(Powers p) {
-		Configurations.getPlayersconfig().getConfigurationSection(player)
-				.set("power", p.toString());
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("power", p.toString());
 		Configurations.savePlayersConfig();
 	}
 

@@ -23,8 +23,7 @@ public class PowerCoolDown {
 					p.setValue(p.getValue().intValue() - 1);
 				} else {
 					Stats s = new Stats(Bukkit.getPlayer(p.getKey()));
-					Power pw = new Power(s.getPower(), Bukkit.getPlayer(p
-							.getKey()));
+					Power pw = new Power(s.getPower(), Bukkit.getPlayer(p.getKey()));
 					pw.apply();
 					playerstoremove.add(p.getKey());
 				}

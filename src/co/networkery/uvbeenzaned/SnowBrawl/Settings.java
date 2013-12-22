@@ -12,8 +12,7 @@ public class Settings {
 		Configurations.getMainConfig().set("round-start-delay", s);
 		Configurations.saveMainConfig();
 		if (sender != null)
-			Chat.sendPPM("Changed round-start-delay to " + String.valueOf(s)
-					+ " seconds.", sender);
+			Chat.sendPPM("Changed round-start-delay to " + String.valueOf(s) + " seconds.", sender);
 	}
 
 	public static int getTeamPoints() {
@@ -24,9 +23,7 @@ public class Settings {
 		Configurations.getMainConfig().set("team-points", pts);
 		Configurations.saveMainConfig();
 		if (sender != null)
-			Chat.sendPPM(
-					"Changed team-points to " + String.valueOf(pts) + " .",
-					sender);
+			Chat.sendPPM("Changed team-points to " + String.valueOf(pts) + " .", sender);
 	}
 
 	public static int getSnowballReloadDelay() {
@@ -37,8 +34,6 @@ public class Settings {
 		Configurations.getMainConfig().set("snowball-reload-delay", d);
 		Configurations.saveMainConfig();
 		if (sender != null)
-			Chat.sendPPM(
-					"Changed snowball-reload-delay to " + String.valueOf(d)
-							+ " .", sender);
+			Chat.sendPPM("Changed snowball-reload-delay to " + String.valueOf(d) + " .", sender);
 	}
 }

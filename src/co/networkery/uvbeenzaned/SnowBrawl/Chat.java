@@ -6,8 +6,7 @@ import org.bukkit.entity.Player;
 
 public class Chat {
 
-	private static String format = ChatColor.GOLD + "[" + ChatColor.AQUA
-			+ "SnowBrawl" + ChatColor.GOLD + "] " + ChatColor.RESET;
+	private static String format = ChatColor.GOLD + "[" + ChatColor.AQUA + "SnowBrawl" + ChatColor.GOLD + "] " + ChatColor.RESET;
 	private static String nopermissionerrormsg = "You do not have permission to use that!";
 
 	public static String formatString(String s) {
@@ -29,10 +28,7 @@ public class Chat {
 			if (TeamLime.stringContainsPlayer(s)) {
 				nmsg = nmsg + ChatColor.GREEN + s + " ";
 			}
-			if (!s.toLowerCase().contains("cyan")
-					&& !s.toLowerCase().contains("lime")
-					&& !TeamCyan.stringContainsPlayer(s)
-					&& !TeamLime.stringContainsPlayer(s)) {
+			if (!s.toLowerCase().contains("cyan") && !s.toLowerCase().contains("lime") && !TeamCyan.stringContainsPlayer(s) && !TeamLime.stringContainsPlayer(s)) {
 				nmsg = nmsg + s + " ";
 			}
 		}

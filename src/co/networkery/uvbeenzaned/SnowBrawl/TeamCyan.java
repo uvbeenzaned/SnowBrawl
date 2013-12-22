@@ -42,23 +42,16 @@ public class TeamCyan {
 			}
 			addPlayer(p);
 			Rank.checkRank(p);
-			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET
-					+ " has joined team CYAN.");
+			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has joined team CYAN.");
 			p.teleport(Lobby.getLobbyspawnlocation());
 			Board.addPlayer(p);
 			if (!TeamLime.isEmpty()) {
 				Round.startTimerRound();
 			} else {
-				Chat.sendPPM(
-						"Team LIME"
-								+ ChatColor.RESET
-								+ " has no players! Please wait until someone joins to play.",
-						p);
+				Chat.sendPPM("Team LIME" + ChatColor.RESET + " has no players! Please wait until someone joins to play.", p);
 			}
 		} else {
-			Chat.sendPPM(
-					"You're already on a team!  Please leave to join another.",
-					p);
+			Chat.sendPPM("You're already on a team!  Please leave to join another.", p);
 		}
 	}
 
@@ -69,18 +62,14 @@ public class TeamCyan {
 			Board.removePlayer(p);
 			removePlayer(p);
 			Chat.sendPPM("You've left team CYAN.", p);
-			Chat.sendTeamCyanMsg(p.getName() + ChatColor.RESET
-					+ " has left team CYAN.");
+			Chat.sendTeamCyanMsg(p.getName() + ChatColor.RESET + " has left team CYAN.");
 			p.teleport(Lobby.getLobbyspawnlocation());
 			if (TeamCyan.isEmpty() && !TeamLime.isEmpty()) {
 				Round.setGameActive(false);
 				Clock.stopTimer();
 				TeamLime.teleportAllPlayersToLobby();
 				for (String tp : TeamLime.getPlayers()) {
-					Chat.sendPPM("There are no players on team CYAN"
-							+ ChatColor.RESET
-							+ " anymore.  Please wait for someone to join!",
-							Bukkit.getPlayer(tp));
+					Chat.sendPPM("There are no players on team CYAN" + ChatColor.RESET + " anymore.  Please wait for someone to join!", Bukkit.getPlayer(tp));
 				}
 			}
 		}
@@ -195,8 +184,7 @@ public class TeamCyan {
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Rank.checkRank(Bukkit.getPlayer(p));
-				Power pw = new Power(s.getPower(), Bukkit.getServer()
-						.getPlayer(p));
+				Power pw = new Power(s.getPower(), Bukkit.getServer().getPlayer(p));
 				pw.apply();
 				a.getCyanSide().getChunk().load();
 				while (!a.getCyanSide().getChunk().isLoaded()) {
@@ -220,9 +208,7 @@ public class TeamCyan {
 			Stats s = new Stats(Bukkit.getPlayer(p));
 			s.giveTeamPoints();
 		}
-		Chat.sendAllTeamsMsg(ChatColor.RED + "+"
-				+ String.valueOf(Settings.getTeamPoints()) + ChatColor.RESET
-				+ " points for all of team CYAN!");
+		Chat.sendAllTeamsMsg(ChatColor.GOLD + "+" + String.valueOf(Settings.getTeamPoints()) + ChatColor.RESET + " points for all of team CYAN!");
 		checkAllPlayersRanks();
 	}
 

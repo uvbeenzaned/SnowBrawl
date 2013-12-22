@@ -34,8 +34,7 @@ public class TeleportFixThree implements Listener {
 			@Override
 			public void run() {
 				// Refresh nearby clients
-				final List<Player> nearby = getPlayersWithin(player,
-						visibleDistance);
+				final List<Player> nearby = getPlayersWithin(player, visibleDistance);
 
 				// System.out.println("Applying fix ... " + visibleDistance);
 
@@ -43,19 +42,17 @@ public class TeleportFixThree implements Listener {
 				updateEntities(player, nearby, false);
 
 				// Then show them again
-				server.getScheduler().scheduleSyncDelayedTask(plugin,
-						new Runnable() {
-							@Override
-							public void run() {
-								updateEntities(player, nearby, true);
-							}
-						}, 1);
+				server.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+					@Override
+					public void run() {
+						updateEntities(player, nearby, true);
+					}
+				}, 1);
 			}
 		}, TELEPORT_FIX_DELAY);
 	}
 
-	private void updateEntities(Player tpedPlayer, List<Player> players,
-			boolean visible) {
+	private void updateEntities(Player tpedPlayer, List<Player> players, boolean visible) {
 		// Hide or show every player to tpedPlayer
 		// and hide or show tpedPlayer to every player.
 		for (Player player : players) {
@@ -73,9 +70,7 @@ public class TeleportFixThree implements Listener {
 		List<Player> res = new ArrayList<Player>();
 		int d2 = distance * distance;
 		for (Player p : server.getOnlinePlayers()) {
-			if (p != player
-					&& p.getWorld() == player.getWorld()
-					&& p.getLocation().distanceSquared(player.getLocation()) <= d2) {
+			if (p != player && p.getWorld() == player.getWorld() && p.getLocation().distanceSquared(player.getLocation()) <= d2) {
 				res.add(p);
 			}
 		}

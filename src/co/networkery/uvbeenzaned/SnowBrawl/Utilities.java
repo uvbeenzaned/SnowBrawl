@@ -27,14 +27,11 @@ public class Utilities {
 		public void actionPerformed(ActionEvent evt) {
 			for (Entry<String, Integer> p : reloadplayers.entrySet()) {
 				if (p.getValue() != 0) {
-					Chat.sendPPM(String.valueOf(p.getValue()),
-							Bukkit.getPlayer(p.getKey()));
+					Chat.sendPPM(String.valueOf(p.getValue()), Bukkit.getPlayer(p.getKey()));
 					p.setValue(p.getValue().intValue() - 1);
 				} else {
-					if (TeamCyan.hasPlayer(Bukkit.getPlayer(p.getKey()))
-							|| TeamLime.hasPlayer(Bukkit.getPlayer(p.getKey()))) {
-						Bukkit.getPlayer(p.getKey()).getInventory()
-								.remove(Material.SNOW_BALL);
+					if (TeamCyan.hasPlayer(Bukkit.getPlayer(p.getKey())) || TeamLime.hasPlayer(Bukkit.getPlayer(p.getKey()))) {
+						Bukkit.getPlayer(p.getKey()).getInventory().remove(Material.SNOW_BALL);
 					}
 					giveSnowballs(Bukkit.getPlayer(p.getKey()));
 					playerstoremove.add(p.getKey());
@@ -58,12 +55,10 @@ public class Utilities {
 			timer.start();
 		}
 		if (!reloadplayers.containsKey(p.getName())) {
-			if (!p.getInventory().containsAtLeast(
-					new ItemStack(Material.SNOW_BALL), 64)) {
+			if (!p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 64)) {
 				p.getInventory().remove(Material.SNOW_BALL);
 				if (new Stats(p).getPower() != Powers.INSTA_RELOAD) {
-					reloadplayers.put(p.getName(),
-							Settings.getSnowballReloadDelay() / 1000);
+					reloadplayers.put(p.getName(), Settings.getSnowballReloadDelay() / 1000);
 					Chat.sendPPM("Reloading in...", p);
 				} else {
 					giveSnowballs(p);
@@ -128,5 +123,10 @@ public class Utilities {
 			pwl.add(pw.toString().toLowerCase());
 		}
 		return pwl;
+	}
+
+	public static long getBlockDistance(Location a, Location b) {
+		long sqdist = (long) a.distanceSquared(b);
+		return (long) Math.sqrt(sqdist);
 	}
 }

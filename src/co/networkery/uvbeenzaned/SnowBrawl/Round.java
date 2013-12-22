@@ -24,8 +24,7 @@ public class Round {
 
 	public static void startRandomMap() {
 		if (!isGameActive() && !Clock.isRunning()) {
-			int arenaamount = Configurations.getArenasconfig().getKeys(false)
-					.size();
+			int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
 			r.setSeed(System.currentTimeMillis());
 			int randnum = r.nextInt(arenaamount);
 			if (arenaamount > 1) {
@@ -49,9 +48,7 @@ public class Round {
 		if (!isGameActive() && !Clock.isRunning()) {
 			TeamCyan.teleportAllPlayersToArena(a);
 			TeamLime.teleportAllPlayersToArena(a);
-			String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE
-					+ "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET
-					+ a.getName();
+			String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();
 			Chat.sendAllTeamsMsg(arenamsg);
 			Chat.sendAllTeamsMsg("    Description: " + a.getDescription());
 			Chat.sendAllTeamsMsg("    Author(s): " + a.getAuthorsString());
@@ -76,9 +73,7 @@ public class Round {
 			Stats s = new Stats(Bukkit.getPlayer(winner));
 			s.addPoints(pts * pts);
 			clearLeads();
-			Chat.sendAllTeamsMsg(winner + ChatColor.RESET
-					+ " got the lead and was awarded " + ChatColor.RED
-					+ String.valueOf(pts * pts) + ChatColor.RESET + " points.");
+			Chat.sendAllTeamsMsg(winner + ChatColor.RESET + " got the lead and was awarded " + ChatColor.GOLD + String.valueOf(pts * pts) + ChatColor.RESET + " points.");
 		}
 	}
 

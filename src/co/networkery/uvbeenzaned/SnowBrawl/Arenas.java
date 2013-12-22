@@ -52,17 +52,13 @@ public class Arenas implements Listener {
 							a.setName(e.getMessage());
 							Chat.sendPPM("Added arena name!", p);
 							wizardplayers.put(p.getName(), 2);
-							Chat.sendPPM(
-									"Please type a brief description of this new arena:",
-									p);
+							Chat.sendPPM("Please type a brief description of this new arena:", p);
 							break;
 						case 2:
 							a.setDescription(e.getMessage());
 							Chat.sendPPM("Added arena description!", p);
 							wizardplayers.put(p.getName(), 3);
-							Chat.sendPPM(
-									"Please type the author(s) of this arena (space each author out):",
-									p);
+							Chat.sendPPM("Please type the author(s) of this arena (space each author out):", p);
 							break;
 						case 3:
 							List<String> authors = new ArrayList<String>();
@@ -72,40 +68,30 @@ public class Arenas implements Listener {
 							a.setAuthors(authors);
 							Chat.sendPPM("Added authors to arena!", p);
 							wizardplayers.put(p.getName(), 4);
-							Chat.sendPPM(
-									"Please locate Cyan's"
-											+ ChatColor.RESET
-											+ " spawn location and stand there, then type the word set.",
-									p);
+							Chat.sendPPM("Please locate Cyan's" + ChatColor.RESET + " spawn location and stand there, then type the word set.", p);
 							break;
 						case 4:
 							if (e.getMessage().equalsIgnoreCase("set")) {
 								a.setCyanSide(p.getLocation());
-								Chat.sendPPM("Set Cyan's spawn point!", p);
+								Chat.sendPPM("Set Cyan's" + ChatColor.RESET + " spawn point!", p);
 								wizardplayers.put(p.getName(), 5);
-								Chat.sendPPM(
-										"Please locate Lime's"
-												+ ChatColor.RESET
-												+ " spawn location and stand there, then type the word set.",
-										p);
+								Chat.sendPPM("Please locate Lime's" + ChatColor.RESET + " spawn location and stand there, then type the word set.", p);
 								break;
 							} else {
-								Chat.sendPPM("Try typing the word set please!",
-										p);
+								Chat.sendPPM("Try typing the word set please!", p);
 								break;
 							}
 						case 5:
 							if (e.getMessage().equalsIgnoreCase("set")) {
 								a.setLimeSide(p.getLocation());
-								Chat.sendPPM("Set Lime's spawn point!", p);
+								Chat.sendPPM("Set Lime's" + ChatColor.RESET + "  spawn point!", p);
 								Chat.sendPPM("Saved arena successfully!", p);
 								a.save();
 								arenatoremove = a;
 								wizardplayers.remove(p.getName());
 								break;
 							} else {
-								Chat.sendPPM("Try typing the word set please!",
-										p);
+								Chat.sendPPM("Try typing the word set please!", p);
 								break;
 							}
 						}

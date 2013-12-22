@@ -3,6 +3,7 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -15,8 +16,7 @@ public class Arena {
 	private Location cyanspawn;
 	private Location limespawn;
 
-	public Arena(Player player, String name, String description,
-			List<String> authors) {
+	public Arena(Player player, String name, String description, List<String> authors) {
 		if (player != null) {
 			setSender(player);
 		}
@@ -33,14 +33,10 @@ public class Arena {
 		if (Configurations.getArenasconfig().contains(name)) {
 			Arena a = new Arena();
 			a.setName(name);
-			a.setDescription(Configurations.getArenasconfig().getString(
-					name + ".description"));
-			a.setAuthors(Configurations.getArenasconfig().getStringList(
-					name + ".authors"));
-			a.setCyanSide(LocationSerializer.str2loc(Configurations
-					.getArenasconfig().getString(name + ".cyanspawn")));
-			a.setLimeSide(LocationSerializer.str2loc(Configurations
-					.getArenasconfig().getString(name + ".limespawn")));
+			a.setDescription(Configurations.getArenasconfig().getString(name + ".description"));
+			a.setAuthors(Configurations.getArenasconfig().getStringList(name + ".authors"));
+			a.setCyanSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".cyanspawn")));
+			a.setLimeSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".limespawn")));
 			return a;
 		}
 		return null;
@@ -87,7 +83,7 @@ public class Arena {
 		boolean first = true;
 		for (String author : getAuthors()) {
 			if (!first) {
-				authorstring = authorstring + ", " + author;
+				authorstring = authorstring + ChatColor.RESET + ", " + author;
 			} else {
 				authorstring = authorstring + author;
 				first = false;
@@ -120,12 +116,10 @@ public class Arena {
 						if (!authors.isEmpty()) {
 							return true;
 						} else {
-							Chat.sendPPM("Missing at least one author name!",
-									getSender());
+							Chat.sendPPM("Missing at least one author name!", getSender());
 						}
 					} else {
-						Chat.sendPPM("Missing an arena description!",
-								getSender());
+						Chat.sendPPM("Missing an arena description!", getSender());
 					}
 				} else {
 					Chat.sendPPM("Missing an arena name!", getSender());
@@ -142,12 +136,9 @@ public class Arena {
 	public void save() {
 		if (tryPass()) {
 			Configurations.getArenasconfig().createSection(name);
-			Configurations.getArenasconfig().set(name + ".cyanspawn",
-					LocationSerializer.loc2str(cyanspawn));
-			Configurations.getArenasconfig().set(name + ".limespawn",
-					LocationSerializer.loc2str(limespawn));
-			Configurations.getArenasconfig().set(name + ".description",
-					description);
+			Configurations.getArenasconfig().set(name + ".cyanspawn", LocationSerializer.loc2str(cyanspawn));
+			Configurations.getArenasconfig().set(name + ".limespawn", LocationSerializer.loc2str(limespawn));
+			Configurations.getArenasconfig().set(name + ".description", description);
 			Configurations.getArenasconfig().set(name + ".authors", authors);
 			Configurations.saveArenasConfig();
 		}

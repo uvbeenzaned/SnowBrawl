@@ -67,13 +67,13 @@ public class Power {
 		}
 		getPlayer().getInventory().addItem(i);
 	}
-	
+
 	private void slowdown() {
 		ItemStack i = new ItemStack(Material.POTION, 2);
 		Potion po = new Potion(PotionType.SLOWNESS);
 		po.splash();
 		po.apply(i);
-		PotionMeta pm = (PotionMeta)i.getItemMeta();
+		PotionMeta pm = (PotionMeta) i.getItemMeta();
 		PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, 300, 2);
 		pm.addCustomEffect(pe, true);
 		i.setItemMeta(pm);

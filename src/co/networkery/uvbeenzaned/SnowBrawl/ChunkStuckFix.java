@@ -20,8 +20,7 @@ public class ChunkStuckFix {
 					int x = Bukkit.getPlayer(p).getLocation().getBlockX();
 					int y = Bukkit.getPlayer(p).getLocation().getBlockY();
 					int z = Bukkit.getPlayer(p).getLocation().getBlockZ();
-					while (Bukkit.getPlayer(p).getWorld().getBlockAt(x, y, z)
-							.getType() != Material.AIR) {
+					while (Bukkit.getPlayer(p).getWorld().getBlockAt(x, y, z).getType() != Material.AIR) {
 						y++;
 					}
 					Bukkit.getPlayer(p).teleport(new Location(w, x, y, z));
@@ -33,8 +32,7 @@ public class ChunkStuckFix {
 					int x = Bukkit.getPlayer(p).getLocation().getBlockX();
 					int y = Bukkit.getPlayer(p).getLocation().getBlockY();
 					int z = Bukkit.getPlayer(p).getLocation().getBlockZ();
-					while (Bukkit.getPlayer(p).getWorld().getBlockAt(x, y, z)
-							.getType() != Material.AIR) {
+					while (Bukkit.getPlayer(p).getWorld().getBlockAt(x, y, z).getType() != Material.AIR) {
 						y++;
 					}
 					Bukkit.getPlayer(p).teleport(new Location(w, x, y, z));

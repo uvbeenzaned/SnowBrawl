@@ -32,9 +32,7 @@ public class PowerListener implements Listener {
 				if (p.getItemInHand().getType() == Material.POTION) {
 					if (Potion.fromItemStack(p.getItemInHand()).getType() == PotionType.SLOWNESS) {
 						if (e.getEntityType() == EntityType.SPLASH_POTION) {
-							e.getEntity().setVelocity(
-									p.getLocation().getDirection().normalize()
-											.multiply(5));
+							e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(5));
 						}
 					}
 				}
@@ -52,8 +50,7 @@ public class PowerListener implements Listener {
 						Chat.sendPPM("Slow down affected:", p);
 						for (Entity en : e.getAffectedEntities()) {
 							if (en.getType() == EntityType.PLAYER) {
-								if (TeamCyan.hasArenaPlayer((Player) en)
-										|| TeamLime.hasArenaPlayer((Player) en))
+								if (TeamCyan.hasArenaPlayer((Player) en) || TeamLime.hasArenaPlayer((Player) en))
 									Chat.sendPM("    " + ((Player) en).getName(), p);
 							}
 						}
@@ -62,8 +59,8 @@ public class PowerListener implements Listener {
 					}
 				}
 			}
-			if(Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.SPEED) {
-				if(TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+			if (Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.SPEED) {
+				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
 					PowerCoolDown.start(p, 30000);
 				}
 			}
@@ -76,11 +73,8 @@ public class PowerListener implements Listener {
 			Player p = (Player) e.getEntity();
 			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
 				if (new Stats(p).hasPower(Powers.SNIPER)) {
-					e.getProjectile().setVelocity(
-							p.getLocation().getDirection().normalize()
-									.multiply(20));
-					p.getLocation().getWorld()
-							.createExplosion(p.getLocation(), 0F);
+					e.getProjectile().setVelocity(p.getLocation().getDirection().normalize().multiply(20));
+					p.getLocation().getWorld().createExplosion(p.getLocation(), 0F);
 					Location smoke = p.getLocation();
 					smoke.setY(smoke.getY() + 1);
 					for (int i = 0; i < 8; i++)
@@ -96,8 +90,7 @@ public class PowerListener implements Listener {
 		if (e.getEntity() instanceof Arrow) {
 			Arrow arrow = (Arrow) e.getEntity();
 			if (arrow.getShooter() instanceof Player) {
-				if (TeamCyan.hasArenaPlayer((Player) arrow.getShooter())
-						|| TeamLime.hasArenaPlayer((Player) arrow.getShooter())) {
+				if (TeamCyan.hasArenaPlayer((Player) arrow.getShooter()) || TeamLime.hasArenaPlayer((Player) arrow.getShooter())) {
 					arrow.remove();
 				}
 			}

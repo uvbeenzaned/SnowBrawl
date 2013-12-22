@@ -1,6 +1,6 @@
 name: SnowBrawl
 main: co.networkery.uvbeenzaned.SnowBrawl.SB
-version: 2.3.7
+version: 2.3.8
 commands:
    snowbrawl:
        description: Main SnowBrawl command.
