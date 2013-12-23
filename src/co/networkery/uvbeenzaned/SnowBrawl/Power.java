@@ -44,6 +44,12 @@ public class Power {
 		case SLOWDOWN:
 			slowdown();
 			break;
+		case BLINDNESS:
+			blindness();
+			break;
+		case SPONTANEOUS_COMBUSTION:
+			spontaneousCombustion();
+			break;
 		case INSTA_RELOAD:
 			// no function required
 			break;
@@ -76,6 +82,38 @@ public class Power {
 		PotionMeta pm = (PotionMeta) i.getItemMeta();
 		PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, 300, 2);
 		pm.addCustomEffect(pe, true);
+		i.setItemMeta(pm);
+		if (getPlayer().getInventory().contains(i.getType())) {
+			getPlayer().getInventory().remove(i.getType());
+		}
+		getPlayer().getInventory().addItem(i);
+	}
+	
+	private void blindness() {
+		ItemStack i = new ItemStack(Material.POTION, 0);
+		Potion po = new Potion(1);
+		po.splash();
+		po.apply(i);
+		PotionMeta pm = (PotionMeta) i.getItemMeta();
+		PotionEffect pe = new PotionEffect(PotionEffectType.BLINDNESS, 100, 1);
+		pm.addCustomEffect(pe, true);
+		pm.setDisplayName("Blindness");
+		i.setItemMeta(pm);
+		if (getPlayer().getInventory().contains(i.getType())) {
+			getPlayer().getInventory().remove(i.getType());
+		}
+		getPlayer().getInventory().addItem(i);
+	}
+	
+	private void spontaneousCombustion() {
+		ItemStack i = new ItemStack(Material.POTION, 1);
+		Potion po = new Potion(PotionType.POISON);
+		po.splash();
+		po.apply(i);
+		PotionMeta pm = (PotionMeta) i.getItemMeta();
+		PotionEffect pe = new PotionEffect(PotionEffectType.POISON, 200, 3);
+		pm.addCustomEffect(pe, true);
+		pm.setDisplayName("Spontaneous Combustion");
 		i.setItemMeta(pm);
 		if (getPlayer().getInventory().contains(i.getType())) {
 			getPlayer().getInventory().remove(i.getType());

@@ -27,12 +27,29 @@ public class PowerListener implements Listener {
 	public void onProjectileLaunch(ProjectileLaunchEvent e) {
 		if (e.getEntity().getShooter().getType() == EntityType.PLAYER) {
 			Player p = (Player) e.getEntity().getShooter();
-			Stats s = new Stats(p);
-			if (s.getPower() == Powers.SLOWDOWN) {
+			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+				Stats s = new Stats(p);
 				if (p.getItemInHand().getType() == Material.POTION) {
-					if (Potion.fromItemStack(p.getItemInHand()).getType() == PotionType.SLOWNESS) {
-						if (e.getEntityType() == EntityType.SPLASH_POTION) {
-							e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(5));
+					if (s.hasPower(Powers.SLOWDOWN)) {
+						if (Potion.fromItemStack(p.getItemInHand()).getType() == PotionType.SLOWNESS) {
+							if (e.getEntityType() == EntityType.SPLASH_POTION) {
+								e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(5));
+							}
+						}
+					}
+					if (s.hasPower(Powers.SPONTANEOUS_COMBUSTION)) {
+						if (Potion.fromItemStack(p.getItemInHand()).getType() == PotionType.POISON) {
+							if (e.getEntityType() == EntityType.SPLASH_POTION) {
+								e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(5));
+							}
+						}
+					}
+					if (s.hasPower(Powers.BLINDNESS)) {
+						if (Potion.fromItemStack(p.getItemInHand()).getType() == PotionType.REGEN) {
+							if (e.getEntityType() == EntityType.SPLASH_POTION) {
+								p.getInventory().remove(p.getItemInHand());
+								e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(5));
+							}
 						}
 					}
 				}
@@ -44,23 +61,64 @@ public class PowerListener implements Listener {
 	public void onPotionSplash(PotionSplashEvent e) {
 		if (e.getEntity().getShooter().getType() == EntityType.PLAYER) {
 			Player p = (Player) e.getEntity().getShooter();
+			Stats s = new Stats(p);
 			if (Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.SLOWNESS) {
 				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-					if (!e.getAffectedEntities().isEmpty()) {
-						Chat.sendPPM("Slow down affected:", p);
-						for (Entity en : e.getAffectedEntities()) {
-							if (en.getType() == EntityType.PLAYER) {
-								if (TeamCyan.hasArenaPlayer((Player) en) || TeamLime.hasArenaPlayer((Player) en))
-									Chat.sendPM("    " + ((Player) en).getName(), p);
+					if (s.hasPower(Powers.SLOWDOWN)) {
+						if (!e.getAffectedEntities().isEmpty()) {
+							Chat.sendPPM("Slowdown affected:", p);
+							for (Entity en : e.getAffectedEntities()) {
+								if (en.getType() == EntityType.PLAYER) {
+									if (TeamCyan.hasArenaPlayer((Player) en) || TeamLime.hasArenaPlayer((Player) en))
+										Chat.sendPM("    " + ((Player) en).getName(), p);
+								}
 							}
+						} else {
+							Chat.sendPPM("Slowdown affected no players!", p);
 						}
-					} else {
-						Chat.sendPPM("Slowdown affected no players!", p);
 					}
 				}
 			}
-			if (Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.SPEED) {
+			if (Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.POISON) {
 				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+					if (s.hasPower(Powers.SPONTANEOUS_COMBUSTION)) {
+						if (!e.getAffectedEntities().isEmpty()) {
+							Chat.sendPPM("Spontaneous Combustion affected:", p);
+							for (Entity en : e.getAffectedEntities()) {
+								if (en.getType() == EntityType.PLAYER) {
+									if (TeamCyan.hasArenaPlayer((Player) en) || TeamLime.hasArenaPlayer((Player) en))
+										((Player) en).setFireTicks(200);
+									Chat.sendPM("    " + ((Player) en).getName(), p);
+								}
+							}
+						} else {
+							Chat.sendPPM("Spontaneous Combustion affected no players!", p);
+						}
+					}
+				}
+			}
+			if (Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.REGEN) {
+				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+					if (s.hasPower(Powers.BLINDNESS)) {
+						if (!e.getAffectedEntities().isEmpty()) {
+							Chat.sendPPM("Blindness affected:", p);
+							for (Entity en : e.getAffectedEntities()) {
+								if (en.getType() == EntityType.PLAYER) {
+									if (TeamCyan.hasArenaPlayer((Player) en) || TeamLime.hasArenaPlayer((Player) en))
+										Chat.sendPM("    " + ((Player) en).getName(), p);
+								}
+							}
+						} else {
+							Chat.sendPPM("Blindness affected no players!", p);
+						}
+					}
+				}
+			}
+			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+				if (s.hasPower(Powers.BLINDNESS)) {
+					PowerCoolDown.start(p, 40000);
+				}
+				if (s.hasPower(Powers.SPEED)) {
 					PowerCoolDown.start(p, 30000);
 				}
 			}

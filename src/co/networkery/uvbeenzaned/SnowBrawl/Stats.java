@@ -131,7 +131,7 @@ public class Stats {
 
 	public boolean hasPower(Powers p) {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power") != null) {
-			if (Powers.valueOf(Configurations.getPlayersconfig().getConfigurationSection(player).getString("power")) == p) {
+			if (Powers.valueOf(Configurations.getPlayersconfig().getConfigurationSection(player).getString("power").toUpperCase()) == p) {
 				return true;
 			}
 			return false;
