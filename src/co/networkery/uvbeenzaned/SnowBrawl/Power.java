@@ -56,6 +56,8 @@ public class Power {
 		case SNIPER:
 			sniper();
 			break;
+		case SMITE:
+			smite();
 		default:
 			break;
 		}
@@ -90,12 +92,12 @@ public class Power {
 	}
 	
 	private void blindness() {
-		ItemStack i = new ItemStack(Material.POTION, 0);
+		ItemStack i = new ItemStack(Material.POTION, 2);
 		Potion po = new Potion(1);
 		po.splash();
 		po.apply(i);
 		PotionMeta pm = (PotionMeta) i.getItemMeta();
-		PotionEffect pe = new PotionEffect(PotionEffectType.BLINDNESS, 100, 1);
+		PotionEffect pe = new PotionEffect(PotionEffectType.BLINDNESS, 160, 1);
 		pm.addCustomEffect(pe, true);
 		pm.setDisplayName("Blindness");
 		i.setItemMeta(pm);
@@ -138,5 +140,16 @@ public class Power {
 			getPlayer().getInventory().remove(i1.getType());
 		}
 		getPlayer().getInventory().addItem(i1);
+	}
+	
+	private void smite() {
+		ItemStack i = new ItemStack(Material.BLAZE_ROD);
+		ItemMeta im = i.getItemMeta();
+		im.setDisplayName("Lighting Rod");
+		i.setItemMeta(im);
+		if (getPlayer().getInventory().contains(i.getType())) {
+			getPlayer().getInventory().remove(i.getType());
+		}
+		getPlayer().getInventory().addItem(i);
 	}
 }

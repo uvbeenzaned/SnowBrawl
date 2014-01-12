@@ -41,8 +41,10 @@ public class GameListener implements Listener {
 			Utilities.checkTeams();
 			Rank.checkRank(p);
 		} else if (TeamCyan.hasPlayer(p) || TeamLime.hasPlayer(p)) {
-			TeamCyan.removePlayer(p);
-			TeamLime.removePlayer(p);
+			e.getDrops().clear();
+			p.setHealth(p.getMaxHealth());
+			p.teleport(Lobby.getLobbyspawnlocation());
+			Rank.checkRank(p);
 		}
 	}
 

@@ -55,7 +55,9 @@ public class SBCommandExecutor implements CommandExecutor {
 							return true;
 						}
 					}
-					Chat.sendPPM("Global plugins stats have not been added yet!  If you mean to get a player's score, don't forget to add their name after \"/sb stats\"!", p);
+					for (String msg : Stats.getGlobalStats()) {
+						Chat.sendPPM(msg, p);
+					}
 					return true;
 				case "power":
 					if (args.length > 1) {
@@ -87,16 +89,20 @@ public class SBCommandExecutor implements CommandExecutor {
 					if (p.isOp() || p.hasPermission("SnowBrawl.arena")) {
 						switch (args[1].toLowerCase()) {
 						case "list":
-							String astring = "";
-							int cnt = 0;
-							Chat.sendPPM("Arena list:", p);
-							for (String name : Arenas.getNameList()) {
-								astring = astring + name + ", ";
-								cnt++;
+							if (p.hasPermission("SnowBrawl.arena.list")) {
+								String astring = "";
+								int cnt = 0;
+								Chat.sendPPM("Arena list:", p);
+								for (String name : Arenas.getNameList()) {
+									astring = astring + name + ", ";
+									cnt++;
+								}
+								astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
+								Chat.sendPM(astring, p);
+								return true;
 							}
-							astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
-							Chat.sendPM(astring, p);
-							return false;
+							Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
+							return true;
 						case "info":
 							if (args.length > 2) {
 								Arena a = Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2));

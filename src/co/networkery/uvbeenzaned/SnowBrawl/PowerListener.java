@@ -1,5 +1,10 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import java.util.ArrayList;
+import java.util.Random;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -9,10 +14,12 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
@@ -115,9 +122,6 @@ public class PowerListener implements Listener {
 				}
 			}
 			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-				if (s.hasPower(Powers.BLINDNESS)) {
-					PowerCoolDown.start(p, 40000);
-				}
 				if (s.hasPower(Powers.SPEED)) {
 					PowerCoolDown.start(p, 30000);
 				}
@@ -150,6 +154,42 @@ public class PowerListener implements Listener {
 			if (arrow.getShooter() instanceof Player) {
 				if (TeamCyan.hasArenaPlayer((Player) arrow.getShooter()) || TeamLime.hasArenaPlayer((Player) arrow.getShooter())) {
 					arrow.remove();
+				}
+			}
+		}
+	}
+
+	@EventHandler
+	public void onItemInteract(PlayerInteractEvent e) {
+		if (TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
+			if (e.getPlayer().getItemInHand().getType() == Material.BLAZE_ROD && e.getAction() == Action.LEFT_CLICK_AIR) {
+				if (new Stats(e.getPlayer()).hasPower(Powers.SMITE)) {
+					ArrayList<String> players = new ArrayList<String>();
+					if(TeamCyan.hasArenaPlayer(e.getPlayer())) {
+						players.addAll(TeamLime.getPlayers());
+					} else if (TeamLime.hasArenaPlayer(e.getPlayer())) {
+						players.addAll(TeamCyan.getPlayers());
+					}
+					int playeramount = players.size();
+					Random r = new Random();
+					r.setSeed(System.currentTimeMillis());
+					int randnum = r.nextInt(playeramount);
+					int playernum = 0;
+					for (String pl : players) {
+						if (randnum == playernum) {
+							Bukkit.getPlayer(pl).getWorld().strikeLightningEffect(Bukkit.getPlayer(pl).getLocation());
+							Bukkit.getPlayer(pl).damage(17);
+							Chat.sendPPM("You've been smitten by " + e.getPlayer().getName() + ChatColor.RESET + "!", Bukkit.getPlayer(pl));
+							Chat.sendPPM("You've just smitten " + pl + ChatColor.RESET + "!", e.getPlayer());
+							break;
+						}
+						playernum++;
+					}
+					e.getPlayer().getInventory().remove(Material.BLAZE_ROD);
+				}
+				Stats s = new Stats(e.getPlayer());
+				if (s.hasPower(Powers.SMITE)) {
+					PowerCoolDown.start(e.getPlayer(), 60000);
 				}
 			}
 		}

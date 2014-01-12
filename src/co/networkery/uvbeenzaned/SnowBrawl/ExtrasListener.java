@@ -2,11 +2,13 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
@@ -25,7 +27,7 @@ public class ExtrasListener implements Listener {
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		if (e.getAction() == Action.LEFT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK) {
-			if (TeamCyan.hasPlayer(e.getPlayer()) || TeamLime.hasPlayer(e.getPlayer())) {
+			if (TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
 				Utilities.reloadSnowballs(e.getPlayer());
 			}
 		}
@@ -71,6 +73,35 @@ public class ExtrasListener implements Listener {
 	public void playerDropItem(PlayerDropItemEvent e) {
 		if (TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
 			e.setCancelled(true);
+		}
+	}
+
+	@EventHandler
+	public void onNewSign(SignChangeEvent e) {
+		if (e.getPlayer().isOp()) {
+			if (e.getLine(0).equalsIgnoreCase("[sb]")) {
+				e.setLine(0, ChatColor.GOLD + "[" + ChatColor.AQUA + "SB" + ChatColor.GOLD + "]");
+				e.setLine(1, ChatColor.DARK_RED + "(click here)");
+				e.setLine(2, ChatColor.BLUE + "(RANK)");
+				e.setLine(3, ChatColor.GOLD + "(K/D)");
+			}
+		}
+	}
+
+	@EventHandler
+	public void onSignClick(PlayerInteractEvent e) {
+		if (TeamCyan.hasPlayer(e.getPlayer()) || TeamLime.hasPlayer(e.getPlayer())) {
+			if (e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+				if (e.getClickedBlock().getType() == Material.SIGN || e.getClickedBlock().getType() == Material.SIGN_POST || e.getClickedBlock().getType() == Material.WALL_SIGN) {
+					Sign s = (org.bukkit.block.Sign) e.getClickedBlock().getState();
+					if (s.getLine(0).equalsIgnoreCase(ChatColor.GOLD + "[" + ChatColor.AQUA + "SB" + ChatColor.GOLD + "]")) {
+						s.setLine(1, ChatColor.DARK_RED + e.getPlayer().getName());
+						s.setLine(2, ChatColor.BLUE + Rank.getRankName(e.getPlayer().getName()));
+						s.setLine(3, ChatColor.GOLD + "K/D: " + ChatColor.GREEN + String.valueOf(new Stats(e.getPlayer()).getKDRatio()));
+						s.update();
+					}
+				}
+			}
 		}
 	}
 

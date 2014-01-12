@@ -57,13 +57,13 @@ public class TeamCyan {
 
 	public static void leave(Player p) {
 		if (hasPlayer(p)) {
-			p.getInventory().setChestplate(new ItemStack(Material.AIR));
-			p.getInventory().remove(Material.SNOW_BALL);
 			Board.removePlayer(p);
 			removePlayer(p);
 			Chat.sendPPM("You've left team CYAN.", p);
 			Chat.sendTeamCyanMsg(p.getName() + ChatColor.RESET + " has left team CYAN.");
 			p.teleport(Lobby.getLobbyspawnlocation());
+			p.getInventory().setChestplate(new ItemStack(Material.AIR));
+			p.getInventory().remove(Material.SNOW_BALL);
 			if (TeamCyan.isEmpty() && !TeamLime.isEmpty()) {
 				Round.setGameActive(false);
 				Clock.stopTimer();

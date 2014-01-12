@@ -8,7 +8,7 @@ import javax.swing.Timer;
 public class Clock {
 
 	private static int cntdwn = 0;
-	private static int printerval = 5;
+	private static int printerval = 10;
 
 	private static ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
@@ -16,7 +16,7 @@ public class Clock {
 				if (printerval % cntdwn == 0) {
 					Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
 				} else {
-					if (cntdwn == 3 || cntdwn == 2 || cntdwn == 1) {
+					if (cntdwn == 5 || cntdwn == 4 || cntdwn == 3 || cntdwn == 2 || cntdwn == 1) {
 						Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
 					}
 				}

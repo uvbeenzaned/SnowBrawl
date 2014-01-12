@@ -17,6 +17,8 @@ public class SB extends JavaPlugin {
 	private Board b;
 	@SuppressWarnings("unused")
 	private TeleportFixThree tpf;
+	@SuppressWarnings("unused")
+	private Help h;
 
 	public void onEnable() {
 		getCommand("snowbrawl").setExecutor(new SBCommandExecutor());
@@ -31,6 +33,7 @@ public class SB extends JavaPlugin {
 		pl = new PowerListener(this);
 		b = new Board();
 		tpf = new TeleportFixThree(this);
+		h = new Help(this);
 	}
 
 	public void onDisable() {
