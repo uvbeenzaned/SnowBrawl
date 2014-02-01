@@ -184,12 +184,14 @@ public class Stats {
 		int kills = 0;
 		float kd = 0;
 		int sbthrown = 0;
-		for(String p : Configurations.getPlayersconfig().getKeys(false)) {
+		for (String p : Configurations.getPlayersconfig().getKeys(false)) {
 			points += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("points");
 			kills += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("kills");
-			kd += (float) Configurations.getPlayersconfig().getConfigurationSection(p).getInt("kills") / Configurations.getPlayersconfig().getConfigurationSection(p).getInt("deaths");
+			if (Configurations.getPlayersconfig().getConfigurationSection(p).getInt("kills") > 0 && Configurations.getPlayersconfig().getConfigurationSection(p).getInt("deaths") > 0) {
+				kd += (float) (Configurations.getPlayersconfig().getConfigurationSection(p).getInt("kills") / Configurations.getPlayersconfig().getConfigurationSection(p).getInt("deaths"));
+				plcount++;
+			}
 			sbthrown += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("snowballs-thrown");
-			plcount++;
 		}
 		kd = (float) kd / plcount;
 		s.add("Global Stats:");
