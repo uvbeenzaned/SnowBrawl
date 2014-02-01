@@ -179,24 +179,24 @@ public class Stats {
 
 	public static ArrayList<String> getGlobalStats() {
 		ArrayList<String> s = new ArrayList<String>();
+		int plcount = 0;
 		int points = 0;
 		int kills = 0;
-		int deaths = 0;
 		float kd = 0;
 		int sbthrown = 0;
 		for(String p : Configurations.getPlayersconfig().getKeys(false)) {
 			points += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("points");
 			kills += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("kills");
-			deaths += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("deaths");
+			kd += (float) Configurations.getPlayersconfig().getConfigurationSection(p).getInt("kills") / Configurations.getPlayersconfig().getConfigurationSection(p).getInt("deaths");
 			sbthrown += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("snowballs-thrown");
+			plcount++;
 		}
-		kd = (float) kills / deaths;
+		kd = (float) kd / plcount;
 		s.add("Global Stats:");
-		s.add("    Points: " + String.valueOf(points));
-		s.add("    Kills: " + String.valueOf(kills));
-		s.add("    Deaths: " + String.valueOf(deaths));
-		s.add("    K/D ratio: " + String.valueOf(kd));
-		s.add("    Snowballs thrown: " + String.valueOf(sbthrown));
+		s.add("    Total Points: " + String.valueOf(points));
+		s.add("    Total Kills: " + String.valueOf(kills));
+		s.add("    Avg. K/D ratio: " + String.valueOf(kd));
+		s.add("    Total Snowballs thrown: " + String.valueOf(sbthrown));
 		return s;
 	}
 

@@ -20,8 +20,11 @@ import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 public class PowerListener implements Listener {
@@ -58,6 +61,11 @@ public class PowerListener implements Listener {
 								e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(5));
 							}
 						}
+					}
+				}
+				if (e.getEntityType() == EntityType.SNOWBALL) {
+					if (new Stats(p).hasPower(Powers.VELOCITY)) {
+						e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(2));
 					}
 				}
 			}
@@ -148,6 +156,25 @@ public class PowerListener implements Listener {
 	}
 
 	@EventHandler
+	public void onPlayerToggleSneak(PlayerToggleSneakEvent e) {
+		Player p = e.getPlayer();
+		if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+			if (new Stats(p).hasPower(Powers.SNIPER)) {
+				PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 100);
+				if (e.isSneaking()) {
+					if (p.getItemInHand().getType() == Material.BOW) {
+						p.addPotionEffect(pe, false);
+					}
+				} else {
+					if (p.hasPotionEffect(PotionEffectType.SLOW)) {
+						p.removePotionEffect(PotionEffectType.SLOW);
+					}
+				}
+			}
+		}
+	}
+
+	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent e) {
 		if (e.getEntity() instanceof Arrow) {
 			Arrow arrow = (Arrow) e.getEntity();
@@ -165,10 +192,10 @@ public class PowerListener implements Listener {
 			if (e.getPlayer().getItemInHand().getType() == Material.BLAZE_ROD && e.getAction() == Action.LEFT_CLICK_AIR) {
 				if (new Stats(e.getPlayer()).hasPower(Powers.SMITE)) {
 					ArrayList<String> players = new ArrayList<String>();
-					if(TeamCyan.hasArenaPlayer(e.getPlayer())) {
-						players.addAll(TeamLime.getPlayers());
+					if (TeamCyan.hasArenaPlayer(e.getPlayer())) {
+						players.addAll(TeamLime.getPlayersinarena());
 					} else if (TeamLime.hasArenaPlayer(e.getPlayer())) {
-						players.addAll(TeamCyan.getPlayers());
+						players.addAll(TeamCyan.getPlayersinarena());
 					}
 					int playeramount = players.size();
 					Random r = new Random();

@@ -58,6 +58,9 @@ public class Power {
 			break;
 		case SMITE:
 			smite();
+		case VELOCITY:
+			// no function required
+			break;
 		default:
 			break;
 		}
@@ -90,7 +93,7 @@ public class Power {
 		}
 		getPlayer().getInventory().addItem(i);
 	}
-	
+
 	private void blindness() {
 		ItemStack i = new ItemStack(Material.POTION, 2);
 		Potion po = new Potion(1);
@@ -106,7 +109,7 @@ public class Power {
 		}
 		getPlayer().getInventory().addItem(i);
 	}
-	
+
 	private void spontaneousCombustion() {
 		ItemStack i = new ItemStack(Material.POTION, 1);
 		Potion po = new Potion(PotionType.POISON);
@@ -141,11 +144,11 @@ public class Power {
 		}
 		getPlayer().getInventory().addItem(i1);
 	}
-	
+
 	private void smite() {
 		ItemStack i = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName("Lighting Rod");
+		im.setDisplayName("Lightning Rod");
 		i.setItemMeta(im);
 		if (getPlayer().getInventory().contains(i.getType())) {
 			getPlayer().getInventory().remove(i.getType());
