@@ -13,6 +13,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -101,6 +102,15 @@ public class ExtrasListener implements Listener {
 						s.update();
 					}
 				}
+			}
+		}
+	}
+
+	@EventHandler
+	public void onCommand(PlayerCommandPreprocessEvent e) {
+		if (!e.getMessage().replace("/", "").toLowerCase().startsWith("sb") || !e.getMessage().replace("/", "").toLowerCase().startsWith("snowbrawl")) {
+			if(!e.getPlayer().isOp() && (TeamCyan.hasPlayer(e.getPlayer()) || TeamLime.hasPlayer(e.getPlayer()))) {
+				Chat.sendPPM("You may not execute external commands while in round!", e.getPlayer());
 			}
 		}
 	}

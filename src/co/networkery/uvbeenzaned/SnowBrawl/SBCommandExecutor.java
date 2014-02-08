@@ -165,6 +165,7 @@ public class SBCommandExecutor implements CommandExecutor {
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 					return true;
 				case "lobby":
+					if(!TeamCyan.hasArenaPlayer(p) && !TeamLime.hasArenaPlayer(p))
 					p.teleport(Lobby.getLobbyspawnlocation());
 					return true;
 				case "join":
