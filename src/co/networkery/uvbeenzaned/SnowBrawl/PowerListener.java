@@ -20,6 +20,7 @@ import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.Potion;
@@ -163,6 +164,25 @@ public class PowerListener implements Listener {
 				PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 100);
 				if (e.isSneaking()) {
 					if (p.getItemInHand().getType() == Material.BOW) {
+						p.addPotionEffect(pe, false);
+					}
+				} else {
+					if (p.hasPotionEffect(PotionEffectType.SLOW)) {
+						p.removePotionEffect(PotionEffectType.SLOW);
+					}
+				}
+			}
+		}
+	}
+
+	@EventHandler
+	public void onPlayerSwitchItem(PlayerItemHeldEvent e) {
+		Player p = e.getPlayer();
+		if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+			if (new Stats(p).hasPower(Powers.SNIPER)) {
+				if (e.getPlayer().getInventory().getItem(e.getNewSlot()) != null && e.getPlayer().getInventory().getItem(e.getNewSlot()).getType() == Material.BOW) {
+					if (p.isSneaking()) {
+						PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 100);
 						p.addPotionEffect(pe, false);
 					}
 				} else {

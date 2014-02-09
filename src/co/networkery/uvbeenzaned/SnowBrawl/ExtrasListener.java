@@ -110,7 +110,8 @@ public class ExtrasListener implements Listener {
 	public void onCommand(PlayerCommandPreprocessEvent e) {
 		if (!e.getMessage().replace("/", "").toLowerCase().startsWith("sb") || !e.getMessage().replace("/", "").toLowerCase().startsWith("snowbrawl")) {
 			if(!e.getPlayer().isOp() && (TeamCyan.hasPlayer(e.getPlayer()) || TeamLime.hasPlayer(e.getPlayer()))) {
-				Chat.sendPPM("You may not execute external commands while in round!", e.getPlayer());
+				Chat.sendPPM("You may not execute external commands while in game!", e.getPlayer());
+				e.setCancelled(true);
 			}
 		}
 	}
