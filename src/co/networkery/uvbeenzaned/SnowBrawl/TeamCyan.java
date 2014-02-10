@@ -43,7 +43,9 @@ public class TeamCyan {
 			addPlayer(p);
 			Rank.checkRank(p);
 			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has joined team CYAN.");
-			p.teleport(Lobby.getLobbyspawnlocation());
+			if (p.getWorld() != Lobby.getLobbyspawnlocation().getWorld()) {
+				p.teleport(Lobby.getLobbyspawnlocation());
+			}
 			Board.addPlayer(p);
 			if (!TeamLime.isEmpty()) {
 				Round.startTimerRound();

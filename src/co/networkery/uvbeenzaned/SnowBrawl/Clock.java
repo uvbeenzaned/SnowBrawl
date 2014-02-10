@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import org.bukkit.ChatColor;
+
 public class Clock {
 
 	private static int cntdwn = 0;
@@ -13,11 +15,11 @@ public class Clock {
 	private static ActionListener taskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
 			if (cntdwn > 0) {
-				if (printerval % cntdwn == 0) {
-					Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
+				if (cntdwn % printerval == 0) {
+					Chat.sendAllTeamsMsg(ChatColor.GREEN + "Round" + ChatColor.RED + " -> " + ChatColor.BLUE + String.valueOf(cntdwn));
 				} else {
 					if (cntdwn == 5 || cntdwn == 4 || cntdwn == 3 || cntdwn == 2 || cntdwn == 1) {
-						Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
+						Chat.sendAllTeamsMsg(ChatColor.RED + String.valueOf(cntdwn));
 					}
 				}
 				cntdwn--;
@@ -41,8 +43,6 @@ public class Clock {
 			cntdwn = Settings.getRoundstartdelay() / 1000;
 			timer.setRepeats(true);
 			timer.start();
-			Chat.sendAllTeamsMsg("Round will start in...");
-			Chat.sendAllTeamsMsg(String.valueOf(cntdwn));
 		}
 	}
 

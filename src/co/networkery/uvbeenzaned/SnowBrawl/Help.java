@@ -31,6 +31,8 @@ public class Help {
 		cmds.add(cmd + "stats - Shows plugin stats and also is used for other stats below.");
 		cmds.add("        <player> - Shows a players stats.");
 		cmds.add("        top <amount> - Shows top 5 players unless amount argument is provided.");
+		cmds.add(cmd + "round - Command to access all round operations and info.");
+		cmds.add("        lineup - Shows the next 5 maps coming up.");
 		for (String c : cmds) {
 			Chat.sendPM(c, p);
 		}

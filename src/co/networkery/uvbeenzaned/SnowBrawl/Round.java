@@ -1,5 +1,7 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,9 +13,9 @@ import org.bukkit.entity.Player;
 
 public class Round {
 
+	private static ArrayList<String> shuffle = new ArrayList<String>();
 	private static Map<String, Integer> leads = new HashMap<String, Integer>();
 	private static Random r = new Random();
-	private static int l = 0;
 	private static boolean gameactive = false;
 
 	public static void startTimerRound() {
@@ -24,22 +26,13 @@ public class Round {
 
 	public static void startRandomMap() {
 		if (!isGameActive() && !Clock.isRunning()) {
-			int arenaamount = Configurations.getArenasconfig().getKeys(false).size();
-			r.setSeed(System.currentTimeMillis());
-			int randnum = r.nextInt(arenaamount);
-			if (arenaamount > 1) {
-				while (randnum == l) {
-					randnum = r.nextInt(arenaamount);
-				}
-			}
-			int mapnum = 0;
-			for (String as : Configurations.getArenasconfig().getKeys(false)) {
-				if (randnum == mapnum) {
-					l = mapnum;
-					startMap(Arena.getInstanceFromConfig(as));
-					break;
-				}
-				mapnum++;
+			if(!shuffle.isEmpty()) {
+				startMap(Arena.getInstanceFromConfig(shuffle.get(0)));
+				shuffle.remove(0);
+			} else {
+				generateMapLineup();
+				startMap(Arena.getInstanceFromConfig(shuffle.get(0)));
+				shuffle.remove(0);
 			}
 		}
 	}
@@ -54,6 +47,16 @@ public class Round {
 			Chat.sendAllTeamsMsg("    Author(s): " + a.getAuthorsString());
 			setGameActive(true);
 		}
+	}
+	
+	public static void generateMapLineup() {
+		shuffle.addAll(Configurations.getArenasconfig().getKeys(false));
+		r.setSeed(System.currentTimeMillis());
+		Collections.shuffle(shuffle, r);
+	}
+	
+	public static ArrayList<String> getMapLineup() {
+		return shuffle;
 	}
 
 	public static Map<String, Integer> getLeads() {

@@ -8,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -32,12 +34,19 @@ public class ExtrasListener implements Listener {
 				Utilities.reloadSnowballs(e.getPlayer());
 			}
 		}
-		if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
-			if (TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
-				if (e.getClickedBlock().getType() != Material.AIR) {
-					e.setCancelled(true);
-				}
-			}
+	}
+
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent e) {
+		if (TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
+			e.setCancelled(true);
+		}
+	}
+	
+	@EventHandler
+	public void onBlockPlace(BlockPlaceEvent e) {
+		if (TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
+			e.setCancelled(true);
 		}
 	}
 
@@ -108,8 +117,8 @@ public class ExtrasListener implements Listener {
 
 	@EventHandler
 	public void onCommand(PlayerCommandPreprocessEvent e) {
-		if (!e.getMessage().replace("/", "").toLowerCase().startsWith("sb") || !e.getMessage().replace("/", "").toLowerCase().startsWith("snowbrawl")) {
-			if(!e.getPlayer().isOp() && (TeamCyan.hasPlayer(e.getPlayer()) || TeamLime.hasPlayer(e.getPlayer()))) {
+		if (!e.getPlayer().isOp() && (TeamCyan.hasPlayer(e.getPlayer()) || TeamLime.hasPlayer(e.getPlayer()))) {
+			if (!e.getMessage().split(" ")[0].replace("/", "").equalsIgnoreCase("sb") && !e.getMessage().split(" ")[0].replace("/", "").equalsIgnoreCase("snowbrawl")) {
 				Chat.sendPPM("You may not execute external commands while in game!", e.getPlayer());
 				e.setCancelled(true);
 			}

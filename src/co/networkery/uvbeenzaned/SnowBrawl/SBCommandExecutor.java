@@ -59,6 +59,31 @@ public class SBCommandExecutor implements CommandExecutor {
 						Chat.sendPPM(msg, p);
 					}
 					return true;
+				case "round":
+					if (args.length > 1) {
+						switch (args[1].toLowerCase()) {
+						case "lineup":
+							if (Round.getMapLineup().isEmpty()) {
+								Round.generateMapLineup();
+							}
+							Chat.sendPPM("Next maps coming up: ", p);
+							for (int i = 0; i < 5; i++) {
+								int read = i;
+								read += 1;
+								if (Round.getMapLineup().size() >= 5) {
+									Chat.sendPM("    " + ChatColor.GOLD + String.valueOf(read) + ChatColor.RESET + ". " + Round.getMapLineup().get(i), p);
+								} else {
+									for (int j = 0; j < Round.getMapLineup().size(); j++) {
+										Chat.sendPM("    " + ChatColor.GOLD + String.valueOf(read) + ChatColor.RESET + ". " + Round.getMapLineup().get(i), p);
+									}
+									break;
+								}
+							}
+							Chat.sendPM("    (map circulation: " + ChatColor.GOLD + String.valueOf(Round.getMapLineup().size()) + ChatColor.RESET + "/" + ChatColor.BLUE + String.valueOf(Configurations.getArenasconfig().getKeys(false).size()) + ChatColor.RESET + ")", p);
+							return true;
+						}
+					}
+					return false;
 				case "power":
 					if (args.length > 1) {
 						switch (args[1].toLowerCase()) {
@@ -165,8 +190,8 @@ public class SBCommandExecutor implements CommandExecutor {
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 					return true;
 				case "lobby":
-					if(!TeamCyan.hasArenaPlayer(p) && !TeamLime.hasArenaPlayer(p))
-					p.teleport(Lobby.getLobbyspawnlocation());
+					if (!TeamCyan.hasArenaPlayer(p) && !TeamLime.hasArenaPlayer(p))
+						p.teleport(Lobby.getLobbyspawnlocation());
 					return true;
 				case "join":
 					if ((p.isOp() && args.length > 1)) {

@@ -43,7 +43,9 @@ public class TeamLime {
 			addPlayer(p);
 			Rank.checkRank(p);
 			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has joined team LIME.");
-			p.teleport(Lobby.getLobbyspawnlocation());
+			if (p.getWorld() != Lobby.getLobbyspawnlocation().getWorld()) {
+				p.teleport(Lobby.getLobbyspawnlocation());
+			}
 			Board.addPlayer(p);
 			if (!TeamCyan.isEmpty()) {
 				Round.startTimerRound();
