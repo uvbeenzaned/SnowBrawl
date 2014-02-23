@@ -72,12 +72,22 @@ public class Utilities {
 		}
 	}
 
+	public static void removeSnowballReloadPlayer(Player p) {
+		if (reloadplayers.containsKey(p.getName()))
+			reloadplayers.remove(p.getName());
+	}
+
+	public static void stopReloadTimer() {
+		timer.stop();
+	}
+
 	public static void giveSnowballs(Player p) {
 		p.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
 	}
 
 	public static void checkTeams() {
 		if (TeamCyan.isArenaPlayersEmpty()) {
+			stopReloadTimer();
 			Chat.sendAllTeamsMsg("Team LIME" + ChatColor.RESET + " wins!");
 			TeamCyan.teleportAllPlayersToLobby();
 			TeamLime.teleportAllPlayersToLobby();
@@ -87,6 +97,7 @@ public class Utilities {
 			Round.startTimerRound();
 		} else {
 			if (TeamLime.isArenaPlayersEmpty()) {
+				stopReloadTimer();
 				Chat.sendAllTeamsMsg("Team CYAN" + ChatColor.RESET + " wins!");
 				TeamCyan.teleportAllPlayersToLobby();
 				TeamLime.teleportAllPlayersToLobby();

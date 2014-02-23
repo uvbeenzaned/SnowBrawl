@@ -58,6 +58,10 @@ public class Round {
 	public static ArrayList<String> getMapLineup() {
 		return shuffle;
 	}
+	
+	public static void removeMapFromLineup(String name) {
+		shuffle.remove(name);
+	}
 
 	public static Map<String, Integer> getLeads() {
 		return leads;

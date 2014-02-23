@@ -51,6 +51,7 @@ public class GameListener implements Listener {
 	@EventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent e) {
 		Player plhit = null;
+		String method = "";
 		if (e.getEntity() instanceof Player) {
 			plhit = (Player) e.getEntity();
 		}
@@ -60,11 +61,13 @@ public class GameListener implements Listener {
 			if (dgr instanceof Snowball) {
 				if (((Snowball) e.getDamager()).getShooter() instanceof Player) {
 					plenemy = (Player) ((Snowball) e.getDamager()).getShooter();
+					method = "Snowball";
 				}
 			}
 			if (dgr instanceof Arrow) {
 				if (((Arrow) e.getDamager()).getShooter() instanceof Player) {
 					plenemy = (Player) ((Arrow) e.getDamager()).getShooter();
+					method = "Sniper Rifle";
 				}
 			}
 			if (plhit != plenemy && plhit != null) {
@@ -74,12 +77,13 @@ public class GameListener implements Listener {
 							if (!TeamLime.hasArenaPlayer(plhit) || !TeamLime.hasArenaPlayer(plenemy)) {
 								if ((e.getEntity() instanceof Player && (e.getDamager() instanceof Snowball || e.getDamager() instanceof Arrow))) {
 									e.setCancelled(true);
-									Chat.sendAllTeamsMsg(plenemy.getName() + ChatColor.RED + " -> " + plhit.getName() + ChatColor.GOLD + " [" + ChatColor.DARK_PURPLE + String.valueOf(Utilities.getBlockDistance(plenemy.getLocation(), plhit.getLocation())) + " blocks" + ChatColor.GOLD + "]");
+									Chat.sendAllTeamsMsg(plenemy.getName() + ChatColor.RED + " -> " + plhit.getName() + ChatColor.GOLD + " [" + ChatColor.DARK_PURPLE + String.valueOf(Utilities.getBlockDistance(plenemy.getLocation(), plhit.getLocation())) + " blocks, " + method + ChatColor.GOLD + "]");
 									Stats s = new Stats(plhit);
 									s.removePoints(1);
 									Chat.sendPPM(ChatColor.RED + "-1" + ChatColor.RESET + " point!", plhit);
 									s.incrementDeathCount();
 									Utilities.playEffects(plenemy, plhit);
+									Utilities.removeSnowballReloadPlayer(plhit);
 									TeamCyan.removeArenaPlayer(plhit);
 									TeamLime.removeArenaPlayer(plhit);
 									Rank.checkRank(plhit);

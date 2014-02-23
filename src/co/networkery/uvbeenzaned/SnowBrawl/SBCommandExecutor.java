@@ -74,7 +74,9 @@ public class SBCommandExecutor implements CommandExecutor {
 									Chat.sendPM("    " + ChatColor.GOLD + String.valueOf(read) + ChatColor.RESET + ". " + Round.getMapLineup().get(i), p);
 								} else {
 									for (int j = 0; j < Round.getMapLineup().size(); j++) {
-										Chat.sendPM("    " + ChatColor.GOLD + String.valueOf(read) + ChatColor.RESET + ". " + Round.getMapLineup().get(i), p);
+										read = j;
+										read += 1;
+										Chat.sendPM("    " + ChatColor.GOLD + String.valueOf(read) + ChatColor.RESET + ". " + Round.getMapLineup().get(j), p);
 									}
 									break;
 								}
@@ -91,19 +93,23 @@ public class SBCommandExecutor implements CommandExecutor {
 							Chat.sendPPM("List of powers:", p);
 							String pws = "";
 							for (Powers pw : Powers.values()) {
-								pws = pws + pw.toString().toLowerCase() + ", ";
+								pws = pws + pw.toString() + ", ";
 							}
 							Chat.sendPM(pws, p);
 							return true;
 						case "set":
 							if (args.length > 2) {
-								if (Utilities.getPowersList().contains(args[2].toLowerCase())) {
+								if (Utilities.getPowersList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
 									Stats s = new Stats(p);
-									s.setPower(Powers.valueOf(args[2].toUpperCase()));
-									Chat.sendPPM("Your power has been changed to: " + s.getPower().toString().toLowerCase(), p);
-									return true;
+									for(Powers pw : Powers.values()) {
+										if(pw.equalsName(Utilities.convertArgsToString(args, 2))) {
+											s.setPower(pw);
+											Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), p);
+											return true;
+										}
+									}
 								}
-								Chat.sendPPM("That power does not exist!  Please check /sb power list.", p);
+								Chat.sendPPM("That power does not exist!  Please check /" + cmd.getName() + " power list.", p);
 								return true;
 							}
 							return false;
@@ -153,8 +159,12 @@ public class SBCommandExecutor implements CommandExecutor {
 							return true;
 						case "remove":
 							if (args.length > 2) {
-								if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2)))
+								if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
+									if (Round.getMapLineup().contains(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getName())) {
+										Round.removeMapFromLineup(Utilities.convertArgsToString(args, 2));
+									}
 									Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).delete();
+								}
 								Chat.sendPPM("Removed arena successfully!", p);
 								return true;
 							} else {

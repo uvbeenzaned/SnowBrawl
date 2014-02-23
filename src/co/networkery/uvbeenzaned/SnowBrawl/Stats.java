@@ -131,7 +131,7 @@ public class Stats {
 
 	public boolean hasPower(Powers p) {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power") != null) {
-			if (Powers.valueOf(Configurations.getPlayersconfig().getConfigurationSection(player).getString("power").toUpperCase()) == p) {
+			if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power").equalsIgnoreCase(p.toString())) {
 				return true;
 			}
 			return false;
@@ -141,10 +141,13 @@ public class Stats {
 
 	public Powers getPower() {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power") != null) {
-			return Powers.valueOf(Configurations.getPlayersconfig().getConfigurationSection(player).getString("power"));
-		} else {
-			return Powers.NONE;
+			for (Powers pw : Powers.values()) {
+				if (pw.equalsName(Configurations.getPlayersconfig().getConfigurationSection(player).getString("power"))) {
+					return pw;
+				}
+			}
 		}
+		return Powers.NONE;
 	}
 
 	public void setPower(Powers p) {
@@ -172,7 +175,7 @@ public class Stats {
 		s.add("    Kills: " + String.valueOf(getKills()));
 		s.add("    Deaths: " + String.valueOf(getDeaths()));
 		s.add("    K/D ratio: " + String.valueOf(getKDRatio()));
-		s.add("    Power: " + getPower().toString().toLowerCase());
+		s.add("    Power: " + getPower().toString());
 		s.add("    Snowballs thrown: " + String.valueOf(getSnowballsThrown()));
 		return s;
 	}

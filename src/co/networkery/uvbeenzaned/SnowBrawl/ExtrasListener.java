@@ -54,7 +54,7 @@ public class ExtrasListener implements Listener {
 	public void onSnowballThrow(ProjectileLaunchEvent e) {
 		if (e.getEntity().getShooter() instanceof Player) {
 			Player p = (Player) e.getEntity().getShooter();
-			if (e.getEntityType() == EntityType.SNOWBALL && (TeamCyan.hasPlayer(p) || TeamLime.hasPlayer(p))) {
+			if (e.getEntityType() == EntityType.SNOWBALL && (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p))) {
 				if (!p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 1)) {
 					Utilities.reloadSnowballs(p);
 				}

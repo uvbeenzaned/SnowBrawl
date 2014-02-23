@@ -41,6 +41,7 @@ public class Clock {
 	public static void startTimer() {
 		if (!Round.isGameActive() && !isRunning()) {
 			cntdwn = Settings.getRoundstartdelay() / 1000;
+			timer = new Timer(1000, taskPerformer);
 			timer.setRepeats(true);
 			timer.start();
 		}
