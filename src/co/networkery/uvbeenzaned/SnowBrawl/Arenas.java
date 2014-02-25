@@ -87,6 +87,9 @@ public class Arenas implements Listener {
 								Chat.sendPPM("Set Lime's" + ChatColor.RESET + "  spawn point!", p);
 								Chat.sendPPM("Saved arena successfully!", p);
 								a.save();
+								if (!Round.getMapLineup().contains(a.getName())) {
+									Round.addMapToLineup(a.getName());
+								}
 								arenatoremove = a;
 								wizardplayers.remove(p.getName());
 								break;

@@ -155,6 +155,20 @@ public class Stats {
 		Configurations.savePlayersConfig();
 	}
 
+	public ArrayList<String> getArenasList() {
+		ArrayList<String> arenas = new ArrayList<String>();
+		for (String n : Arenas.getNameList()) {
+			Arena a = Arena.getInstanceFromConfig(n);
+			if (a.getAuthors().contains(player)) {
+				arenas.add(a.getName());
+			}
+		}
+		if (!arenas.isEmpty()) {
+			return arenas;
+		}
+		return new ArrayList<String>();
+	}
+
 	public ArrayList<String> getAllStats() {
 		ArrayList<String> s = new ArrayList<String>();
 		s.add("Stats for " + player + ":");
@@ -177,6 +191,7 @@ public class Stats {
 		s.add("    K/D ratio: " + String.valueOf(getKDRatio()));
 		s.add("    Power: " + getPower().toString());
 		s.add("    Snowballs thrown: " + String.valueOf(getSnowballsThrown()));
+		s.add("    Arenas created/assisted: " + String.valueOf(getArenasList().size()));
 		return s;
 	}
 

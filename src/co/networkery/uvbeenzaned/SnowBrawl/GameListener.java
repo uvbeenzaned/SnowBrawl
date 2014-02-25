@@ -6,6 +6,7 @@ import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
@@ -68,6 +69,16 @@ public class GameListener implements Listener {
 				if (((Arrow) e.getDamager()).getShooter() instanceof Player) {
 					plenemy = (Player) ((Arrow) e.getDamager()).getShooter();
 					method = "Sniper Rifle";
+				}
+			}
+			if (dgr.getType() == EntityType.PLAYER) {
+				plenemy = (Player) dgr;
+			}
+			if (e.getEntity().getType().equals(EntityType.ITEM_FRAME) || e.getEntity().getType().equals(EntityType.PAINTING)) {
+				if (plenemy != null) {
+					if (TeamCyan.hasPlayer(plenemy) || TeamLime.hasPlayer(plenemy)) {
+						e.setCancelled(true);
+					}
 				}
 			}
 			if (plhit != plenemy && plhit != null) {

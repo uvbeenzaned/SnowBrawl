@@ -26,7 +26,7 @@ public class Round {
 
 	public static void startRandomMap() {
 		if (!isGameActive() && !Clock.isRunning()) {
-			if(!shuffle.isEmpty()) {
+			if (!shuffle.isEmpty()) {
 				startMap(Arena.getInstanceFromConfig(shuffle.get(0)));
 				shuffle.remove(0);
 			} else {
@@ -48,19 +48,27 @@ public class Round {
 			setGameActive(true);
 		}
 	}
-	
+
 	public static void generateMapLineup() {
 		shuffle.addAll(Configurations.getArenasconfig().getKeys(false));
-		r.setSeed(System.currentTimeMillis());
-		Collections.shuffle(shuffle, r);
+		shuffleMapLineup();
 	}
-	
+
 	public static ArrayList<String> getMapLineup() {
 		return shuffle;
 	}
-	
+
+	public static void addMapToLineup(String name) {
+		shuffle.add(name);
+	}
+
 	public static void removeMapFromLineup(String name) {
 		shuffle.remove(name);
+	}
+
+	public static void shuffleMapLineup() {
+		r.setSeed(System.currentTimeMillis());
+		Collections.shuffle(shuffle, r);
 	}
 
 	public static Map<String, Integer> getLeads() {

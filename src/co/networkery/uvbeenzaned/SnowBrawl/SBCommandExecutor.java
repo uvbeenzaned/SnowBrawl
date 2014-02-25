@@ -101,8 +101,8 @@ public class SBCommandExecutor implements CommandExecutor {
 							if (args.length > 2) {
 								if (Utilities.getPowersList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
 									Stats s = new Stats(p);
-									for(Powers pw : Powers.values()) {
-										if(pw.equalsName(Utilities.convertArgsToString(args, 2))) {
+									for (Powers pw : Powers.values()) {
+										if (pw.equalsName(Utilities.convertArgsToString(args, 2))) {
 											s.setPower(pw);
 											Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), p);
 											return true;
@@ -120,17 +120,39 @@ public class SBCommandExecutor implements CommandExecutor {
 					if (p.isOp() || p.hasPermission("SnowBrawl.arena")) {
 						switch (args[1].toLowerCase()) {
 						case "list":
-							if (p.hasPermission("SnowBrawl.arena.list")) {
-								String astring = "";
-								int cnt = 0;
-								Chat.sendPPM("Arena list:", p);
-								for (String name : Arenas.getNameList()) {
-									astring = astring + name + ", ";
-									cnt++;
+							if (p.isOp() || p.hasPermission("SnowBrawl.arena.list")) {
+								if (args.length == 2) {
+									String astring = "";
+									int cnt = 0;
+									Chat.sendPPM("Arena list:", p);
+									for (String name : Arenas.getNameList()) {
+										astring = astring + name + ", ";
+										cnt++;
+									}
+									astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
+									Chat.sendPM(astring, p);
+									return true;
+
+								} else if (args.length > 2) {
+									Stats s = new Stats(args[2], p);
+									if (!s.getError()) {
+										if (!s.getArenasList().isEmpty()) {
+											String astring = "";
+											int cnt = 0;
+											Chat.sendPPM("Arenas created/assisted by " + args[2] + ChatColor.RESET + ":", p);
+											for (String name : s.getArenasList()) {
+												astring = astring + name + ", ";
+												cnt++;
+											}
+											astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
+											Chat.sendPM(astring, p);
+											return true;
+										}
+										Chat.sendPPM("This player has not created or assisted in any arenas.", p);
+										return true;
+									}
+									return true;
 								}
-								astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
-								Chat.sendPM(astring, p);
-								return true;
 							}
 							Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 							return true;
