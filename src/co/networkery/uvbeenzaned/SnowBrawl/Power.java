@@ -39,25 +39,27 @@ public class Power {
 	public void apply() {
 		switch (power) {
 		case SPEED:
-			speed();
+			addToInventory(speed());
 			break;
 		case SLOWDOWN:
-			slowdown();
+			addToInventory(slowdown());
 			break;
 		case BLINDNESS:
-			blindness();
+			addToInventory(blindness());
 			break;
 		case SPONTANEOUS_COMBUSTION:
-			spontaneousCombustion();
+			addToInventory(spontaneousCombustion());
 			break;
 		case INSTA_RELOAD:
 			// no function required
 			break;
 		case SNIPER:
-			sniper();
+			addToInventory(sniperRifle());
+			addToInventory(sniperAmmo());
 			break;
 		case SMITE:
-			smite();
+			addToInventory(smite());
+			break;
 		case VELOCITY:
 			// no function required
 			break;
@@ -65,21 +67,43 @@ public class Power {
 			break;
 		}
 	}
+	
+	public int time() {
+		switch (power) {
+		case SPEED:
+			return 30000;
+		case SLOWDOWN:
+			return 0;
+		case BLINDNESS:
+			return 0;
+		case SPONTANEOUS_COMBUSTION:
+			return 0;
+		case INSTA_RELOAD:
+			return 0;
+		case SNIPER:
+			return 30000;
+		case SMITE:
+			return 60000;
+		case VELOCITY:
+			// no function required
+			break;
+		default:
+			return 0;
+		}
+		return 0;
+	}
 
 	// power functions
-	private void speed() {
+	private ItemStack speed() {
 		ItemStack i = new ItemStack(Material.POTION, 1);
 		Potion p = new Potion(PotionType.SPEED);
 		p.splash();
 		p.setLevel(2);
 		p.apply(i);
-		if (getPlayer().getInventory().contains(i.getType())) {
-			getPlayer().getInventory().remove(i.getType());
-		}
-		getPlayer().getInventory().addItem(i);
+		return i;
 	}
 
-	private void slowdown() {
+	private ItemStack slowdown() {
 		ItemStack i = new ItemStack(Material.POTION, 2);
 		Potion po = new Potion(PotionType.SLOWNESS);
 		po.splash();
@@ -88,13 +112,10 @@ public class Power {
 		PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, 300, 2);
 		pm.addCustomEffect(pe, true);
 		i.setItemMeta(pm);
-		if (getPlayer().getInventory().contains(i.getType())) {
-			getPlayer().getInventory().remove(i.getType());
-		}
-		getPlayer().getInventory().addItem(i);
+		return i;
 	}
 
-	private void blindness() {
+	private ItemStack blindness() {
 		ItemStack i = new ItemStack(Material.POTION, 2);
 		Potion po = new Potion(1);
 		po.splash();
@@ -104,13 +125,10 @@ public class Power {
 		pm.addCustomEffect(pe, true);
 		pm.setDisplayName("Blindness");
 		i.setItemMeta(pm);
-		if (getPlayer().getInventory().contains(i.getType())) {
-			getPlayer().getInventory().remove(i.getType());
-		}
-		getPlayer().getInventory().addItem(i);
+		return i;
 	}
 
-	private void spontaneousCombustion() {
+	private ItemStack spontaneousCombustion() {
 		ItemStack i = new ItemStack(Material.POTION, 1);
 		Potion po = new Potion(PotionType.POISON);
 		po.splash();
@@ -120,36 +138,35 @@ public class Power {
 		pm.addCustomEffect(pe, true);
 		pm.setDisplayName("Spontaneous Combustion");
 		i.setItemMeta(pm);
-		if (getPlayer().getInventory().contains(i.getType())) {
-			getPlayer().getInventory().remove(i.getType());
-		}
-		getPlayer().getInventory().addItem(i);
+		return i;
 	}
 
-	private void sniper() {
+	private ItemStack sniperRifle() {
 		ItemStack i = new ItemStack(Material.BOW);
 		ItemMeta im = i.getItemMeta();
 		im.setDisplayName("Sniper Rifle");
 		i.setItemMeta(im);
-		if (getPlayer().getInventory().contains(i.getType())) {
-			getPlayer().getInventory().remove(i.getType());
-		}
-		getPlayer().getInventory().addItem(i);
-		ItemStack i1 = new ItemStack(Material.ARROW);
-		ItemMeta im1 = i1.getItemMeta();
-		im1.setDisplayName("Ammo");
-		i1.setItemMeta(im1);
-		if (getPlayer().getInventory().contains(i1.getType())) {
-			getPlayer().getInventory().remove(i1.getType());
-		}
-		getPlayer().getInventory().addItem(i1);
+		addToInventory(i);
+		return i;
+	}
+	
+	private ItemStack sniperAmmo() {
+		ItemStack i = new ItemStack(Material.ARROW);
+		ItemMeta im = i.getItemMeta();
+		im.setDisplayName("Ammo");
+		i.setItemMeta(im);
+		return i;
 	}
 
-	private void smite() {
+	private ItemStack smite() {
 		ItemStack i = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta im = i.getItemMeta();
 		im.setDisplayName("Lightning Rod");
 		i.setItemMeta(im);
+		return i;
+	}
+	
+	private void addToInventory(ItemStack i) {
 		if (getPlayer().getInventory().contains(i.getType())) {
 			getPlayer().getInventory().remove(i.getType());
 		}

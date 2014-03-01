@@ -92,7 +92,7 @@ public class GameListener implements Listener {
 									Stats s = new Stats(plhit);
 									s.removePoints(1);
 									Chat.sendPPM(ChatColor.RED + "-1" + ChatColor.RESET + " point!", plhit);
-									s.incrementDeathCount();
+									s.incrementLossCount();
 									Utilities.playEffects(plenemy, plhit);
 									Utilities.removeSnowballReloadPlayer(plhit);
 									TeamCyan.removeArenaPlayer(plhit);
@@ -101,7 +101,7 @@ public class GameListener implements Listener {
 									s = new Stats(plenemy);
 									s.addPoints(1);
 									Chat.sendPPM(ChatColor.GOLD + "+1" + ChatColor.RESET + " point!", plenemy);
-									s.incrementKillsCount();
+									s.incrementLossCount();
 									Round.addPlayerLead(plenemy, 1);
 									Rank.checkRank(plenemy);
 									if (!TeamCyan.isArenaPlayersEmpty() && !TeamLime.isArenaPlayersEmpty()) {

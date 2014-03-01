@@ -67,37 +67,37 @@ public class Stats {
 		addPoints(standardpoints * multiply);
 	}
 
-	public int getKills() {
+	public int getHits() {
 		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("kills");
 	}
 
-	public void setKills(int k) {
+	public void setHits(int k) {
 		Configurations.getPlayersconfig().getConfigurationSection(player).set("kills", k);
 		Configurations.savePlayersConfig();
 	}
 
-	public void incrementKillsCount() {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("kills", getKills() + 1);
+	public void incrementHitsCount() {
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("kills", getHits() + 1);
 		Configurations.savePlayersConfig();
 		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
 
-	public int getDeaths() {
+	public int getLosses() {
 		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("deaths");
 	}
 
-	public void setDeaths(int d) {
+	public void setLosses(int d) {
 		Configurations.getPlayersconfig().getConfigurationSection(player).set("deaths", d);
 		Configurations.savePlayersConfig();
 	}
 
-	public void incrementDeathCount() {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("deaths", getDeaths() + 1);
+	public void incrementLossCount() {
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("deaths", getLosses() + 1);
 		Configurations.savePlayersConfig();
 	}
 
 	public float getKDRatio() {
-		return (float) getKills() / getDeaths();
+		return (float) getHits() / getLosses();
 	}
 
 	public int getSnowballsThrown() {
@@ -186,9 +186,9 @@ public class Stats {
 		}
 		s.add("    Rank: " + getLastRank());
 		s.add("    Points: " + String.valueOf(getPoints()));
-		s.add("    Kills: " + String.valueOf(getKills()));
-		s.add("    Deaths: " + String.valueOf(getDeaths()));
-		s.add("    K/D ratio: " + String.valueOf(getKDRatio()));
+		s.add("    Hits: " + String.valueOf(getHits()));
+		s.add("    Losses: " + String.valueOf(getLosses()));
+		s.add("    H/L ratio: " + String.valueOf(getKDRatio()));
 		s.add("    Power: " + getPower().toString());
 		s.add("    Snowballs thrown: " + String.valueOf(getSnowballsThrown()));
 		s.add("    Arenas created/assisted: " + String.valueOf(getArenasList().size()));
@@ -214,8 +214,8 @@ public class Stats {
 		kd = (float) kd / plcount;
 		s.add("Global Stats:");
 		s.add("    Total Points: " + String.valueOf(points));
-		s.add("    Total Kills: " + String.valueOf(kills));
-		s.add("    Avg. K/D ratio: " + String.valueOf(kd));
+		s.add("    Total Hits: " + String.valueOf(kills));
+		s.add("    Avg. H/L ratio: " + String.valueOf(kd));
 		s.add("    Total Snowballs thrown: " + String.valueOf(sbthrown));
 		return s;
 	}

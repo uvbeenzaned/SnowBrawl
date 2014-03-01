@@ -19,11 +19,25 @@ public class PowerCoolDown {
 	private static ActionListener coolDownTaskPerformer = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {
 			for (Entry<String, Integer> p : cooldownplayers.entrySet()) {
+				Stats s = new Stats(Bukkit.getPlayer(p.getKey()));
+				Power pw = new Power(s.getPower(), Bukkit.getPlayer(p.getKey()));
 				if (p.getValue() != 0) {
+					int sec = pw.time() / 1000;
+					float val = (float) ((float) 100 / sec) * ((float) p.getValue().intValue() / 100);
 					p.setValue(p.getValue().intValue() - 1);
+					if (val < 1) {
+						Bukkit.getPlayer(p.getKey()).setExp(val);
+					}
+					// Chat.sendPPM(String.valueOf(sec),
+					// Bukkit.getPlayer(p.getKey()));
+					// Chat.sendPPM(String.valueOf((float) ((float) 100 / sec) *
+					// ((float) p.getValue().intValue() / 100)),
+					// Bukkit.getPlayer(p.getKey()));
+					// Chat.sendPPM(String.valueOf(p.getValue().intValue()),
+					// Bukkit.getPlayer(p.getKey()));
 				} else {
-					Stats s = new Stats(Bukkit.getPlayer(p.getKey()));
-					Power pw = new Power(s.getPower(), Bukkit.getPlayer(p.getKey()));
+					Bukkit.getPlayer(p.getKey()).setLevel(0);
+					Bukkit.getPlayer(p.getKey()).setExp(0);
 					pw.apply();
 					playerstoremove.add(p.getKey());
 				}
@@ -59,6 +73,8 @@ public class PowerCoolDown {
 
 	public static void removeCoolDownPlayer(Player p) {
 		if (hasCoolDownPlayer(p)) {
+			p.setLevel(0);
+			p.setExp(0);
 			cooldownplayers.remove(p.getName());
 		}
 	}

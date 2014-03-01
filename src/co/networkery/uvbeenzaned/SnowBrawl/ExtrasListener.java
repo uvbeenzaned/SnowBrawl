@@ -93,7 +93,7 @@ public class ExtrasListener implements Listener {
 				e.setLine(0, ChatColor.GOLD + "[" + ChatColor.AQUA + "SB" + ChatColor.GOLD + "]");
 				e.setLine(1, ChatColor.DARK_RED + "(click here)");
 				e.setLine(2, ChatColor.BLUE + "(RANK)");
-				e.setLine(3, ChatColor.GOLD + "(K/D)");
+				e.setLine(3, ChatColor.GOLD + "(H/L)");
 			}
 		}
 	}
@@ -107,7 +107,7 @@ public class ExtrasListener implements Listener {
 					if (s.getLine(0).equalsIgnoreCase(ChatColor.GOLD + "[" + ChatColor.AQUA + "SB" + ChatColor.GOLD + "]")) {
 						s.setLine(1, ChatColor.DARK_RED + e.getPlayer().getName());
 						s.setLine(2, ChatColor.BLUE + Rank.getRankName(e.getPlayer().getName()));
-						s.setLine(3, ChatColor.GOLD + "K/D: " + ChatColor.GREEN + String.valueOf(new Stats(e.getPlayer()).getKDRatio()));
+						s.setLine(3, ChatColor.GOLD + "H/L: " + ChatColor.GREEN + String.valueOf(new Stats(e.getPlayer()).getKDRatio()));
 						s.update();
 					}
 				}
