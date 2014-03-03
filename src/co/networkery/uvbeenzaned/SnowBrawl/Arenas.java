@@ -85,8 +85,22 @@ public class Arenas implements Listener {
 							if (e.getMessage().equalsIgnoreCase("set")) {
 								a.setLimeSide(p.getLocation());
 								Chat.sendPPM("Set Lime's" + ChatColor.RESET + "  spawn point!", p);
-								Chat.sendPPM("Saved arena successfully!", p);
+								wizardplayers.put(p.getName(), 6);
+								Chat.sendPPM("Should this arena be enabled for circulation yet? (yes/no)", p);
+								break;
+							} else {
+								Chat.sendPPM("Try typing the word set please!", p);
+								break;
+							}
+						case 6:
+							if (e.getMessage().equalsIgnoreCase("yes") || e.getMessage().equalsIgnoreCase("no")) {
+								if (e.getMessage().equalsIgnoreCase("yes")) {
+									a.setEnabled(true);
+								} else if (e.getMessage().equalsIgnoreCase("no")) {
+									a.setEnabled(false);
+								}
 								a.save();
+								Chat.sendPPM("Saved arena successfully!", p);
 								if (!Round.getMapLineup().contains(a.getName())) {
 									Round.addMapToLineup(a.getName());
 								}
@@ -94,7 +108,7 @@ public class Arenas implements Listener {
 								wizardplayers.remove(p.getName());
 								break;
 							} else {
-								Chat.sendPPM("Try typing the word set please!", p);
+								Chat.sendPPM("Please answer yes or no the above question!", p);
 								break;
 							}
 						}

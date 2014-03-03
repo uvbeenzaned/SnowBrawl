@@ -15,6 +15,7 @@ public class Arena {
 	private List<String> authors;
 	private Location cyanspawn;
 	private Location limespawn;
+	private boolean enabled;
 
 	public Arena(Player player, String name, String description, List<String> authors) {
 		if (player != null) {
@@ -37,6 +38,7 @@ public class Arena {
 			a.setAuthors(Configurations.getArenasconfig().getStringList(name + ".authors"));
 			a.setCyanSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".cyanspawn")));
 			a.setLimeSide(LocationSerializer.str2loc(Configurations.getArenasconfig().getString(name + ".limespawn")));
+			a.enabled = Configurations.getArenasconfig().getBoolean(name + ".enabled");
 			return a;
 		}
 		return null;
@@ -108,6 +110,14 @@ public class Arena {
 		limespawn = l;
 	}
 
+	public boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean e) {
+		enabled = e;
+	}
+
 	private boolean tryPass() {
 		if (cyanspawn != null) {
 			if (limespawn != null) {
@@ -140,6 +150,7 @@ public class Arena {
 			Configurations.getArenasconfig().set(name + ".limespawn", LocationSerializer.loc2str(limespawn));
 			Configurations.getArenasconfig().set(name + ".description", description);
 			Configurations.getArenasconfig().set(name + ".authors", authors);
+			Configurations.getArenasconfig().set(name + ".enabled", enabled);
 			Configurations.saveArenasConfig();
 		}
 	}

@@ -28,13 +28,6 @@ public class PowerCoolDown {
 					if (val < 1) {
 						Bukkit.getPlayer(p.getKey()).setExp(val);
 					}
-					// Chat.sendPPM(String.valueOf(sec),
-					// Bukkit.getPlayer(p.getKey()));
-					// Chat.sendPPM(String.valueOf((float) ((float) 100 / sec) *
-					// ((float) p.getValue().intValue() / 100)),
-					// Bukkit.getPlayer(p.getKey()));
-					// Chat.sendPPM(String.valueOf(p.getValue().intValue()),
-					// Bukkit.getPlayer(p.getKey()));
 				} else {
 					Bukkit.getPlayer(p.getKey()).setLevel(0);
 					Bukkit.getPlayer(p.getKey()).setExp(0);

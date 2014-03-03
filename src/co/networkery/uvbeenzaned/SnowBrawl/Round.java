@@ -50,7 +50,11 @@ public class Round {
 	}
 
 	public static void generateMapLineup() {
-		shuffle.addAll(Configurations.getArenasconfig().getKeys(false));
+		for(String map : Configurations.getArenasconfig().getKeys(false)) {
+			if(Arena.getInstanceFromConfig(map).getEnabled()) {
+				shuffle.add(map);
+			}
+		}
 		shuffleMapLineup();
 	}
 

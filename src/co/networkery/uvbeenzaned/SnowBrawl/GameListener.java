@@ -101,7 +101,7 @@ public class GameListener implements Listener {
 									s = new Stats(plenemy);
 									s.addPoints(1);
 									Chat.sendPPM(ChatColor.GOLD + "+1" + ChatColor.RESET + " point!", plenemy);
-									s.incrementLossCount();
+									s.incrementHitsCount();
 									Round.addPlayerLead(plenemy, 1);
 									Rank.checkRank(plenemy);
 									if (!TeamCyan.isArenaPlayersEmpty() && !TeamLime.isArenaPlayersEmpty()) {
@@ -121,7 +121,6 @@ public class GameListener implements Listener {
 				if (TeamCyan.hasArenaPlayer(plenemy) || TeamLime.hasArenaPlayer(plenemy)) {
 					e.setCancelled(true);
 					Entity mob = e.getEntity();
-					mob.remove();
 					Firework fw = mob.getWorld().spawn(mob.getLocation(), Firework.class);
 					FireworkMeta fwm = fw.getFireworkMeta();
 					FireworkEffect effect = FireworkEffect.builder().withColor(Color.AQUA).with(Type.BALL_LARGE).build();
@@ -136,7 +135,14 @@ public class GameListener implements Listener {
 					fw.setFireworkMeta(fwm);
 					Stats s = new Stats(plenemy);
 					s.addPoints(1);
-					Chat.sendAllTeamsMsg(ChatColor.GOLD + "+1" + ChatColor.RESET + " bonus point for " + plenemy.getName() + ChatColor.RESET + "! Type: " + mob.getType().toString().toLowerCase());
+					String mobname = mob.getType().toString().toLowerCase();
+					if(mobname.contains("_")) {
+						for(String mn : mobname.split("_")) {
+							mobname += mn + " ";
+						}
+					}
+					Chat.sendAllTeamsMsg(ChatColor.GOLD + "+1" + ChatColor.RESET + " point for " + plenemy.getName() + ChatColor.RED + " -> " + mobname + ChatColor.GOLD + " [" + ChatColor.DARK_PURPLE + String.valueOf(Utilities.getBlockDistance(plenemy.getLocation(), mob.getLocation())) + " blocks, " + method + ChatColor.GOLD + "]");
+					mob.remove();
 				}
 			}
 		}

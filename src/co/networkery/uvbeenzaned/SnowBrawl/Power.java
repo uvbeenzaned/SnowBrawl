@@ -1,5 +1,7 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import java.util.ArrayList;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -13,11 +15,27 @@ import org.bukkit.potion.PotionType;
 public class Power {
 
 	private Powers power;
+	private String powername;
 	private Player player;
+	private String description;
+	private double price;
 
 	public Power(Powers p, Player pl) {
 		setPower(p);
 		setPlayer(pl);
+		powername = p.toString();
+		fetchPowerConfiguration();
+	}
+
+	private void fetchPowerConfiguration() {
+		if (Configurations.getPowersconfig().contains(powername)) {
+			setDescription(Configurations.getPowersconfig().getConfigurationSection(powername).getString("description"));
+			setPrice(Configurations.getPowersconfig().getConfigurationSection(powername).getDouble("price"));
+		} else {
+			Configurations.getPowersconfig().createSection(powername);
+			Configurations.getPowersconfig().getConfigurationSection(powername).set("description", "This power is missing a description.");
+			Configurations.getPowersconfig().getConfigurationSection(powername).set("price", (double) 00.00);
+		}
 	}
 
 	public Powers getPower() {
@@ -28,12 +46,40 @@ public class Power {
 		this.power = power;
 	}
 
+	public String getPowerName() {
+		return powername;
+	}
+
 	public Player getPlayer() {
 		return player;
 	}
 
 	public void setPlayer(Player player) {
 		this.player = player;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	public ArrayList<String> getPowerInfo() {
+		ArrayList<String> info = new ArrayList<String>();
+		info.add(powername + ":");
+		info.add("    Description: " + description);
+		info.add("    Cost: " + price);
+		return info;
 	}
 
 	public void apply() {
@@ -67,7 +113,7 @@ public class Power {
 			break;
 		}
 	}
-	
+
 	public int time() {
 		switch (power) {
 		case SPEED:
@@ -149,11 +195,11 @@ public class Power {
 		addToInventory(i);
 		return i;
 	}
-	
+
 	private ItemStack sniperAmmo() {
 		ItemStack i = new ItemStack(Material.ARROW);
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName("Ammo");
+		im.setDisplayName("Snow Ammo");
 		i.setItemMeta(im);
 		return i;
 	}
@@ -165,7 +211,7 @@ public class Power {
 		i.setItemMeta(im);
 		return i;
 	}
-	
+
 	private void addToInventory(ItemStack i) {
 		if (getPlayer().getInventory().contains(i.getType())) {
 			getPlayer().getInventory().remove(i.getType());

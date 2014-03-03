@@ -28,6 +28,7 @@ public class Help {
 		cmds.add(cmd + "power - Command to access all power options.");
 		cmds.add("        set - Set a special power to use in rounds.");
 		cmds.add("        list - List special powers that can be used in round.");
+		cmds.add("        info <power> - Get information about a certain power.");
 		cmds.add(cmd + "stats - Shows plugin stats and also is used for other stats below.");
 		cmds.add("        <player> - Shows a players stats.");
 		cmds.add("        top <amount> - Shows top 5 players unless amount argument is provided.");
@@ -51,11 +52,12 @@ public class Help {
 			cmds.add("        set-team-points [points] - Set points received per winning player per round for the winning team.");
 			cmds.add("        set-snowball-reload-delay [milliseconds] - Set the time it takes to reload a players snowballs in milliseconds.");
 			cmds.add(cmd + "arena - Command to access all arena options.");
-			cmds.add("        list - Shows a list of all arenas.");
-			cmds.add("        info [arena name] - Shows a list of all arenas.");
-			cmds.add("        warp [arena name] - Teleports you to the specified arena.");
+			cmds.add("        list [player name] - Shows a list of all arenas or with the addition of [player name] you can see all of the arenas that one player made/assisted in.");
+			cmds.add("        info <arena name> - Shows information about the specified arena.");
+			cmds.add("        warp <arena name> - Teleports you to the specified arena.");
 			cmds.add("        add - Starts arena wizard.");
-			cmds.add("        remove [arena name] - Removes specified arena from configuration.");
+			cmds.add("        remove <arena name> - Removes specified arena from configuration.");
+			cmds.add("        toggle <arena name> - Enable/Disable the map from circulation.");
 			for (String c : cmds) {
 				Chat.sendPM(c, p);
 			}

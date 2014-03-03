@@ -34,6 +34,9 @@ public class SB extends JavaPlugin {
 		b = new Board();
 		tpf = new TeleportFixThree(this);
 		h = new Help(this);
+		if(!Arenas.getNameList().isEmpty()) {
+			Round.generateMapLineup();
+		}
 	}
 
 	public void onDisable() {

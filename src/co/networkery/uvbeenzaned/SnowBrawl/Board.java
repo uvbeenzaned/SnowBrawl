@@ -63,7 +63,7 @@ public class Board {
 		Score score = scores.getScore(p);
 		score.setScore(s.getPoints());
 		Score kill = kills.getScore(p);
-		kill.setScore(s.getLosses());
+		kill.setScore(s.getHits());
 		Score snowball = snowballs.getScore(p);
 		snowball.setScore(s.getSnowballsThrown());
 	}

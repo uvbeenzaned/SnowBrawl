@@ -68,31 +68,31 @@ public class Stats {
 	}
 
 	public int getHits() {
-		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("kills");
+		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("hits");
 	}
 
 	public void setHits(int k) {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("kills", k);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("hits", k);
 		Configurations.savePlayersConfig();
 	}
 
 	public void incrementHitsCount() {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("kills", getHits() + 1);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("hits", getHits() + 1);
 		Configurations.savePlayersConfig();
 		Board.updatePlayer(Bukkit.getPlayer(player));
 	}
 
 	public int getLosses() {
-		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("deaths");
+		return Configurations.getPlayersconfig().getConfigurationSection(player).getInt("losses");
 	}
 
 	public void setLosses(int d) {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("deaths", d);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("losses", d);
 		Configurations.savePlayersConfig();
 	}
 
 	public void incrementLossCount() {
-		Configurations.getPlayersconfig().getConfigurationSection(player).set("deaths", getLosses() + 1);
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("losses", getLosses() + 1);
 		Configurations.savePlayersConfig();
 	}
 
@@ -199,14 +199,14 @@ public class Stats {
 		ArrayList<String> s = new ArrayList<String>();
 		int plcount = 0;
 		int points = 0;
-		int kills = 0;
+		int hits = 0;
 		float kd = 0;
 		int sbthrown = 0;
 		for (String p : Configurations.getPlayersconfig().getKeys(false)) {
 			points += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("points");
-			kills += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("kills");
-			if (Configurations.getPlayersconfig().getConfigurationSection(p).getInt("kills") > 0 && Configurations.getPlayersconfig().getConfigurationSection(p).getInt("deaths") > 0) {
-				kd += (float) (Configurations.getPlayersconfig().getConfigurationSection(p).getInt("kills") / Configurations.getPlayersconfig().getConfigurationSection(p).getInt("deaths"));
+			hits += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("hits");
+			if (Configurations.getPlayersconfig().getConfigurationSection(p).getInt("hits") > 0 && Configurations.getPlayersconfig().getConfigurationSection(p).getInt("losses") > 0) {
+				kd += (float) (Configurations.getPlayersconfig().getConfigurationSection(p).getInt("hits") / Configurations.getPlayersconfig().getConfigurationSection(p).getInt("losses"));
 				plcount++;
 			}
 			sbthrown += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("snowballs-thrown");
@@ -214,7 +214,7 @@ public class Stats {
 		kd = (float) kd / plcount;
 		s.add("Global Stats:");
 		s.add("    Total Points: " + String.valueOf(points));
-		s.add("    Total Hits: " + String.valueOf(kills));
+		s.add("    Total Hits: " + String.valueOf(hits));
 		s.add("    Avg. H/L ratio: " + String.valueOf(kd));
 		s.add("    Total Snowballs thrown: " + String.valueOf(sbthrown));
 		return s;
