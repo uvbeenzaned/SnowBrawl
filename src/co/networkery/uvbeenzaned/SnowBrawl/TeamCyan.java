@@ -210,7 +210,7 @@ public class TeamCyan {
 			Stats s = new Stats(Bukkit.getPlayer(p));
 			s.giveTeamPoints();
 		}
-		Chat.sendAllTeamsMsg(ChatColor.GOLD + "+" + String.valueOf(Settings.getTeamPoints()) + ChatColor.RESET + " points for all of team CYAN!");
+		Chat.sendAllTeamsMsg(ChatColor.GOLD + "+" + String.valueOf(Settings.getTeamPoints() * TeamLime.getPlayers().size()) + ChatColor.RESET + " points for all of team CYAN!");
 		checkAllPlayersRanks();
 	}
 

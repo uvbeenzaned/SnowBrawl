@@ -1,6 +1,7 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -58,13 +59,12 @@ public class Stats {
 	}
 
 	public void giveTeamPoints() {
-		int standardpoints = Configurations.getMainConfig().getInt("team-points");
 		int multiply = 0;
 		if (TeamCyan.hasPlayer(Bukkit.getPlayer(player)))
 			multiply = TeamLime.getPlayers().size();
 		if (TeamLime.hasPlayer(Bukkit.getPlayer(player)))
 			multiply = TeamCyan.getPlayers().size();
-		addPoints(standardpoints * multiply);
+		addPoints(Settings.getTeamPoints() * multiply);
 	}
 
 	public int getHits() {
@@ -129,14 +129,44 @@ public class Stats {
 		Configurations.getPlayersconfig().getConfigurationSection(player).set("last-rank", r);
 	}
 
-	public boolean hasPower(Powers p) {
+	public boolean usingPower(Powers p) {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power") != null) {
-			if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power").equalsIgnoreCase(p.toString())) {
+			if (getPower().equalsName(p.toString())) {
 				return true;
 			}
 			return false;
 		}
 		return false;
+	}
+
+	public boolean ownsPower(Powers p) {
+		if (getPurchasedPowers().contains(p.toString())) {
+			return true;
+		}
+		return false;
+	}
+
+	public List<String> getPurchasedPowers() {
+		if (Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("purchased-powers") != null) {
+			return Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("purchased-powers");
+		}
+		return new ArrayList<String>();
+	}
+
+	public void addPower(Powers p) {
+		List<String> ppws = getPurchasedPowers();
+		if (Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("purchased-powers") != null) {
+			if (!getPurchasedPowers().contains(p.toString())) {
+				ppws.add(p.toString());
+				Configurations.getPlayersconfig().getConfigurationSection(player).set("purchased-powers", ppws);
+				Configurations.savePlayersConfig();
+			}
+		} else {
+			Configurations.getPlayersconfig().getConfigurationSection(player).createSection("purchased-powers");
+			ppws.add(p.toString());
+			Configurations.getPlayersconfig().getConfigurationSection(player).set("purchased-powers", ppws);
+			Configurations.savePlayersConfig();
+		}
 	}
 
 	public Powers getPower() {
@@ -171,6 +201,7 @@ public class Stats {
 
 	public ArrayList<String> getAllStats() {
 		ArrayList<String> s = new ArrayList<String>();
+		String purchasedpowers = "";
 		s.add("Stats for " + player + ":");
 		if (Bukkit.getOfflinePlayer(player).isOnline()) {
 			if (TeamCyan.hasPlayer(player)) {
@@ -184,12 +215,16 @@ public class Stats {
 		} else {
 			s.add("    Team: N/A (player offline)");
 		}
+		for (String pw : getPurchasedPowers()) {
+			purchasedpowers += pw + ", ";
+		}
 		s.add("    Rank: " + getLastRank());
 		s.add("    Points: " + String.valueOf(getPoints()));
 		s.add("    Hits: " + String.valueOf(getHits()));
 		s.add("    Losses: " + String.valueOf(getLosses()));
 		s.add("    H/L ratio: " + String.valueOf(getKDRatio()));
 		s.add("    Power: " + getPower().toString());
+		s.add("    Purchased powers: " + purchasedpowers);
 		s.add("    Snowballs thrown: " + String.valueOf(getSnowballsThrown()));
 		s.add("    Arenas created/assisted: " + String.valueOf(getArenasList().size()));
 		return s;

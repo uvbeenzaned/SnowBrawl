@@ -41,21 +41,21 @@ public class PowerListener implements Listener {
 			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
 				Stats s = new Stats(p);
 				if (p.getItemInHand().getType() == Material.POTION) {
-					if (s.hasPower(Powers.SLOWDOWN)) {
+					if (s.usingPower(Powers.SLOWDOWN)) {
 						if (Potion.fromItemStack(p.getItemInHand()).getType() == PotionType.SLOWNESS) {
 							if (e.getEntityType() == EntityType.SPLASH_POTION) {
 								e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(5));
 							}
 						}
 					}
-					if (s.hasPower(Powers.SPONTANEOUS_COMBUSTION)) {
+					if (s.usingPower(Powers.SPONTANEOUS_COMBUSTION)) {
 						if (Potion.fromItemStack(p.getItemInHand()).getType() == PotionType.POISON) {
 							if (e.getEntityType() == EntityType.SPLASH_POTION) {
 								e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(5));
 							}
 						}
 					}
-					if (s.hasPower(Powers.BLINDNESS)) {
+					if (s.usingPower(Powers.BLINDNESS)) {
 						if (Potion.fromItemStack(p.getItemInHand()).getType() == PotionType.REGEN) {
 							if (e.getEntityType() == EntityType.SPLASH_POTION) {
 								p.getInventory().remove(p.getItemInHand());
@@ -65,7 +65,7 @@ public class PowerListener implements Listener {
 					}
 				}
 				if (e.getEntityType() == EntityType.SNOWBALL) {
-					if (new Stats(p).hasPower(Powers.VELOCITY)) {
+					if (new Stats(p).usingPower(Powers.VELOCITY)) {
 						e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(2));
 					}
 				}
@@ -80,7 +80,7 @@ public class PowerListener implements Listener {
 			Stats s = new Stats(p);
 			if (Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.SLOWNESS) {
 				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-					if (s.hasPower(Powers.SLOWDOWN)) {
+					if (s.usingPower(Powers.SLOWDOWN)) {
 						if (!e.getAffectedEntities().isEmpty()) {
 							Chat.sendPPM("Slowdown affected:", p);
 							for (Entity en : e.getAffectedEntities()) {
@@ -97,7 +97,7 @@ public class PowerListener implements Listener {
 			}
 			if (Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.POISON) {
 				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-					if (s.hasPower(Powers.SPONTANEOUS_COMBUSTION)) {
+					if (s.usingPower(Powers.SPONTANEOUS_COMBUSTION)) {
 						if (!e.getAffectedEntities().isEmpty()) {
 							Chat.sendPPM("Spontaneous Combustion affected:", p);
 							for (Entity en : e.getAffectedEntities()) {
@@ -115,7 +115,7 @@ public class PowerListener implements Listener {
 			}
 			if (Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.REGEN) {
 				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-					if (s.hasPower(Powers.BLINDNESS)) {
+					if (s.usingPower(Powers.BLINDNESS)) {
 						if (!e.getAffectedEntities().isEmpty()) {
 							Chat.sendPPM("Blindness affected:", p);
 							for (Entity en : e.getAffectedEntities()) {
@@ -131,7 +131,7 @@ public class PowerListener implements Listener {
 				}
 			}
 			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-				if (s.hasPower(Powers.SPEED)) {
+				if (s.usingPower(Powers.SPEED)) {
 					PowerCoolDown.start(p, 30000);
 				}
 			}
@@ -143,7 +143,7 @@ public class PowerListener implements Listener {
 		if (e.getEntity().getType() == EntityType.PLAYER) {
 			Player p = (Player) e.getEntity();
 			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-				if (new Stats(p).hasPower(Powers.SNIPER)) {
+				if (new Stats(p).usingPower(Powers.SNIPER)) {
 					e.getProjectile().setVelocity(p.getLocation().getDirection().normalize().multiply(20));
 					p.getLocation().getWorld().createExplosion(p.getLocation(), 0F);
 					Location smoke = p.getLocation();
@@ -160,7 +160,7 @@ public class PowerListener implements Listener {
 	public void onPlayerToggleSneak(PlayerToggleSneakEvent e) {
 		Player p = e.getPlayer();
 		if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-			if (new Stats(p).hasPower(Powers.SNIPER)) {
+			if (new Stats(p).usingPower(Powers.SNIPER)) {
 				PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 100);
 				if (e.isSneaking()) {
 					if (p.getItemInHand().getType() == Material.BOW) {
@@ -179,7 +179,7 @@ public class PowerListener implements Listener {
 	public void onPlayerSwitchItem(PlayerItemHeldEvent e) {
 		Player p = e.getPlayer();
 		if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-			if (new Stats(p).hasPower(Powers.SNIPER)) {
+			if (new Stats(p).usingPower(Powers.SNIPER)) {
 				if (e.getPlayer().getInventory().getItem(e.getNewSlot()) != null && e.getPlayer().getInventory().getItem(e.getNewSlot()).getType() == Material.BOW) {
 					if (p.isSneaking()) {
 						PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 100);
@@ -210,7 +210,7 @@ public class PowerListener implements Listener {
 	public void onItemInteract(PlayerInteractEvent e) {
 		if (TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
 			if (e.getPlayer().getItemInHand().getType() == Material.BLAZE_ROD && e.getAction() == Action.LEFT_CLICK_AIR) {
-				if (new Stats(e.getPlayer()).hasPower(Powers.SMITE)) {
+				if (new Stats(e.getPlayer()).usingPower(Powers.SMITE)) {
 					ArrayList<String> players = new ArrayList<String>();
 					if (TeamCyan.hasArenaPlayer(e.getPlayer())) {
 						players.addAll(TeamLime.getPlayersinarena());
@@ -235,7 +235,7 @@ public class PowerListener implements Listener {
 					e.getPlayer().getInventory().remove(Material.BLAZE_ROD);
 				}
 				Stats s = new Stats(e.getPlayer());
-				if (s.hasPower(Powers.SMITE)) {
+				if (s.usingPower(Powers.SMITE)) {
 					PowerCoolDown.start(e.getPlayer(), 60000);
 				}
 			}

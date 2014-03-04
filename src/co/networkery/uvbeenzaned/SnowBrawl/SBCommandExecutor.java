@@ -88,12 +88,17 @@ public class SBCommandExecutor implements CommandExecutor {
 					return false;
 				case "power":
 					if (args.length > 1) {
+						Stats s = new Stats(p);
 						switch (args[1].toLowerCase()) {
 						case "list":
 							Chat.sendPPM("List of powers:", p);
 							String pws = "";
 							for (Powers pw : Powers.values()) {
-								pws = pws + pw.toString() + ", ";
+								if (s.ownsPower(pw) || !Store.isEnabled()) {
+									pws = pws + ChatColor.GREEN + pw.toString() + ChatColor.RESET + ", ";
+								} else {
+									pws = pws + ChatColor.DARK_GRAY + pw.toString() + ChatColor.RESET + ", ";
+								}
 							}
 							Chat.sendPM(pws, p);
 							return true;
@@ -106,6 +111,7 @@ public class SBCommandExecutor implements CommandExecutor {
 											Chat.sendPPM(pw.getPowerInfo().get(0), p);
 											Chat.sendPM(pw.getPowerInfo().get(1), p);
 											Chat.sendPM(pw.getPowerInfo().get(2), p);
+											Chat.sendPM(pw.getPowerInfo().get(3), p);
 											return true;
 										}
 									}
@@ -116,11 +122,14 @@ public class SBCommandExecutor implements CommandExecutor {
 						case "set":
 							if (args.length > 2) {
 								if (Utilities.getPowersList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
-									Stats s = new Stats(p);
 									for (Powers pw : Powers.values()) {
 										if (pw.equalsName(Utilities.convertArgsToString(args, 2))) {
-											s.setPower(pw);
-											Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), p);
+											if ((s.ownsPower(pw) || pw.equals(Powers.NONE)) || !Store.isEnabled()) {
+												s.setPower(pw);
+												Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), p);
+												return true;
+											}
+											Chat.sendPPM("You do not own this power.  Please purchase it to use it! /" + cmd.getName() + " power info " + pw.toString() + ".", p);
 											return true;
 										}
 									}
@@ -252,6 +261,46 @@ public class SBCommandExecutor implements CommandExecutor {
 					}
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 					return true;
+				case "store":
+					if (args.length > 1) {
+						switch (args[1].toLowerCase()) {
+						case "buy":
+							if (args.length > 2) {
+								switch (args[2].toLowerCase()) {
+								case "power":
+									if (args.length >= 3) {
+										if (Utilities.getPowersList().contains(Utilities.convertArgsToString(args, 3).toLowerCase())) {
+											for (Powers pw : Powers.values()) {
+												if (pw.toString().equalsIgnoreCase(Utilities.convertArgsToString(args, 3))) {
+													Store.purchasePower(p, p, pw);
+													return true;
+												}
+											}
+										}
+										Chat.sendPPM("The power " + Utilities.convertArgsToString(args, 3) + " does not exist!", p);
+										return true;
+									}
+									return false;
+								}
+							}
+							return false;
+						case "toggle":
+							if (p.isOp()) {
+								if (Store.isEnabled()) {
+									Store.setEnabled(false);
+									Settings.setStoreEnabled(false, p);
+									return true;
+								} else {
+									Store.setEnabled(true);
+									Settings.setStoreEnabled(true, p);
+									return true;
+								}
+							}
+							Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
+							return true;
+						}
+					}
+					return false;
 				case "help":
 					Help.printHelp(p);
 					Help.printOpCommands(p);

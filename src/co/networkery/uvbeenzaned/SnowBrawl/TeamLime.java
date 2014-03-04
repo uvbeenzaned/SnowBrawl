@@ -207,7 +207,7 @@ public class TeamLime {
 			Stats s = new Stats(Bukkit.getPlayer(p));
 			s.giveTeamPoints();
 		}
-		Chat.sendAllTeamsMsg(ChatColor.GOLD + "+" + String.valueOf(Settings.getTeamPoints()) + ChatColor.RESET + " points for all of team LIME!");
+		Chat.sendAllTeamsMsg(ChatColor.GOLD + "+" + String.valueOf(Settings.getTeamPoints() * TeamCyan.getPlayers().size()) + ChatColor.RESET + " points for all of team LIME!");
 		checkAllPlayersRanks();
 	}
 

@@ -57,7 +57,7 @@ public class Utilities {
 		if (!reloadplayers.containsKey(p.getName())) {
 			if (!p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 64)) {
 				p.getInventory().remove(Material.SNOW_BALL);
-				if (new Stats(p).getPower() != Powers.INSTA_RELOAD) {
+				if (new Stats(p).usingPower(Powers.INSTA_RELOAD)) {
 					reloadplayers.put(p.getName(), Settings.getSnowballReloadDelay() / 1000);
 					Chat.sendPPM("Reloading in...", p);
 				} else {

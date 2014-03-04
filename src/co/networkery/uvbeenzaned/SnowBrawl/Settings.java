@@ -36,4 +36,15 @@ public class Settings {
 		if (sender != null)
 			Chat.sendPPM("Changed snowball-reload-delay to " + String.valueOf(d) + " .", sender);
 	}
+	
+	public static boolean getStoreEnabled() {
+		return Configurations.getMainConfig().getBoolean("store-enabled");
+	}
+	
+	public static void setStoreEnabled(boolean enabled, Player sender) {
+		Configurations.getMainConfig().set("store-enabled", enabled);
+		Configurations.saveMainConfig();
+		if (sender != null)
+			Chat.sendPPM("Set store enabled to " + String.valueOf(enabled) + ".", sender);
+	}
 }

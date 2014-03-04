@@ -28,7 +28,9 @@ public class Help {
 		cmds.add(cmd + "power - Command to access all power options.");
 		cmds.add("        set - Set a special power to use in rounds.");
 		cmds.add("        list - List special powers that can be used in round.");
-		cmds.add("        info <power> - Get information about a certain power.");
+		cmds.add("        info <power name> - Get information about a certain power.");
+		cmds.add(cmd + "store - Command for accessing all store options.");
+		cmds.add("        buy power <power name> - Purchases the power for use in game if funds are sufficient.");
 		cmds.add(cmd + "stats - Shows plugin stats and also is used for other stats below.");
 		cmds.add("        <player> - Shows a players stats.");
 		cmds.add("        top <amount> - Shows top 5 players unless amount argument is provided.");
@@ -58,6 +60,8 @@ public class Help {
 			cmds.add("        add - Starts arena wizard.");
 			cmds.add("        remove <arena name> - Removes specified arena from configuration.");
 			cmds.add("        toggle <arena name> - Enable/Disable the map from circulation.");
+			cmds.add(cmd + "store - Command for accessing all store options.");
+			cmds.add("        toggle - Turn the Store off/on making all the powers free or purchasable.");
 			for (String c : cmds) {
 				Chat.sendPM(c, p);
 			}

@@ -2,6 +2,7 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 
 import java.util.ArrayList;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,8 @@ public class Power {
 		} else {
 			Configurations.getPowersconfig().createSection(powername);
 			Configurations.getPowersconfig().getConfigurationSection(powername).set("description", "This power is missing a description.");
-			Configurations.getPowersconfig().getConfigurationSection(powername).set("price", (double) 00.00);
+			Configurations.getPowersconfig().getConfigurationSection(powername).set("price", (double) 0.0);
+			Configurations.savePowersConfig();
 		}
 	}
 
@@ -73,12 +75,23 @@ public class Power {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
 	public ArrayList<String> getPowerInfo() {
 		ArrayList<String> info = new ArrayList<String>();
 		info.add(powername + ":");
 		info.add("    Description: " + description);
-		info.add("    Cost: " + price);
+		if (Store.isEnabled()) {
+			info.add("    Cost: " + price);
+			Stats s = new Stats(player);
+			if (!s.ownsPower(power)) {
+				info.add(ChatColor.BLUE + "    You can purchase this power by using /sb store buy power " + power.toString() + ".");
+			} else {
+				info.add(ChatColor.GREEN + "    You own this power.");
+			}
+		} else {
+			info.add("    Cost: 0.0");
+			info.add(ChatColor.GREEN + "    Anyone can use this power.");
+		}
 		return info;
 	}
 
@@ -131,12 +144,10 @@ public class Power {
 		case SMITE:
 			return 60000;
 		case VELOCITY:
-			// no function required
-			break;
+			return 0;
 		default:
 			return 0;
 		}
-		return 0;
 	}
 
 	// power functions

@@ -6,3 +6,5 @@ round-start-delay: 10000
 team-points: 1
 #the time it takes to reload snowballs in milliseconds
 snowball-reload-delay: 3000
+#is the in-game store enabled?
+store-enabled: false

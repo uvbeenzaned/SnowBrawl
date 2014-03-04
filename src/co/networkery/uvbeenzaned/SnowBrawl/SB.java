@@ -19,6 +19,8 @@ public class SB extends JavaPlugin {
 	private TeleportFixThree tpf;
 	@SuppressWarnings("unused")
 	private Help h;
+	@SuppressWarnings("unused")
+	private Store s;
 
 	public void onEnable() {
 		getCommand("snowbrawl").setExecutor(new SBCommandExecutor());
@@ -34,6 +36,7 @@ public class SB extends JavaPlugin {
 		b = new Board();
 		tpf = new TeleportFixThree(this);
 		h = new Help(this);
+		s = new Store(this);
 		if(!Arenas.getNameList().isEmpty()) {
 			Round.generateMapLineup();
 		}

@@ -141,7 +141,7 @@ public class GameListener implements Listener {
 							mobname += mn + " ";
 						}
 					}
-					Chat.sendAllTeamsMsg(ChatColor.GOLD + "+1" + ChatColor.RESET + " point for " + plenemy.getName() + ChatColor.RED + " -> " + mobname + ChatColor.GOLD + " [" + ChatColor.DARK_PURPLE + String.valueOf(Utilities.getBlockDistance(plenemy.getLocation(), mob.getLocation())) + " blocks, " + method + ChatColor.GOLD + "]");
+					Chat.sendAllTeamsMsg(ChatColor.GOLD + "+1" + ChatColor.RESET + " point for " + plenemy.getName() + ChatColor.RED + " -> " + mobname + ChatColor.RESET + ChatColor.GOLD + " [" + ChatColor.DARK_PURPLE + String.valueOf(Utilities.getBlockDistance(plenemy.getLocation(), mob.getLocation())) + " blocks, " + method + ChatColor.GOLD + "]");
 					mob.remove();
 				}
 			}
