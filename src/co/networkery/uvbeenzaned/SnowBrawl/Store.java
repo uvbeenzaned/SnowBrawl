@@ -49,27 +49,30 @@ public class Store {
 	}
 
 	public static void purchasePower(Player sender, Player p, Powers pws) {
-		Stats s = new Stats(p);
-		Power pw = new Power(pws, p);
-		EconomyResponse er = null;
-		if (!s.ownsPower(pws) && !pws.equals(Powers.NONE)) {
-			if (getEconomy().hasAccount(sender.getName())) {
-				if (getEconomy().getBalance(sender.getName()) >= pw.getPrice()) {
-					er = getEconomy().withdrawPlayer(sender.getName(), pw.getPrice());
-					if (er.transactionSuccess()) {
-						s.addPower(pws);
-						co.networkery.uvbeenzaned.SnowBrawl.Chat.sendPPM("You have just purchased the power " + pws.toString() + " for " + String.valueOf(pw.getPrice()) + " dollars.", sender);
+		if (getEconomy() != null) {
+			Stats s = new Stats(p);
+			Power pw = new Power(pws, p);
+			EconomyResponse er = null;
+			if (!s.ownsPower(pws) && !pws.equals(Powers.NONE)) {
+				if (getEconomy().hasAccount(sender.getName())) {
+					if (getEconomy().getBalance(sender.getName()) >= pw.getPrice()) {
+						er = getEconomy().withdrawPlayer(sender.getName(), pw.getPrice());
+						if (er.transactionSuccess()) {
+							s.addPower(pws);
+							Chat.sendPPM("You have just purchased the power " + pws.toString() + " for " + String.valueOf(pw.getPrice()) + " dollars.", sender);
+						} else {
+							Chat.sendPPM("There was a problem while making your transaction! Please report this error to the admin(s):", sender);
+							Chat.sendPM("    " + er.errorMessage, sender);
+						}
 					} else {
-						co.networkery.uvbeenzaned.SnowBrawl.Chat.sendPPM("There was a problem while making your transaction! Please report this error to the admin(s):", sender);
-						co.networkery.uvbeenzaned.SnowBrawl.Chat.sendPM("    " + er.errorMessage, sender);
+						Chat.sendPPM("You do not have enough funds to buy this power!", sender);
 					}
-				} else {
-					co.networkery.uvbeenzaned.SnowBrawl.Chat.sendPPM("You do not have enough funds to buy this power!", sender);
 				}
+			} else {
+				Chat.sendPPM("You have already purchased the power " + pws.toString() + "!", sender);
 			}
 		} else {
-			co.networkery.uvbeenzaned.SnowBrawl.Chat.sendPPM("You have already purchased the power " + pws.toString() + "!", sender);
+			Chat.sendPPM("This server does not have a Vault supported economy!  Please report this error to the admin(s).", sender);
 		}
 	}
-
 }

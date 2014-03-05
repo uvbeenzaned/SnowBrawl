@@ -65,7 +65,7 @@ public class PowerListener implements Listener {
 					}
 				}
 				if (e.getEntityType() == EntityType.SNOWBALL) {
-					if (new Stats(p).usingPower(Powers.VELOCITY)) {
+					if (s.usingPower(Powers.VELOCITY)) {
 						e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(2));
 					}
 				}
@@ -142,8 +142,9 @@ public class PowerListener implements Listener {
 	public void onPlayerShootBow(EntityShootBowEvent e) {
 		if (e.getEntity().getType() == EntityType.PLAYER) {
 			Player p = (Player) e.getEntity();
+			Stats s = new Stats(p);
 			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-				if (new Stats(p).usingPower(Powers.SNIPER)) {
+				if (s.usingPower(Powers.SNIPER)) {
 					e.getProjectile().setVelocity(p.getLocation().getDirection().normalize().multiply(20));
 					p.getLocation().getWorld().createExplosion(p.getLocation(), 0F);
 					Location smoke = p.getLocation();
@@ -159,8 +160,9 @@ public class PowerListener implements Listener {
 	@EventHandler
 	public void onPlayerToggleSneak(PlayerToggleSneakEvent e) {
 		Player p = e.getPlayer();
+		Stats s = new Stats(p);
 		if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-			if (new Stats(p).usingPower(Powers.SNIPER)) {
+			if (s.usingPower(Powers.SNIPER)) {
 				PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 100);
 				if (e.isSneaking()) {
 					if (p.getItemInHand().getType() == Material.BOW) {
@@ -178,8 +180,9 @@ public class PowerListener implements Listener {
 	@EventHandler
 	public void onPlayerSwitchItem(PlayerItemHeldEvent e) {
 		Player p = e.getPlayer();
+		Stats s = new Stats(p);
 		if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-			if (new Stats(p).usingPower(Powers.SNIPER)) {
+			if (s.usingPower(Powers.SNIPER)) {
 				if (e.getPlayer().getInventory().getItem(e.getNewSlot()) != null && e.getPlayer().getInventory().getItem(e.getNewSlot()).getType() == Material.BOW) {
 					if (p.isSneaking()) {
 						PotionEffect pe = new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 100);

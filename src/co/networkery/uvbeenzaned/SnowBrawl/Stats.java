@@ -131,10 +131,7 @@ public class Stats {
 
 	public boolean usingPower(Powers p) {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power") != null) {
-			if (getPower().equalsName(p.toString())) {
-				return true;
-			}
-			return false;
+			return getPower().equals(p);
 		}
 		return false;
 	}
