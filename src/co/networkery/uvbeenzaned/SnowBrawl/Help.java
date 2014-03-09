@@ -23,7 +23,7 @@ public class Help {
 		Chat.sendPM(ChatColor.DARK_PURPLE + "<" + ChatColor.GOLD + "-" + ChatColor.DARK_PURPLE + "> " + ChatColor.AQUA + "SnowBrawl Help" + ChatColor.DARK_PURPLE + " <" + ChatColor.GOLD + "-" + ChatColor.DARK_PURPLE + ">", p);
 		cmds.add(cmd + "help - Shows this help page.");
 		cmds.add(cmd + "lobby - Teleports player to game lobby.");
-		cmds.add(cmd + "join - Joins you to a random team.");
+		cmds.add(cmd + "join <cyan/lime> - Joins you to a random team or to cyan or lime.");
 		cmds.add(cmd + "leave - Removes you from your current team.");
 		cmds.add(cmd + "power - Command to access all power options.");
 		cmds.add("        set - Set a special power to use in rounds.");

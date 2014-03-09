@@ -202,9 +202,7 @@ public class PowerListener implements Listener {
 		if (e.getEntity() instanceof Arrow) {
 			Arrow arrow = (Arrow) e.getEntity();
 			if (arrow.getShooter() instanceof Player) {
-				if (TeamCyan.hasArenaPlayer((Player) arrow.getShooter()) || TeamLime.hasArenaPlayer((Player) arrow.getShooter())) {
-					arrow.remove();
-				}
+				arrow.remove();
 			}
 		}
 	}

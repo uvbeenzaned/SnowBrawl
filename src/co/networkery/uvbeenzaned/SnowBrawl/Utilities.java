@@ -121,6 +121,17 @@ public class Utilities {
 		dead.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 0);
 	}
 
+	public static void reloadSound(Player p) {
+		if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+			Stats s = new Stats(p);
+			if (s.usingPower(Powers.SNIPER)) {
+				p.getWorld().playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+			} else {
+				p.getWorld().playSound(p.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
+			}
+		}
+	}
+
 	public static String convertArgsToString(String[] args, int startpoint) {
 		String aname = "";
 		for (int i = startpoint; i < args.length; i++) {

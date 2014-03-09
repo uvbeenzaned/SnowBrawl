@@ -32,6 +32,7 @@ public class PowerCoolDown {
 					Bukkit.getPlayer(p.getKey()).setLevel(0);
 					Bukkit.getPlayer(p.getKey()).setExp(0);
 					pw.apply();
+					Utilities.reloadSound(Bukkit.getPlayer(p.getKey()));
 					playerstoremove.add(p.getKey());
 				}
 			}

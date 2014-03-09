@@ -189,7 +189,7 @@ public class TeamLime {
 				while (!a.getCyanSide().getChunk().isLoaded()) {
 				}
 				Bukkit.getServer().getPlayer(p).teleport(a.getLimeSide());
-				ChunkStuckFix.checkPlayerStuck(350);
+				ChunkStuckFix.checkPlayerStuck(400);
 			}
 		}
 	}

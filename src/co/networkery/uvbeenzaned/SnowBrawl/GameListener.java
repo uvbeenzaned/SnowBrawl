@@ -35,11 +35,14 @@ public class GameListener implements Listener {
 	public void onPlayerDeath(PlayerDeathEvent e) {
 		Player p = (Player) e.getEntity();
 		if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+			Stats s = new Stats(p);
 			e.getDrops().clear();
 			p.setHealth(p.getMaxHealth());
 			TeamCyan.removeArenaPlayer(p);
 			TeamLime.removeArenaPlayer(p);
 			Utilities.checkTeams();
+			s.removePoints(1);
+			Chat.sendPPM(ChatColor.RED + "-1 " + ChatColor.RESET + "point for dying!", p);
 			Rank.checkRank(p);
 		} else if (TeamCyan.hasPlayer(p) || TeamLime.hasPlayer(p)) {
 			e.getDrops().clear();
@@ -79,6 +82,14 @@ public class GameListener implements Listener {
 					if (TeamCyan.hasPlayer(plenemy) || TeamLime.hasPlayer(plenemy)) {
 						e.setCancelled(true);
 					}
+				}
+			}
+			if (method == "Sniper Rifle") {
+				if (TeamCyan.hasArenaPlayer(plenemy) && TeamCyan.hasArenaPlayer(plhit)) {
+					e.setCancelled(true);
+				}
+				if (TeamLime.hasArenaPlayer(plenemy) && TeamLime.hasArenaPlayer(plhit)) {
+					e.setCancelled(true);
 				}
 			}
 			if (plhit != plenemy && plhit != null) {
@@ -136,8 +147,8 @@ public class GameListener implements Listener {
 					Stats s = new Stats(plenemy);
 					s.addPoints(1);
 					String mobname = mob.getType().toString().toLowerCase();
-					if(mobname.contains("_")) {
-						for(String mn : mobname.split("_")) {
+					if (mobname.contains("_")) {
+						for (String mn : mobname.split("_")) {
 							mobname += mn + " ";
 						}
 					}

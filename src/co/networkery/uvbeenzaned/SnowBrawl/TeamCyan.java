@@ -192,7 +192,7 @@ public class TeamCyan {
 				while (!a.getCyanSide().getChunk().isLoaded()) {
 				}
 				Bukkit.getServer().getPlayer(p).teleport(a.getCyanSide());
-				ChunkStuckFix.checkPlayerStuck(350);
+				ChunkStuckFix.checkPlayerStuck(400);
 			}
 		}
 	}
