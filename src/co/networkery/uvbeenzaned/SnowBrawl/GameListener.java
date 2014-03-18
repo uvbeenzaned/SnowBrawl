@@ -84,14 +84,14 @@ public class GameListener implements Listener {
 					}
 				}
 			}
-			if (method == "Sniper Rifle") {
-				if (TeamCyan.hasArenaPlayer(plenemy) && TeamCyan.hasArenaPlayer(plhit)) {
-					e.setCancelled(true);
-				}
-				if (TeamLime.hasArenaPlayer(plenemy) && TeamLime.hasArenaPlayer(plhit)) {
-					e.setCancelled(true);
-				}
-			}
+//			if (method == "Sniper Rifle") {
+//				if (TeamCyan.hasArenaPlayer(plenemy) && TeamCyan.hasArenaPlayer(plhit)) {
+//					e.setCancelled(true);
+//				}
+//				if (TeamLime.hasArenaPlayer(plenemy) && TeamLime.hasArenaPlayer(plhit)) {
+//					e.setCancelled(true);
+//				}
+//			}
 			if (plhit != plenemy && plhit != null) {
 				if (TeamCyan.hasArenaPlayer(plhit) || TeamLime.hasArenaPlayer(plhit)) {
 					if (TeamCyan.hasArenaPlayer(plenemy) || TeamLime.hasArenaPlayer(plenemy)) {

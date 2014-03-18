@@ -41,7 +41,9 @@ public class SBCommandExecutor implements CommandExecutor {
 							}
 							return false;
 						}
-						return false;
+						Help.printHelp(p);
+						Help.printOpCommands(p);
+						return true;
 					}
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 					return true;
@@ -144,120 +146,124 @@ public class SBCommandExecutor implements CommandExecutor {
 					return false;
 				case "arena":
 					if (p.isOp() || p.hasPermission("SnowBrawl.arena")) {
-						switch (args[1].toLowerCase()) {
-						case "list":
-							if (args.length == 2) {
-								String astring = "";
-								int cnt = 0;
-								Chat.sendPPM("Arena list:", p);
-								for (String name : Arenas.getNameList()) {
-									if (!Arena.getInstanceFromConfig(name).getEnabled()) {
-										astring = astring + ChatColor.DARK_GRAY + name + ChatColor.RESET + ", ";
-										cnt++;
-									} else {
-										astring = astring + name + ", ";
-										cnt++;
-									}
-								}
-								astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
-								Chat.sendPM(astring, p);
-								return true;
-
-							} else if (args.length > 2) {
-								Stats s = new Stats(args[2], p);
-								if (!s.getError()) {
-									if (!s.getArenasList().isEmpty()) {
-										String astring = "";
-										int cnt = 0;
-										Chat.sendPPM("Arenas created/assisted by " + args[2] + ChatColor.RESET + ":", p);
-										for (String name : s.getArenasList()) {
-											if (!Arena.getInstanceFromConfig(name).getEnabled()) {
-												astring = astring + ChatColor.DARK_GRAY + name + ChatColor.RESET + ", ";
-												cnt++;
-											} else {
-												astring = astring + name + ", ";
-												cnt++;
-											}
+						if (args.length > 1) {
+							switch (args[1].toLowerCase()) {
+							case "list":
+								if (args.length == 2) {
+									String astring = "";
+									int cnt = 0;
+									Chat.sendPPM("Arena list:", p);
+									for (String name : Arenas.getNameList()) {
+										if (!Arena.getInstanceFromConfig(name).getEnabled()) {
+											astring = astring + ChatColor.DARK_GRAY + name + ChatColor.RESET + ", ";
+											cnt++;
+										} else {
+											astring = astring + name + ", ";
+											cnt++;
 										}
-										astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
-										Chat.sendPM(astring, p);
+									}
+									astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
+									Chat.sendPM(astring, p);
+									return true;
+
+								} else if (args.length > 2) {
+									Stats s = new Stats(args[2], p);
+									if (!s.getError()) {
+										if (!s.getArenasList().isEmpty()) {
+											String astring = "";
+											int cnt = 0;
+											Chat.sendPPM("Arenas created/assisted by " + args[2] + ChatColor.RESET + ":", p);
+											for (String name : s.getArenasList()) {
+												if (!Arena.getInstanceFromConfig(name).getEnabled()) {
+													astring = astring + ChatColor.DARK_GRAY + name + ChatColor.RESET + ", ";
+													cnt++;
+												} else {
+													astring = astring + name + ", ";
+													cnt++;
+												}
+											}
+											astring = astring + ChatColor.LIGHT_PURPLE + "[" + ChatColor.GOLD + cnt + ChatColor.LIGHT_PURPLE + "]";
+											Chat.sendPM(astring, p);
+											return true;
+										}
+										Chat.sendPPM("This player has not created or assisted in any arenas.", p);
 										return true;
 									}
-									Chat.sendPPM("This player has not created or assisted in any arenas.", p);
 									return true;
 								}
+								Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 								return true;
-							}
-							Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
-							return true;
-						case "info":
-							if (args.length > 2) {
-								Arena a = Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2));
-								if (a != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2)))
-									Chat.sendPPM("Name: " + a.getName(), p);
-								Chat.sendPPM("Description: " + a.getDescription(), p);
-								Chat.sendPPM("Authors: " + a.getAuthorsString(), p);
-								Chat.sendPPM("CYAN" + ChatColor.RESET + " side: " + LocationSerializer.loc2str(a.getCyanSide()), p);
-								Chat.sendPPM("LIME" + ChatColor.RESET + " side: " + LocationSerializer.loc2str(a.getLimeSide()), p);
-								return true;
-							}
-							return false;
-						case "warp":
-							if (args.length > 2) {
-								if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
-									p.teleport(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getCyanSide());
+							case "info":
+								if (args.length > 2) {
+									Arena a = Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2));
+									if (a != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2)))
+										Chat.sendPPM("Name: " + a.getName(), p);
+									Chat.sendPPM("Description: " + a.getDescription(), p);
+									Chat.sendPPM("Authors: " + a.getAuthorsString(), p);
+									Chat.sendPPM("CYAN" + ChatColor.RESET + " side: " + LocationSerializer.loc2str(a.getCyanSide()), p);
+									Chat.sendPPM("LIME" + ChatColor.RESET + " side: " + LocationSerializer.loc2str(a.getLimeSide()), p);
 									return true;
 								}
-							}
-							return false;
-						case "add":
-							Arenas.startArenaWizard(p);
-							return true;
-						case "remove":
-							if (args.length > 2) {
-								if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
-									if (Round.getMapLineup().contains(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getName())) {
-										Round.removeMapFromLineup(Utilities.convertArgsToString(args, 2));
+								return false;
+							case "warp":
+								if (args.length > 2) {
+									if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
+										p.teleport(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getCyanSide());
+										return true;
 									}
-									Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).delete();
 								}
-								Chat.sendPPM("Removed arena successfully!", p);
+								return false;
+							case "add":
+								Arenas.startArenaWizard(p);
 								return true;
-							} else {
-								Chat.sendPPM("The arena \"" + Utilities.convertArgsToString(args, 2) + "\" does not exist in the arena list!", p);
-							}
-							return false;
-						case "toggle":
-							if (args.length > 2) {
-								if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
-									Arena atoggle = Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2));
-									if (p.isOp() || atoggle.getAuthors().contains(p.getName())) {
-										if (atoggle.getEnabled()) {
-											atoggle.setEnabled(false);
-											atoggle.save();
-											if (Round.getMapLineup().contains(atoggle.getName())) {
-												Round.removeMapFromLineup(atoggle.getName());
-											}
-											Chat.sendPPM("Disabled " + Utilities.convertArgsToString(args, 2) + " and removed from current circulation.", p);
-											return true;
-										} else {
-											atoggle.setEnabled(true);
-											atoggle.save();
-											if (!Round.getMapLineup().contains(atoggle.getName())) {
-												Round.addMapToLineup(atoggle.getName());
-											}
-											Chat.sendPPM("Enabled " + Utilities.convertArgsToString(args, 2) + " for circulation.", p);
-											return true;
+							case "remove":
+								if (args.length > 2) {
+									if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
+										if (Round.getMapLineup().contains(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getName())) {
+											Round.removeMapFromLineup(Utilities.convertArgsToString(args, 2));
 										}
+										Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).delete();
 									}
-									Chat.sendPPM("You are not allowed to disable an arena that you did not assist/create!", p);
+									Chat.sendPPM("Removed arena successfully!", p);
+									return true;
+								} else {
+									Chat.sendPPM("The arena \"" + Utilities.convertArgsToString(args, 2) + "\" does not exist in the arena list!", p);
+								}
+								return false;
+							case "toggle":
+								if (args.length > 2) {
+									if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
+										Arena atoggle = Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2));
+										if (p.isOp() || atoggle.getAuthors().contains(p.getName())) {
+											if (atoggle.getEnabled()) {
+												atoggle.setEnabled(false);
+												atoggle.save();
+												if (Round.getMapLineup().contains(atoggle.getName())) {
+													Round.removeMapFromLineup(atoggle.getName());
+												}
+												Chat.sendPPM("Disabled " + Utilities.convertArgsToString(args, 2) + " and removed from current circulation.", p);
+												return true;
+											} else {
+												atoggle.setEnabled(true);
+												atoggle.save();
+												if (!Round.getMapLineup().contains(atoggle.getName())) {
+													Round.addMapToLineup(atoggle.getName());
+												}
+												Chat.sendPPM("Enabled " + Utilities.convertArgsToString(args, 2) + " for circulation.", p);
+												return true;
+											}
+										}
+										Chat.sendPPM("You are not allowed to disable an arena that you did not assist/create!", p);
+										return true;
+									}
+									Chat.sendPPM(Utilities.convertArgsToString(args, 2) + " does not exist in the config!", p);
 									return true;
 								}
-								Chat.sendPPM(Utilities.convertArgsToString(args, 2) + " does not exist in the config!", p);
-								return true;
 							}
-							return false;
 						}
+						Help.printHelp(p);
+						Help.printOpCommands(p);
+						return true;
 					}
 					Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 					return true;
@@ -299,8 +305,13 @@ public class SBCommandExecutor implements CommandExecutor {
 							Chat.sendPPM(Chat.standardPermissionErrorMessage(), p);
 							return true;
 						}
+						Help.printHelp(p);
+						Help.printOpCommands(p);
+						return true;
 					}
-					return false;
+					Help.printHelp(p);
+					Help.printOpCommands(p);
+					return true;
 				case "help":
 					Help.printHelp(p);
 					Help.printOpCommands(p);

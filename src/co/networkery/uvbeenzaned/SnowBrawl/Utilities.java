@@ -1,13 +1,9 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
-import javax.swing.Timer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,43 +13,48 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 public class Utilities {
 
+	private static Plugin p = null;
+
+	public Utilities(Plugin pl) {
+		p = pl;
+	}
+
 	private static TreeMap<String, Integer> reloadplayers = new TreeMap<String, Integer>();
 	private static ArrayList<String> playerstoremove = new ArrayList<String>();
+	private static int taskid = -1;
 
-	private static ActionListener reloadTaskPerformer = new ActionListener() {
-		public void actionPerformed(ActionEvent evt) {
-			for (Entry<String, Integer> p : reloadplayers.entrySet()) {
-				if (p.getValue() != 0) {
-					Chat.sendPPM(String.valueOf(p.getValue()), Bukkit.getPlayer(p.getKey()));
-					p.setValue(p.getValue().intValue() - 1);
-				} else {
-					if (TeamCyan.hasPlayer(Bukkit.getPlayer(p.getKey())) || TeamLime.hasPlayer(Bukkit.getPlayer(p.getKey()))) {
-						Bukkit.getPlayer(p.getKey()).getInventory().remove(Material.SNOW_BALL);
+	private static void schedule() {
+		taskid = p.getServer().getScheduler().scheduleSyncDelayedTask(p, new Runnable() {
+			public void run() {
+				for (Entry<String, Integer> p : reloadplayers.entrySet()) {
+					if (p.getValue() != 0) {
+						Chat.sendPPM(String.valueOf(p.getValue()), Bukkit.getPlayer(p.getKey()));
+						p.setValue(p.getValue().intValue() - 1);
+					} else {
+						if (TeamCyan.hasPlayer(Bukkit.getPlayer(p.getKey())) || TeamLime.hasPlayer(Bukkit.getPlayer(p.getKey()))) {
+							Bukkit.getPlayer(p.getKey()).getInventory().remove(Material.SNOW_BALL);
+						}
+						giveSnowballs(Bukkit.getPlayer(p.getKey()));
+						Bukkit.getPlayer(p.getKey()).getWorld().playSound(Bukkit.getPlayer(p.getKey()).getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
+						playerstoremove.add(p.getKey());
 					}
-					giveSnowballs(Bukkit.getPlayer(p.getKey()));
-					playerstoremove.add(p.getKey());
+				}
+				for (String p : playerstoremove) {
+					reloadplayers.remove(p);
+				}
+				playerstoremove.clear();
+				if (!reloadplayers.isEmpty()) {
+					schedule();
 				}
 			}
-			for (String p : playerstoremove) {
-				reloadplayers.remove(p);
-			}
-			playerstoremove.clear();
-			if (reloadplayers.isEmpty()) {
-				timer.stop();
-			}
-		}
-	};
-
-	private static Timer timer = new Timer(1000, reloadTaskPerformer);
+		}, 20L);
+	}
 
 	public static void reloadSnowballs(Player p) {
-		if (!timer.isRunning()) {
-			timer.setRepeats(true);
-			timer.start();
-		}
 		if (!reloadplayers.containsKey(p.getName())) {
 			if (!p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 64)) {
 				p.getInventory().remove(Material.SNOW_BALL);
@@ -71,6 +72,9 @@ public class Utilities {
 		} else {
 			Chat.sendPPM("You are already reloading, please wait!", p);
 		}
+		if (!isTimerRunning()) {
+			schedule();
+		}
 	}
 
 	public static void removeSnowballReloadPlayer(Player p) {
@@ -79,7 +83,16 @@ public class Utilities {
 	}
 
 	public static void stopReloadTimer() {
-		timer.stop();
+		p.getServer().getScheduler().cancelTask(taskid);
+		taskid = -1;
+	}
+	
+	public static boolean isTimerRunning() {
+		if(taskid == -1) {
+			return false;
+		} else {
+			return p.getServer().getScheduler().isCurrentlyRunning(taskid);
+		}
 	}
 
 	public static void giveSnowballs(Player p) {

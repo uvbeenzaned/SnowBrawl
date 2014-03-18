@@ -6,6 +6,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SB extends JavaPlugin {
 
 	@SuppressWarnings("unused")
+	private Clock c;
+	@SuppressWarnings("unused")
 	private Arenas as;
 	@SuppressWarnings("unused")
 	private GameListener gl;
@@ -21,6 +23,10 @@ public class SB extends JavaPlugin {
 	private Help h;
 	@SuppressWarnings("unused")
 	private Store s;
+	@SuppressWarnings("unused")
+	private Utilities u;
+	@SuppressWarnings("unused")
+	private PowerCoolDown pcd;
 
 	public void onEnable() {
 		getCommand("snowbrawl").setExecutor(new SBCommandExecutor());
@@ -29,6 +35,7 @@ public class SB extends JavaPlugin {
 		TeamCyan.setColor(ChatColor.AQUA);
 		TeamLime.setName("Lime");
 		TeamLime.setColor(ChatColor.GREEN);
+		c = new Clock(this);
 		as = new Arenas(this);
 		gl = new GameListener(this);
 		el = new ExtrasListener(this);
@@ -37,6 +44,8 @@ public class SB extends JavaPlugin {
 		tpf = new TeleportFixThree(this);
 		h = new Help(this);
 		s = new Store(this);
+		u = new Utilities(this);
+		pcd = new PowerCoolDown(this);
 		if(!Arenas.getNameList().isEmpty()) {
 			Round.generateMapLineup();
 		}
