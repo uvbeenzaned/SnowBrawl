@@ -67,4 +67,13 @@ public class Chat {
 			Chat.sendPPM(msg, Bukkit.getServer().getPlayer(p));
 		}
 	}
+	
+	public static void sendAllTeamsMsgNoFormat(String msg) {
+		for (String p : TeamCyan.getPlayers()) {
+			Chat.sendPM(msg, Bukkit.getServer().getPlayer(p));
+		}
+		for (String p : TeamLime.getPlayers()) {
+			Chat.sendPM(msg, Bukkit.getServer().getPlayer(p));
+		}
+	}
 }

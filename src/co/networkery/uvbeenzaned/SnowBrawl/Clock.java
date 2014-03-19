@@ -1,7 +1,9 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
 public class Clock {
 
@@ -13,10 +15,10 @@ public class Clock {
 
 	private static int cntdwn = 0;
 	private static int printerval = 10;
-	private static int taskid = -1;
+	private static BukkitTask task = null;
 
 	private static void schedule() {
-		taskid = p.getServer().getScheduler().scheduleSyncDelayedTask(p, new Runnable() {
+		task = p.getServer().getScheduler().runTaskTimer(p, new Runnable() {
 			public void run() {
 				if (cntdwn > 0) {
 					if (cntdwn % printerval == 0) {
@@ -27,14 +29,14 @@ public class Clock {
 						}
 					}
 					cntdwn--;
-					schedule();
 				} else {
 					if (cntdwn <= 0) {
+						stopTimer();
 						Round.startRandomMap();
 					}
 				}
 			}
-		}, 20L);
+		}, 20L, 20L);
 	}
 
 	public static void startTimer() {
@@ -45,15 +47,15 @@ public class Clock {
 	}
 
 	public static void stopTimer() {
-		p.getServer().getScheduler().cancelTask(taskid);
-		taskid = -1;
+		if (task != null)
+			task.cancel();
 	}
 
 	public static boolean isRunning() {
-		if(taskid == -1) {
-			return false;
+		if (task != null) {
+			return Bukkit.getScheduler().isCurrentlyRunning(task.getTaskId());
 		} else {
-			return p.getServer().getScheduler().isCurrentlyRunning(taskid);
+			return false;
 		}
 	}
 }

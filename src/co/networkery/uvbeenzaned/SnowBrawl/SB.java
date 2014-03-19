@@ -27,6 +27,8 @@ public class SB extends JavaPlugin {
 	private Utilities u;
 	@SuppressWarnings("unused")
 	private PowerCoolDown pcd;
+	@SuppressWarnings("unused")
+	private ChunkStuckFix csf;
 
 	public void onEnable() {
 		getCommand("snowbrawl").setExecutor(new SBCommandExecutor());
@@ -46,6 +48,7 @@ public class SB extends JavaPlugin {
 		s = new Store(this);
 		u = new Utilities(this);
 		pcd = new PowerCoolDown(this);
+		csf = new ChunkStuckFix(this);
 		if(!Arenas.getNameList().isEmpty()) {
 			Round.generateMapLineup();
 		}

@@ -235,7 +235,7 @@ public class Rank {
 		return rank;
 	}
 
-	private static ItemStack colorArmor(int r, int g, int b) {
+	public static ItemStack colorArmor(int r, int g, int b) {
 		ItemStack cp = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta m = (LeatherArmorMeta) cp.getItemMeta();
 		m.setColor(Color.fromRGB(r, g, b));

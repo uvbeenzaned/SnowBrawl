@@ -200,9 +200,12 @@ public class PowerListener implements Listener {
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent e) {
 		if (e.getEntity() instanceof Arrow) {
-			Arrow arrow = (Arrow) e.getEntity();
-			if (arrow.getShooter() instanceof Player) {
-				arrow.remove();
+			if (e.getEntity().getShooter() instanceof Player) {
+				Player p = (Player) e.getEntity().getShooter();
+				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+					Arrow arrow = (Arrow) e.getEntity();
+					arrow.remove();
+				}
 			}
 		}
 	}

@@ -16,6 +16,27 @@ public class SBCommandExecutor implements CommandExecutor {
 			Player p = (Player) sender;
 			if (args.length > 0) {
 				switch (args[0].toLowerCase()) {
+				case "givearmor":
+					if(p.isOp()) {
+						p.getInventory().addItem(Rank.colorArmor(255, 0, 0));
+						p.getInventory().addItem(Rank.colorArmor(255, 74, 0));
+						p.getInventory().addItem(Rank.colorArmor(255, 119, 0));
+						p.getInventory().addItem(Rank.colorArmor(255, 195, 0));
+						p.getInventory().addItem(Rank.colorArmor(255, 255, 0));
+						p.getInventory().addItem(Rank.colorArmor(204, 255, 0));
+						p.getInventory().addItem(Rank.colorArmor(0, 255, 0));
+						p.getInventory().addItem(Rank.colorArmor(0, 255, 255));
+						p.getInventory().addItem(Rank.colorArmor(0, 0, 255));
+						p.getInventory().addItem(Rank.colorArmor(89, 0, 255));
+						p.getInventory().addItem(Rank.colorArmor(255, 0, 255));
+						p.getInventory().addItem(Rank.colorArmor(255, 0, 78));
+						p.getInventory().addItem(Rank.colorArmor(0, 0, 0));
+						p.getInventory().addItem(Rank.colorArmor(96, 96, 96));
+						p.getInventory().addItem(Rank.colorArmor(160, 160, 160));
+						p.getInventory().addItem(Rank.colorArmor(255, 255, 255));
+						return true;
+					}
+					return false;
 				case "config":
 					if (p.isOp() || p.hasPermission("SnowBrawl.config")) {
 						switch (args[1].toLowerCase()) {

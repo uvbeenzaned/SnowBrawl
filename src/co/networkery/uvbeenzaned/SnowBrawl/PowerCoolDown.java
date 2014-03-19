@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitTask;
 
 public class PowerCoolDown {
 
@@ -18,10 +19,10 @@ public class PowerCoolDown {
 
 	private static TreeMap<String, Integer> cooldownplayers = new TreeMap<String, Integer>();
 	private static ArrayList<String> playerstoremove = new ArrayList<String>();
-	private static int taskid = -1;
+	private static BukkitTask task = null;
 
 	private static void schedule() {
-		taskid = p.getServer().getScheduler().scheduleSyncDelayedTask(p, new Runnable() {
+		task = p.getServer().getScheduler().runTaskTimerAsynchronously(p, new Runnable() {
 			public void run() {
 				for (Entry<String, Integer> p : cooldownplayers.entrySet()) {
 					Stats s = new Stats(Bukkit.getPlayer(p.getKey()));
@@ -45,30 +46,35 @@ public class PowerCoolDown {
 					cooldownplayers.remove(p);
 				}
 				playerstoremove.clear();
-				if (!cooldownplayers.isEmpty()) {
-					schedule();
+				if (cooldownplayers.isEmpty()) {
+					stopCoolDownTimer();
 				}
 			}
-		}, 20L);
+		}, 20L, 20L);
 	}
 
 	public static void start(Player p, int ms) {
 		if (!cooldownplayers.containsKey(p.getName())) {
+			if (!isTimerRunning()) {
+				schedule();
+			}
 			cooldownplayers.put(p.getName(), ms / 1000);
 			Chat.sendPPM(ms / 1000 + " second cooldown...", p);
 		} else {
 			Chat.sendPPM("Please wait until the cooldown process is over!", p);
 		}
-		if (!isTimerRunning()) {
-			schedule();
-		}
 	}
-	
+
+	public static void stopCoolDownTimer() {
+		if (task != null)
+			task.cancel();
+	}
+
 	public static boolean isTimerRunning() {
-		if(taskid == -1) {
-			return false;
+		if (task != null) {
+			return p.getServer().getScheduler().isCurrentlyRunning(task.getTaskId());
 		} else {
-			return p.getServer().getScheduler().isCurrentlyRunning(taskid);
+			return false;
 		}
 	}
 
