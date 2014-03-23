@@ -99,7 +99,8 @@ public class GameListener implements Listener {
 							if (!TeamLime.hasArenaPlayer(plhit) || !TeamLime.hasArenaPlayer(plenemy)) {
 								if ((e.getEntity() instanceof Player && (e.getDamager() instanceof Snowball || e.getDamager() instanceof Arrow))) {
 									e.setCancelled(true);
-									Chat.sendAllTeamsMsg(plenemy.getName() + ChatColor.RED + " -> " + plhit.getName() + ChatColor.GOLD + " [" + ChatColor.DARK_PURPLE + String.valueOf(Utilities.getBlockDistance(plenemy.getLocation(), plhit.getLocation())) + " blocks, " + method + ChatColor.GOLD + "]");
+									long shotdistance = Utilities.getBlockDistance(plenemy.getLocation(), plhit.getLocation());
+									Chat.sendAllTeamsMsg(plenemy.getName() + ChatColor.RED + " -> " + plhit.getName() + ChatColor.GOLD + " [" + ChatColor.DARK_PURPLE + String.valueOf(shotdistance) + " blocks, " + method + ChatColor.GOLD + "]");
 									Stats s = new Stats(plhit);
 									s.removePoints(1);
 									Chat.sendPPM(ChatColor.RED + "-1" + ChatColor.RESET + " point!", plhit);
@@ -113,6 +114,7 @@ public class GameListener implements Listener {
 									s.addPoints(1);
 									Chat.sendPPM(ChatColor.GOLD + "+1" + ChatColor.RESET + " point!", plenemy);
 									s.incrementHitsCount();
+									s.checkShotDistanceRecord(method, shotdistance);
 									Round.addPlayerLead(plenemy, 1);
 									Rank.checkRank(plenemy);
 									if (!TeamCyan.isArenaPlayersEmpty() && !TeamLime.isArenaPlayersEmpty()) {

@@ -131,12 +131,22 @@ public class ExtrasListener implements Listener {
 		if (TeamCyan.hasPlayer(e.getPlayer().getName())) {
 			cc = ChatColor.AQUA;
 			Chat.sendAllTeamsMsgNoFormat(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(e.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + e.getPlayer().getName() + ChatColor.RESET + "> " + e.getMessage());
-			e.setCancelled(true);
+//			for(Player p : e.getRecipients()) {
+//				if(p.isOp() && p.getName() != e.getPlayer().getName() && (!TeamCyan.hasPlayer(p) || !TeamLime.hasPlayer(p))) {
+//					Chat.sendPM(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(e.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + e.getPlayer().getName() + ChatColor.RESET + "> " + e.getMessage(), p);
+//				}
+//			}
+//			e.setCancelled(true);
 		}
 		if (TeamLime.hasPlayer(e.getPlayer().getName())) {
 			cc = ChatColor.GREEN;
 			Chat.sendAllTeamsMsgNoFormat(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(e.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + e.getPlayer().getName() + ChatColor.RESET + "> " + e.getMessage());
-			e.setCancelled(true);
+//			for(Player p : e.getRecipients()) {
+//				if(p.isOp() && p.getName() != e.getPlayer().getName() && (!TeamCyan.hasPlayer(p) || !TeamLime.hasPlayer(p))) {
+//					Chat.sendPM(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(e.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + e.getPlayer().getName() + ChatColor.RESET + "> " + e.getMessage(), p);
+//				}
+//			}
+//			e.setCancelled(true);
 		}
 	}
 

@@ -185,9 +185,9 @@ public class TeamLime {
 				Rank.checkRank(Bukkit.getPlayer(p));
 				Power pw = new Power(s.getPower(), Bukkit.getServer().getPlayer(p));
 				pw.apply();
-				a.getCyanSide().getChunk().load();
-				while (!a.getCyanSide().getChunk().isLoaded()) {
-				}
+//				a.getCyanSide().getChunk().load();
+//				while (!a.getCyanSide().getChunk().isLoaded()) {
+//				}
 				Bukkit.getServer().getPlayer(p).teleport(a.getLimeSide());
 				ChunkStuckFix.checkPlayerStuck(400);
 			}

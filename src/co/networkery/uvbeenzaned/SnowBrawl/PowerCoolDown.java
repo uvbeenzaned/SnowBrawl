@@ -20,6 +20,7 @@ public class PowerCoolDown {
 	private static TreeMap<String, Integer> cooldownplayers = new TreeMap<String, Integer>();
 	private static ArrayList<String> playerstoremove = new ArrayList<String>();
 	private static BukkitTask task = null;
+	private static boolean running = false;
 
 	private static void schedule() {
 		task = p.getServer().getScheduler().runTaskTimerAsynchronously(p, new Runnable() {
@@ -57,6 +58,7 @@ public class PowerCoolDown {
 		if (!cooldownplayers.containsKey(p.getName())) {
 			if (!isTimerRunning()) {
 				schedule();
+				running = true;
 			}
 			cooldownplayers.put(p.getName(), ms / 1000);
 			Chat.sendPPM(ms / 1000 + " second cooldown...", p);
@@ -66,16 +68,14 @@ public class PowerCoolDown {
 	}
 
 	public static void stopCoolDownTimer() {
-		if (task != null)
+		if (isTimerRunning()) {
 			task.cancel();
+			running = false;
+		}
 	}
 
 	public static boolean isTimerRunning() {
-		if (task != null) {
-			return p.getServer().getScheduler().isCurrentlyRunning(task.getTaskId());
-		} else {
-			return false;
-		}
+		return running;
 	}
 
 	public static boolean hasCoolDownPlayer(Player p) {

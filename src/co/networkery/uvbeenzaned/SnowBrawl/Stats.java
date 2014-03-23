@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class Stats {
@@ -117,6 +118,29 @@ public class Stats {
 		setSnowballsThrown(getSnowballsThrown() - a);
 	}
 
+	public void checkShotDistanceRecord(String method, long distance) {
+		if (method == "Snowball") {
+			if (Configurations.getPlayersconfig().getConfigurationSection(player).getLong("snowball-record-distance") < distance) {
+				Configurations.getPlayersconfig().getConfigurationSection(player).set("snowball-record-distance", distance);
+			}
+		}
+		if (method == "Sniper Rifle") {
+			if (Configurations.getPlayersconfig().getConfigurationSection(player).getLong("sniper-record-distance") < distance) {
+				Configurations.getPlayersconfig().getConfigurationSection(player).set("sniper-record-distance", distance);
+			}
+		}
+	}
+
+	public long getShotDistanceRecord(String method) {
+		if (method == "Snowball") {
+			return Configurations.getPlayersconfig().getConfigurationSection(player).getLong("snowball-record-distance");
+		}
+		if (method == "Sniper Rifle") {
+			return Configurations.getPlayersconfig().getConfigurationSection(player).getLong("sniper-record-distance");
+		}
+		return 0;
+	}
+
 	public String getLastRank() {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("last-rank") != null) {
 			return Configurations.getPlayersconfig().getConfigurationSection(player).getString("last-rank");
@@ -223,6 +247,8 @@ public class Stats {
 		s.add("    Power: " + getPower().toString());
 		s.add("    Purchased powers: " + purchasedpowers);
 		s.add("    Snowballs thrown: " + String.valueOf(getSnowballsThrown()));
+		s.add("    Snowball distance record: " + String.valueOf(getShotDistanceRecord("Snowball")) + " blocks");
+		s.add("    Sniper distance record: " + String.valueOf(getShotDistanceRecord("Sniper Rifle")) + " blocks");
 		s.add("    Arenas created/assisted: " + String.valueOf(getArenasList().size()));
 		return s;
 	}
@@ -234,6 +260,10 @@ public class Stats {
 		int hits = 0;
 		float kd = 0;
 		int sbthrown = 0;
+		String sbrecordplayer = "";
+		String sniperrecordplayer = "";
+		long snowballdistancerecord = 0;
+		long sniperdistancerecord = 0;
 		for (String p : Configurations.getPlayersconfig().getKeys(false)) {
 			points += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("points");
 			hits += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("hits");
@@ -242,6 +272,14 @@ public class Stats {
 				plcount++;
 			}
 			sbthrown += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("snowballs-thrown");
+			if(snowballdistancerecord < Configurations.getPlayersconfig().getConfigurationSection(p).getLong("snowball-record-distance")) {
+				snowballdistancerecord = Configurations.getPlayersconfig().getConfigurationSection(p).getLong("snowball-record-distance");
+				sbrecordplayer = p;
+			}
+			if(sniperdistancerecord < Configurations.getPlayersconfig().getConfigurationSection(p).getLong("sniper-record-distance")) {
+				sniperdistancerecord = Configurations.getPlayersconfig().getConfigurationSection(p).getLong("sniper-record-distance");
+				sniperrecordplayer = p;
+			}
 		}
 		kd = (float) kd / plcount;
 		s.add("Global Stats:");
@@ -249,6 +287,8 @@ public class Stats {
 		s.add("    Total Hits: " + String.valueOf(hits));
 		s.add("    Avg. H/L ratio: " + String.valueOf(kd));
 		s.add("    Total Snowballs thrown: " + String.valueOf(sbthrown));
+		s.add("    Record Snowball Shot Distance: " + sbrecordplayer + ChatColor.RESET + " - " + String.valueOf(snowballdistancerecord) + " blocks");
+		s.add("    Record Sniper Shot Distance: " + sniperrecordplayer + ChatColor.RESET + " - " + String.valueOf(sniperdistancerecord) + " blocks");
 		return s;
 	}
 

@@ -27,6 +27,7 @@ public class Utilities {
 	private static TreeMap<String, Integer> reloadplayers = new TreeMap<String, Integer>();
 	private static ArrayList<String> playerstoremove = new ArrayList<String>();
 	private static BukkitTask task = null;
+	private static boolean running = false;
 
 	private static void schedule() {
 		task = p.getServer().getScheduler().runTaskTimerAsynchronously(p, new Runnable() {
@@ -63,6 +64,7 @@ public class Utilities {
 				if (!s.usingPower(Powers.INSTA_RELOAD)) {
 					if (!isTimerRunning()) {
 						schedule();
+						running = true;
 					}
 					reloadplayers.put(p.getName(), Settings.getSnowballReloadDelay() / 1000);
 					Chat.sendPPM("Reloading in...", p);
@@ -84,16 +86,14 @@ public class Utilities {
 	}
 
 	public static void stopReloadTimer() {
-		if (task != null)
+		if (isTimerRunning()) {
 			task.cancel();
+			running = false;
+		}
 	}
 
 	public static boolean isTimerRunning() {
-		if (task != null) {
-			return Bukkit.getScheduler().isCurrentlyRunning(task.getTaskId());
-		} else {
-			return false;
-		}
+		return running;
 	}
 
 	public static void giveSnowballs(Player p) {

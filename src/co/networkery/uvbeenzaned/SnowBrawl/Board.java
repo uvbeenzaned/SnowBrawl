@@ -16,6 +16,7 @@ public class Board {
 	private static Scoreboard board;
 	private static Team cyan;
 	private static Team lime;
+	private static String scoredisplayname = ChatColor.LIGHT_PURPLE + "[" + ChatColor.GREEN + "Score" + ChatColor.LIGHT_PURPLE + "]";
 	private static Objective scores;
 	private static Objective kills;
 	private static Objective snowballs;
@@ -31,7 +32,7 @@ public class Board {
 		lime.setPrefix(ChatColor.GREEN + "");
 		scores = board.registerNewObjective("score", "dummy");
 		scores.setDisplaySlot(DisplaySlot.SIDEBAR);
-		scores.setDisplayName(ChatColor.LIGHT_PURPLE + "[" + ChatColor.GREEN + "Score" + ChatColor.LIGHT_PURPLE + "]");
+		scores.setDisplayName(scoredisplayname);
 		kills = board.registerNewObjective("kills", "dummy");
 		kills.setDisplaySlot(DisplaySlot.PLAYER_LIST);
 		kills.setDisplayName(ChatColor.LIGHT_PURPLE + "[" + ChatColor.RED + "Kills" + ChatColor.LIGHT_PURPLE + "]");
@@ -75,6 +76,14 @@ public class Board {
 		for (String p : TeamLime.getPlayers()) {
 			updatePlayer(Bukkit.getPlayer(p));
 		}
+	}
+	
+	public static void appendScoreBoardTitle(String t) {
+		scores.setDisplayName(scoredisplayname + " " + t);
+	}
+	
+	public static void resetScoreBoardTitle() {
+		scores.setDisplayName(scoredisplayname);
 	}
 
 }
