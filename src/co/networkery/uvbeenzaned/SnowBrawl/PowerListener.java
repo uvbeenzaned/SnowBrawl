@@ -36,7 +36,7 @@ public class PowerListener implements Listener {
 
 	@EventHandler
 	public void onProjectileLaunch(ProjectileLaunchEvent e) {
-		if (e.getEntity().getShooter().getType() == EntityType.PLAYER) {
+		if (e.getEntity().getShooter() instanceof Player) {
 			Player p = (Player) e.getEntity().getShooter();
 			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
 				Stats s = new Stats(p);
@@ -75,7 +75,7 @@ public class PowerListener implements Listener {
 
 	@EventHandler
 	public void onPotionSplash(PotionSplashEvent e) {
-		if (e.getEntity().getShooter().getType() == EntityType.PLAYER) {
+		if (e.getEntity().getShooter() instanceof Player) {
 			Player p = (Player) e.getEntity().getShooter();
 			Stats s = new Stats(p);
 			if (Potion.fromItemStack(e.getPotion().getItem()).getType() == PotionType.SLOWNESS) {
@@ -204,6 +204,9 @@ public class PowerListener implements Listener {
 				Player p = (Player) e.getEntity().getShooter();
 				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
 					Arrow arrow = (Arrow) e.getEntity();
+					Location smoke = arrow.getLocation();
+					for (int i = 0; i < 8; i++)
+						p.getWorld().playEffect(smoke, Effect.SMOKE, i);
 					arrow.remove();
 				}
 			}

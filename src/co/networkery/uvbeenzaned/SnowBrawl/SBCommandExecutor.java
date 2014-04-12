@@ -82,6 +82,9 @@ public class SBCommandExecutor implements CommandExecutor {
 						Chat.sendPPM(msg, p);
 					}
 					return true;
+				case "ranks":
+					p.openInventory(RankMenu.getMenu());
+					return true;
 				case "round":
 					if (args.length > 1) {
 						switch (args[1].toLowerCase()) {

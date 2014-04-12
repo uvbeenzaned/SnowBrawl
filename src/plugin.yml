@@ -1,7 +1,7 @@
 name: SnowBrawl
 main: co.networkery.uvbeenzaned.SnowBrawl.SB
 softdepend: [Vault]
-version: 2.5.5
+version: 2.5.6
 commands:
    snowbrawl:
        description: Main SnowBrawl command.

@@ -58,9 +58,9 @@ public class TeamCyan {
 	}
 
 	public static void leave(Player p) {
-		if (hasPlayer(p)) {
-			Board.removePlayer(p);
+		if (hasPlayer(p)) {			
 			removePlayer(p);
+			Board.removePlayer(p);
 			Chat.sendPPM("You've left team CYAN.", p);
 			Chat.sendTeamCyanMsg(p.getName() + ChatColor.RESET + " has left team CYAN.");
 			p.teleport(Lobby.getLobbyspawnlocation());
@@ -143,6 +143,7 @@ public class TeamCyan {
 			p.getInventory().clear();
 			Rank.checkRank(p);
 			p.teleport(Lobby.getLobbyspawnlocation());
+			Board.outPlayer(p);
 		}
 	}
 

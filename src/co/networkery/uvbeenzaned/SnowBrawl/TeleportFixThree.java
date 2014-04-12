@@ -15,6 +15,7 @@ public class TeleportFixThree implements Listener {
 	private Server server;
 	private Plugin plugin;
 
+	
 	private final int TELEPORT_FIX_DELAY = 15; // ticks
 
 	public TeleportFixThree(Plugin plugin) {
@@ -28,7 +29,7 @@ public class TeleportFixThree implements Listener {
 
 		final Player player = event.getPlayer();
 		final int visibleDistance = server.getViewDistance() * 16;
-
+		
 		// Fix the visibility issue one tick later
 		server.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 			@Override

@@ -1,5 +1,8 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -235,11 +238,100 @@ public class Rank {
 		return rank;
 	}
 
+	public static String getRankNameFromStringColorCode(String code) {
+		switch (code) {
+		case "255, 0, 0":
+			return "Loser";
+		case "255, 74, 0":
+			return "{R1}Newbie";
+		case "255, 119, 0":
+			return "{R2}Beginner";
+		case "255, 195, 0":
+			return "{R3}Amature";
+		case "255, 255, 0":
+			return "{R4}Intermediate";
+		case "204, 255, 0":
+			return "{R5}Master";
+		case "0, 255, 0":
+			return "{R6}Boss";
+		case "0, 255, 255":
+			return "{R7}Butch";
+		case "0, 0, 255":
+			return "{R8}Rex";
+		case "89, 0, 255":
+			return "{R9}Killer";
+		case "255, 0, 255":
+			return "{R10}Alpha";
+		case "255, 0, 78":
+			return "{R11}Hunter";
+		case "0, 0, 0":
+			return "{R12}Double";
+		case "96, 96, 96":
+			return "{R13}Winner";
+		case "160, 160, 160":
+			return "{R14}Ultimate";
+		case "255, 255, 255":
+			return "{R15}Chosen";
+		default:
+			return null;
+		}
+	}
+	
+	public static String getRankLoreFromStringColorCode(String code) {
+		switch (code) {
+		case "255, 0, 0":
+			return "-1 or lower pts";
+		case "255, 74, 0":
+			return "0 - 99 pts";
+		case "255, 119, 0":
+			return "100 - 299 pts";
+		case "255, 195, 0":
+			return "300 - 699 pts";
+		case "255, 255, 0":
+			return "700 - 1999 pts";
+		case "204, 255, 0":
+			return "2000 - 4999 pts";
+		case "0, 255, 0":
+			return "5000 - 9999 pts";
+		case "0, 255, 255":
+			return "10000 - 19999 pts";
+		case "0, 0, 255":
+			return "20000 - 49999 pts";
+		case "89, 0, 255":
+			return "50000 - 99999 pts";
+		case "255, 0, 255":
+			return "100000 - 499999 pts";
+		case "255, 0, 78":
+			return "500000 - 999999 pts";
+		case "0, 0, 0":
+			return "1000000 - 4999999 pts";
+		case "96, 96, 96":
+			return "5000000 - 9999999";
+		case "160, 160, 160":
+			return "10000000 - 99999999";
+		case "255, 255, 255":
+			return "100000000 or more pts";
+		default:
+			return null;
+		}
+	}
+
 	public static ItemStack colorArmor(int r, int g, int b) {
 		ItemStack cp = new ItemStack(Material.LEATHER_CHESTPLATE);
 		LeatherArmorMeta m = (LeatherArmorMeta) cp.getItemMeta();
 		m.setColor(Color.fromRGB(r, g, b));
+		m.setDisplayName(getRankNameFromStringColorCode(String.valueOf(r) + ", " + String.valueOf(g) + ", " + String.valueOf(b)));
+		List<String> lore = new ArrayList<String>();
+		lore.add(getRankLoreFromStringColorCode(String.valueOf(r) + ", " + String.valueOf(g) + ", " + String.valueOf(b)));
+		m.setLore(lore);
 		cp.setItemMeta(m);
 		return cp;
+	}
+
+	public static ItemStack colorArmor(String colorstring) {
+		int r = Integer.valueOf(colorstring.split(",")[0]);
+		int g = Integer.valueOf(colorstring.split(",")[1]);
+		int b = Integer.valueOf(colorstring.split(",")[2]);
+		return colorArmor(r, g, b);
 	}
 }

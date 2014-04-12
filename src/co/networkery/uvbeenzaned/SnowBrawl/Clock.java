@@ -13,7 +13,6 @@ public class Clock {
 	}
 
 	private static int cntdwn = 0;
-	//private static int printerval = 10;
 	private static BukkitTask task = null;
 	private static boolean running = false;
 
@@ -22,9 +21,9 @@ public class Clock {
 			public void run() {
 				if (cntdwn > 0) {
 					if (cntdwn == 5 || cntdwn == 4 || cntdwn == 3 || cntdwn == 2 || cntdwn == 1) {
-						Board.appendScoreBoardTitle(ChatColor.BLUE + "Round " + ChatColor.RED + "-> " + String.valueOf(cntdwn));
+						Board.prependScoreBoardTitle(ChatColor.BLUE + "Round " + ChatColor.RED + "-> " + String.valueOf(cntdwn), true);
 					} else {
-						Board.appendScoreBoardTitle(ChatColor.BLUE + "Round " + ChatColor.RED + "-> " + ChatColor.BLUE + String.valueOf(cntdwn));
+						Board.prependScoreBoardTitle(ChatColor.BLUE + "Round " + ChatColor.RED + "-> " + ChatColor.BLUE + String.valueOf(cntdwn), true);
 					}
 					cntdwn--;
 				} else {

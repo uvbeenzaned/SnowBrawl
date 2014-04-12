@@ -108,19 +108,19 @@ public class Utilities {
 			TeamLime.teleportAllPlayersToLobby();
 			TeamLime.awardTeamPoints();
 			Round.giveLeadPoints();
+			Board.clearOutPlayers();
 			Round.setGameActive(false);
 			Round.startTimerRound();
-		} else {
-			if (TeamLime.isArenaPlayersEmpty()) {
-				stopReloadTimer();
-				Chat.sendAllTeamsMsg("Team CYAN" + ChatColor.RESET + " wins!");
-				TeamCyan.teleportAllPlayersToLobby();
-				TeamLime.teleportAllPlayersToLobby();
-				TeamCyan.awardTeamPoints();
-				Round.giveLeadPoints();
-				Round.setGameActive(false);
-				Round.startTimerRound();
-			}
+		} else if (TeamLime.isArenaPlayersEmpty()) {
+			stopReloadTimer();
+			Chat.sendAllTeamsMsg("Team CYAN" + ChatColor.RESET + " wins!");
+			TeamCyan.teleportAllPlayersToLobby();
+			TeamLime.teleportAllPlayersToLobby();
+			TeamCyan.awardTeamPoints();
+			Round.giveLeadPoints();
+			Board.clearOutPlayers();
+			Round.setGameActive(false);
+			Round.startTimerRound();
 		}
 	}
 

@@ -73,7 +73,7 @@ public class ExtrasListener implements Listener {
 			if (e.getSlotType() == SlotType.ARMOR) {
 				e.setCancelled(true);
 			}
-			if (e.getCurrentItem().getType() == Material.SNOW_BALL) {
+			if (e.getCursor().getType() == Material.SNOW_BALL) {
 				e.setCancelled(true);
 			}
 		}
@@ -136,7 +136,7 @@ public class ExtrasListener implements Listener {
 //					Chat.sendPM(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(e.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + e.getPlayer().getName() + ChatColor.RESET + "> " + e.getMessage(), p);
 //				}
 //			}
-//			e.setCancelled(true);
+			e.setCancelled(true);
 		}
 		if (TeamLime.hasPlayer(e.getPlayer().getName())) {
 			cc = ChatColor.GREEN;
@@ -146,7 +146,7 @@ public class ExtrasListener implements Listener {
 //					Chat.sendPM(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(e.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + e.getPlayer().getName() + ChatColor.RESET + "> " + e.getMessage(), p);
 //				}
 //			}
-//			e.setCancelled(true);
+			e.setCancelled(true);
 		}
 	}
 
