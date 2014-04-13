@@ -17,7 +17,7 @@ public class SBCommandExecutor implements CommandExecutor {
 			if (args.length > 0) {
 				switch (args[0].toLowerCase()) {
 				case "givearmor":
-					if(p.isOp()) {
+					if (p.isOp()) {
 						p.getInventory().addItem(Rank.colorArmor(255, 0, 0));
 						p.getInventory().addItem(Rank.colorArmor(255, 74, 0));
 						p.getInventory().addItem(Rank.colorArmor(255, 119, 0));
@@ -147,20 +147,24 @@ public class SBCommandExecutor implements CommandExecutor {
 							return false;
 						case "set":
 							if (args.length > 2) {
-								if (Utilities.getPowersList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
-									for (Powers pw : Powers.values()) {
-										if (pw.equalsName(Utilities.convertArgsToString(args, 2))) {
-											if ((s.ownsPower(pw) || pw.equals(Powers.NONE)) || !Store.isEnabled()) {
-												s.setPower(pw);
-												Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), p);
+								if (!TeamCyan.hasArenaPlayer(p) && !TeamLime.hasArenaPlayer(p)) {
+									if (Utilities.getPowersList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
+										for (Powers pw : Powers.values()) {
+											if (pw.equalsName(Utilities.convertArgsToString(args, 2))) {
+												if ((s.ownsPower(pw) || pw.equals(Powers.NONE)) || !Store.isEnabled()) {
+													s.setPower(pw);
+													Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), p);
+													return true;
+												}
+												Chat.sendPPM("You do not own this power.  Please purchase it to use it! /" + cmd.getName() + " power info " + pw.toString() + ".", p);
 												return true;
 											}
-											Chat.sendPPM("You do not own this power.  Please purchase it to use it! /" + cmd.getName() + " power info " + pw.toString() + ".", p);
-											return true;
 										}
 									}
+									Chat.sendPPM("That power does not exist!  Please check /" + cmd.getName() + " power list.", p);
+									return true;
 								}
-								Chat.sendPPM("That power does not exist!  Please check /" + cmd.getName() + " power list.", p);
+								Chat.sendPPM("You may not change your power during a round!", p);
 								return true;
 							}
 							return false;
@@ -231,10 +235,14 @@ public class SBCommandExecutor implements CommandExecutor {
 								return false;
 							case "warp":
 								if (args.length > 2) {
-									if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
-										p.teleport(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getCyanSide());
-										return true;
+									if (!TeamCyan.hasArenaPlayer(p) && !TeamLime.hasArenaPlayer(p)) {
+										if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
+											p.teleport(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getCyanSide());
+											return true;
+										}
 									}
+									Chat.sendPPM("You may not warp to an arena during a round!", p);
+									return true;
 								}
 								return false;
 							case "add":

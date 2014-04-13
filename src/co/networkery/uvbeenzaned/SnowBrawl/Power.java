@@ -149,6 +149,69 @@ public class Power {
 			return 0;
 		}
 	}
+	
+	public ItemStack getPowerItemWithInfo() {
+		ItemStack itemwithinfo;
+		ItemMeta im;
+		switch (power) {
+		case SPEED:
+			itemwithinfo = speed();
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("Speed");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		case SLOWDOWN:
+			itemwithinfo = slowdown();
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("Slowdown");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		case BLINDNESS:
+			itemwithinfo = blindness();
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("Blindness");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		case SPONTANEOUS_COMBUSTION:
+			itemwithinfo = spontaneousCombustion();
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("Spontaneous Combustion");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		case INSTA_RELOAD:
+			itemwithinfo = new ItemStack(Material.SNOW_BALL, 1);
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("Insta-reload");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		case SNIPER:
+			itemwithinfo = sniperRifle();
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("Sniper");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		case SMITE:
+			itemwithinfo = smite();
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("Smite");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		case VELOCITY:
+			itemwithinfo = new ItemStack(Material.FIRE, 1);
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("Velocity");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		case NONE:
+			itemwithinfo = new ItemStack(Material.THIN_GLASS, 1);
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("None");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		default:
+			return null;
+		}
+	}
 
 	// power functions
 	private ItemStack speed() {
@@ -203,7 +266,6 @@ public class Power {
 		ItemMeta im = i.getItemMeta();
 		im.setDisplayName("Sniper Rifle");
 		i.setItemMeta(im);
-		addToInventory(i);
 		return i;
 	}
 

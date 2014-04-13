@@ -166,4 +166,22 @@ public class Utilities {
 		long sqdist = (long) a.distanceSquared(b);
 		return (long) Math.sqrt(sqdist);
 	}
+
+//	public static ArrayList<String> makeLoreCompatibile(ArrayList<String> l) {
+//		ArrayList<String> newlist = new ArrayList<String>();
+//		StringBuilder currline = null;
+//		for (String s : l) {
+//			if (s.split(" ").length > 6) {
+//				currline = new StringBuilder();
+//				for (String word : s.split(" ")) {
+//					if (currline.toString().split(" ").length < 6) {
+//						currline.append(word);
+//					} else {
+//						newlist.add(currline.toString());
+//					}
+//				}
+//			}
+//		}
+//		return newlist;
+//	}
 }

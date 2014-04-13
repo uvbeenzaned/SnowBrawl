@@ -47,6 +47,7 @@ public class TeamLime {
 			Rank.checkRank(p);
 			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has joined team LIME.");
 			Board.addPlayer(p);
+			PowersMenu.giveInteractItem(p);
 			if (!TeamCyan.isEmpty()) {
 				Round.startTimerRound();
 			} else {
@@ -66,6 +67,7 @@ public class TeamLime {
 			p.teleport(Lobby.getLobbyspawnlocation());
 			p.getInventory().setChestplate(new ItemStack(Material.AIR));
 			p.getInventory().remove(Material.SNOW_BALL);
+			p.getInventory().remove(Material.ENCHANTED_BOOK);
 			if (TeamLime.isEmpty() && !TeamCyan.isEmpty()) {
 				Round.setGameActive(false);
 				Clock.stopTimer();
@@ -143,6 +145,7 @@ public class TeamLime {
 		Rank.checkRank(p);
 		p.teleport(Lobby.getLobbyspawnlocation());
 		Board.outPlayer(p);
+		PowersMenu.giveInteractItem(p);
 	}
 
 	public static boolean hasArenaPlayer(Player p) {
@@ -186,9 +189,6 @@ public class TeamLime {
 				Rank.checkRank(Bukkit.getPlayer(p));
 				Power pw = new Power(s.getPower(), Bukkit.getServer().getPlayer(p));
 				pw.apply();
-//				a.getCyanSide().getChunk().load();
-//				while (!a.getCyanSide().getChunk().isLoaded()) {
-//				}
 				Bukkit.getServer().getPlayer(p).teleport(a.getLimeSide());
 				ChunkStuckFix.checkPlayerStuck(400);
 			}

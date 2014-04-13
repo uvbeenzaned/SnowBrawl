@@ -76,6 +76,9 @@ public class ExtrasListener implements Listener {
 			if (e.getCursor().getType() == Material.SNOW_BALL) {
 				e.setCancelled(true);
 			}
+			if (e.getCursor().isSimilar(PowersMenu.getInteractItem())) {
+				e.setCancelled(true);
+			}
 		}
 	}
 

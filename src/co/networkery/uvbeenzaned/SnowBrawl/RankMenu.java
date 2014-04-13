@@ -11,9 +11,9 @@ import org.bukkit.material.Dye;
 public class RankMenu {
 
 	static Inventory i;
-	
+
 	public static void initialize() {
-		i = Bukkit.createInventory(null, 18, "[SnowBrawl] - Ranks and Colors");
+		i = Bukkit.createInventory(null, 18, "[SnowBrawl] Ranks and Colors");
 		i.setItem(0, Rank.colorArmor(255, 0, 0));
 		i.setItem(1, Rank.colorArmor(255, 74, 0));
 		i.setItem(2, Rank.colorArmor(255, 119, 0));
@@ -32,11 +32,11 @@ public class RankMenu {
 		i.setItem(15, Rank.colorArmor(255, 255, 255));
 		i.setItem(17, getCloseButton());
 	}
-	
+
 	public static Inventory getMenu() {
 		return i;
 	}
-	
+
 	public static ItemStack getCloseButton() {
 		Dye red = new Dye();
 		red.setColor(DyeColor.RED);
