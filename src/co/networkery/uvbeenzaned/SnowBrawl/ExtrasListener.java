@@ -76,15 +76,12 @@ public class ExtrasListener implements Listener {
 			if (e.getCursor().getType() == Material.SNOW_BALL) {
 				e.setCancelled(true);
 			}
-			if (e.getCursor().isSimilar(PowersMenu.getInteractItem())) {
-				e.setCancelled(true);
-			}
 		}
 	}
 
 	@EventHandler
 	public void playerDropItem(PlayerDropItemEvent e) {
-		if (TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
+		if (TeamCyan.hasPlayer(e.getPlayer()) || TeamLime.hasPlayer(e.getPlayer())) {
 			e.setCancelled(true);
 		}
 	}

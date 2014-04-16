@@ -53,6 +53,7 @@ public class SB extends JavaPlugin {
 		csf = new ChunkStuckFix(this);
 		ml = new MenuListener(this);
 		RankMenu.initialize();
+		StoreMenu.initialize();
 		if(!Arenas.getNameList().isEmpty()) {
 			Round.generateMapLineup();
 		}

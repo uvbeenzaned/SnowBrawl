@@ -9,7 +9,10 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 
 public class Round {
 
@@ -73,6 +76,41 @@ public class Round {
 	public static void shuffleMapLineup() {
 		r.setSeed(System.currentTimeMillis());
 		Collections.shuffle(shuffle, r);
+	}
+	
+	public static void giveLineupBook(Player p) {
+		p.getInventory().setItem(8, getLineupBook());
+	}
+	
+	public static ItemStack getLineupBook() {
+		ItemStack book = new ItemStack(Material.WRITTEN_BOOK, 1);
+		BookMeta bm = (BookMeta) book.getItemMeta();
+		bm.setDisplayName("Round line-up...");
+		bm.setAuthor("SnowBrawl");
+		bm.setTitle("Round line-up...");
+		StringBuilder bookmaps = new StringBuilder();
+		if (getMapLineup().isEmpty()) {
+			generateMapLineup();
+		}
+		bookmaps.append("Next arenas coming up:\n");
+		for (int i = 0; i < 8; i++) {
+			int read = i;
+			read += 1;
+			if (getMapLineup().size() >= 8) {
+				bookmaps.append(ChatColor.GOLD + String.valueOf(read) + ChatColor.RESET + ". " + getMapLineup().get(i) + "\n");
+			} else {
+				for (int j = 0; j < getMapLineup().size(); j++) {
+					read = j;
+					read += 1;
+					bookmaps.append(ChatColor.GOLD + String.valueOf(read) + ChatColor.RESET + ". " + getMapLineup().get(j) + "\n");
+				}
+				break;
+			}
+		}
+		bookmaps.append("    (arena circulation: " + ChatColor.GOLD + String.valueOf(getMapLineup().size()) + ChatColor.RESET + "/" + ChatColor.BLUE + String.valueOf(Configurations.getArenasconfig().getKeys(false).size()) + ChatColor.RESET + ")\n");
+		bm.addPage(bookmaps.toString());
+		book.setItemMeta(bm);
+		return book;
 	}
 
 	public static Map<String, Integer> getLeads() {

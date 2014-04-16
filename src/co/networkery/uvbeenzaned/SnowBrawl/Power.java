@@ -150,7 +150,7 @@ public class Power {
 		}
 	}
 	
-	public ItemStack getPowerItemWithInfo() {
+	public ItemStack getPowerItemWithTitle() {
 		ItemStack itemwithinfo;
 		ItemMeta im;
 		switch (power) {

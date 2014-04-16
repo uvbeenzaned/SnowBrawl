@@ -30,6 +30,17 @@ public class Store {
 
 	public static void setEnabled(boolean enabled) {
 		storeenabled = enabled;
+		if(enabled) {
+			Stats s = null;
+			for(String p : Configurations.getPlayersconfig().getKeys(false)) {
+				s = new Stats(p);
+				if(!s.getError()) {
+					if(!s.getPurchasedPowers().contains(s.getPower().toString()) && s.getPower() != Powers.NONE) {
+						s.setPower(Powers.NONE);
+					}
+				}
+			}
+		}
 	}
 
 	private static boolean setupEconomy(Plugin pl) {

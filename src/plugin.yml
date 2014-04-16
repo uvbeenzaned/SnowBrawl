@@ -1,7 +1,7 @@
 name: SnowBrawl
 main: co.networkery.uvbeenzaned.SnowBrawl.SB
 softdepend: [Vault, MagicChest]
-version: 2.5.7
+version: 2.5.8
 commands:
    snowbrawl:
        description: Main SnowBrawl command.

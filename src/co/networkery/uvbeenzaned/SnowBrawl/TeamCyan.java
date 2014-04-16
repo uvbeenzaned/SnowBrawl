@@ -47,7 +47,9 @@ public class TeamCyan {
 			Rank.checkRank(p);
 			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has joined team CYAN.");
 			Board.addPlayer(p);
-			PowersMenu.giveInteractItem(p);
+			PowerMenu.giveInteractItem(p);
+			StoreMenu.giveInteractItem(p);
+			Round.giveLineupBook(p);
 			if (!TeamLime.isEmpty()) {
 				Round.startTimerRound();
 			} else {
@@ -68,6 +70,8 @@ public class TeamCyan {
 			p.getInventory().setChestplate(new ItemStack(Material.AIR));
 			p.getInventory().remove(Material.SNOW_BALL);
 			p.getInventory().remove(Material.ENCHANTED_BOOK);
+			p.getInventory().remove(Material.CHEST);
+			p.getInventory().remove(Material.WRITTEN_BOOK);
 			if (TeamCyan.isEmpty() && !TeamLime.isEmpty()) {
 				Round.setGameActive(false);
 				Clock.stopTimer();
@@ -146,7 +150,9 @@ public class TeamCyan {
 			Rank.checkRank(p);
 			p.teleport(Lobby.getLobbyspawnlocation());
 			Board.outPlayer(p);
-			PowersMenu.giveInteractItem(p);
+			PowerMenu.giveInteractItem(p);
+			StoreMenu.giveInteractItem(p);
+			Round.giveLineupBook(p);
 		}
 	}
 
@@ -192,6 +198,7 @@ public class TeamCyan {
 				Rank.checkRank(Bukkit.getPlayer(p));
 				Power pw = new Power(s.getPower(), Bukkit.getServer().getPlayer(p));
 				pw.apply();
+				Round.giveLineupBook(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).teleport(a.getCyanSide());
 				ChunkStuckFix.checkPlayerStuck(400);
 			}

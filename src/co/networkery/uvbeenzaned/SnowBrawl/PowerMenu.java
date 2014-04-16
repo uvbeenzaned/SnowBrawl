@@ -10,12 +10,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Dye;
 
-public class PowersMenu implements IMenu {
+public class PowerMenu implements IMenu {
 
 	Inventory i;
 	Stats s;
 
-	public PowersMenu(Player p) {
+	public PowerMenu(Player p) {
 		s = new Stats(p);
 		if (!s.getError()) {
 			i = Bukkit.createInventory(null, 18, "[SnowBrawl] Switch Powers");
@@ -25,16 +25,16 @@ public class PowersMenu implements IMenu {
 				for (Powers pws : Powers.values()) {
 					if (s.getPurchasedPowers().contains(pws.toString())) {
 						power = new Power(pws, p);
-						i.setItem(slot, power.getPowerItemWithInfo());
+						i.setItem(slot, power.getPowerItemWithTitle());
 						slot++;
 					}
 				}
 				power = new Power(Powers.NONE, p);
-				i.setItem(slot, power.getPowerItemWithInfo());
+				i.setItem(slot, power.getPowerItemWithTitle());
 			} else {
 				for (Powers pw : Powers.values()) {
 					power = new Power(pw, p);
-					i.setItem(slot, power.getPowerItemWithInfo());
+					i.setItem(slot, power.getPowerItemWithTitle());
 					slot++;
 				}
 			}
@@ -53,7 +53,7 @@ public class PowersMenu implements IMenu {
 		red.setColor(DyeColor.RED);
 		ItemStack close = red.toItemStack(1);
 		ItemMeta closemeta = close.getItemMeta();
-		closemeta.setDisplayName(ChatColor.RED + "Close Powers Menu");
+		closemeta.setDisplayName(ChatColor.RED + "Close Power Menu");
 		close.setItemMeta(closemeta);
 		return close;
 	}
@@ -67,7 +67,7 @@ public class PowersMenu implements IMenu {
 	}
 
 	public static void giveInteractItem(Player p) {
-		p.getInventory().setItem(8, getInteractItem());
+		p.getInventory().setItem(7, getInteractItem());
 	}
 
 }
