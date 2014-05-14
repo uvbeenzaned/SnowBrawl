@@ -16,6 +16,7 @@ public class Arenas implements Listener {
 
 	private static Map<String, Integer> wizardplayers = new HashMap<String, Integer>();
 	private static List<Arena> arenawizardlist = new ArrayList<Arena>();
+	private static Map<String, Integer> playerarenascroll = new HashMap<String, Integer>();
 
 	public Arenas(JavaPlugin p) {
 		p.getServer().getPluginManager().registerEvents(this, p);
@@ -36,6 +37,18 @@ public class Arenas implements Listener {
 		a.setSender(p);
 		arenawizardlist.add(a);
 		Chat.sendPPM("Please type an arena name to use:", p);
+	}
+
+	public static Map<String, Integer> getPlayerScrollList() {
+		return playerarenascroll;
+	}
+
+	public static void setPlayerScrollList(Player p, int aindex) {
+		playerarenascroll.put(p.getName(), aindex);
+	}
+	
+	public static void removePlayerFromScrollList(Player p) {
+		playerarenascroll.remove(p.getName());
 	}
 
 	@EventHandler

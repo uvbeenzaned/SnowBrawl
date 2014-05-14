@@ -61,6 +61,7 @@ public class Help {
 			cmds.add("        add - Starts arena wizard.");
 			cmds.add("        remove <arena name> - Removes specified arena from configuration.");
 			cmds.add("        toggle <arena name> - Enable/Disable the map from circulation.");
+			cmds.add("        scroll - Turns on quick scroll mode to find an arena quickly.");
 			cmds.add(cmd + "store - Command for accessing all store options.");
 			cmds.add("        toggle - Turn the Store off/on making all the powers free or purchasable.");
 			for (String c : cmds) {

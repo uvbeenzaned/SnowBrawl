@@ -122,6 +122,9 @@ public class Power {
 		case VELOCITY:
 			// no function required
 			break;
+		case ERUPTION:
+			addToInventory(eruption());
+			break;
 		default:
 			break;
 		}
@@ -145,6 +148,8 @@ public class Power {
 			return 60000;
 		case VELOCITY:
 			return 0;
+		case ERUPTION:
+			return 30000;
 		default:
 			return 0;
 		}
@@ -200,6 +205,12 @@ public class Power {
 			itemwithinfo = new ItemStack(Material.FIRE, 1);
 			im = itemwithinfo.getItemMeta();
 			im.setDisplayName("Velocity");
+			itemwithinfo.setItemMeta(im);
+			return itemwithinfo;
+		case ERUPTION:
+			itemwithinfo = new ItemStack(Material.EGG, 1);
+			im = itemwithinfo.getItemMeta();
+			im.setDisplayName("Eruption");
 			itemwithinfo.setItemMeta(im);
 			return itemwithinfo;
 		case NONE:
@@ -281,6 +292,14 @@ public class Power {
 		ItemStack i = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta im = i.getItemMeta();
 		im.setDisplayName("Lightning Rod");
+		i.setItemMeta(im);
+		return i;
+	}
+	
+	private ItemStack eruption() {
+		ItemStack i = new ItemStack(Material.EGG);
+		ItemMeta im = i.getItemMeta();
+		im.setDisplayName("Eruption");
 		i.setItemMeta(im);
 		return i;
 	}

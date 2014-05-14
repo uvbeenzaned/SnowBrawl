@@ -22,6 +22,9 @@ Smite:
 Velocity:
   description: Enables you to throw not just faster than normal but also further!
   price: 6000.0
+Eruption:
+  description: A throwable grenade that creates a dome of snowballs flying outwards to defeat all in it's range upon impact.
+  price: 10000.0
 None:
   description: For when you don't want to use a power!
   price: 0.0

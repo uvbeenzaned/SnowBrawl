@@ -193,6 +193,7 @@ public class TeamCyan {
 				Stats s = new Stats(Bukkit.getServer().getPlayer(p));
 				addArenaPlayer(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).setGameMode(GameMode.SURVIVAL);
+				Bukkit.getServer().getPlayer(p).setFlying(false);
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Rank.checkRank(Bukkit.getPlayer(p));

@@ -18,6 +18,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -111,6 +112,19 @@ public class ExtrasListener implements Listener {
 						s.update();
 					}
 				}
+			}
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerScrollEvent(PlayerItemHeldEvent e) {
+		if(Arenas.getPlayerScrollList().containsKey(e.getPlayer().getName())) {
+			if(e.getPreviousSlot() > Arenas.getPlayerScrollList().get(e.getPlayer())) {
+				e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer()))).getCyanSide());
+				Arenas.setPlayerScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer()) + 1);
+			} else if(e.getPreviousSlot() < Arenas.getPlayerScrollList().get(e.getPlayer())) {
+				e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer()))).getCyanSide());
+				Arenas.setPlayerScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer()) - 1);
 			}
 		}
 	}

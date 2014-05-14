@@ -97,17 +97,17 @@ public class Round {
 			int read = i;
 			read += 1;
 			if (getMapLineup().size() >= 8) {
-				bookmaps.append(ChatColor.GOLD + String.valueOf(read) + ChatColor.RESET + ". " + getMapLineup().get(i) + "\n");
+				bookmaps.append(String.valueOf(read) + ". " + getMapLineup().get(i) + "\n");
 			} else {
 				for (int j = 0; j < getMapLineup().size(); j++) {
 					read = j;
 					read += 1;
-					bookmaps.append(ChatColor.GOLD + String.valueOf(read) + ChatColor.RESET + ". " + getMapLineup().get(j) + "\n");
+					bookmaps.append(String.valueOf(read) + ". " + getMapLineup().get(j) + "\n");
 				}
 				break;
 			}
 		}
-		bookmaps.append("    (arena circulation: " + ChatColor.GOLD + String.valueOf(getMapLineup().size()) + ChatColor.RESET + "/" + ChatColor.BLUE + String.valueOf(Configurations.getArenasconfig().getKeys(false).size()) + ChatColor.RESET + ")\n");
+		bookmaps.append("(arena circulation: " + String.valueOf(getMapLineup().size()) + "/" + String.valueOf(Configurations.getArenasconfig().getKeys(false).size()) + ")\n");
 		bm.addPage(bookmaps.toString());
 		book.setItemMeta(bm);
 		return book;

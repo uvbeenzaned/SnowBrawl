@@ -291,6 +291,15 @@ public class SBCommandExecutor implements CommandExecutor {
 									Chat.sendPPM(Utilities.convertArgsToString(args, 2) + " does not exist in the config!", p);
 									return true;
 								}
+							case "scroll":
+								if(!Arenas.getPlayerScrollList().containsKey(p.getName())) {
+									Arenas.setPlayerScrollList(p, 0);
+									Chat.sendPPM("You have turned on arena quick scrolling!", p);
+								} else {
+									Arenas.removePlayerFromScrollList(p);
+									Chat.sendPPM("You have turned off arena quick scrolling!", p);
+								}
+								
 							}
 						}
 						Help.printHelp(p);

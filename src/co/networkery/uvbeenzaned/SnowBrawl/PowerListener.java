@@ -8,7 +8,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Egg;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -19,6 +21,7 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -27,6 +30,7 @@ import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
+import org.bukkit.util.Vector;
 
 public class PowerListener implements Listener {
 
@@ -199,17 +203,37 @@ public class PowerListener implements Listener {
 
 	@EventHandler
 	public void onProjectileHit(ProjectileHitEvent e) {
-		if (e.getEntity() instanceof Arrow) {
-			if (e.getEntity().getShooter() instanceof Player) {
-				Player p = (Player) e.getEntity().getShooter();
-				if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+		if (e.getEntity().getShooter() instanceof Player) {
+			Player p = (Player) e.getEntity().getShooter();
+			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
+				if (e.getEntity() instanceof Arrow) {
 					Arrow arrow = (Arrow) e.getEntity();
 					Location smoke = arrow.getLocation();
 					for (int i = 0; i < 8; i++)
 						p.getWorld().playEffect(smoke, Effect.SMOKE, i);
 					arrow.remove();
 				}
+				if (e.getEntity() instanceof Egg) {
+					Egg egg = (Egg) e.getEntity();
+//					double pitch = ((egg.getLocation().getPitch() + 90) * Math.PI) / 180;
+//					double yaw = ((egg.getLocation().getYaw() + 90) * Math.PI) / 180;
+//					double x = Math.sin(pitch) * Math.cos(yaw);
+//					double y = Math.sin(pitch) * Math.sin(yaw);
+//					double z = Math.cos(pitch);
+//					@SuppressWarnings("unused")
+//					Vector vector = new Vector(x, y, z);
+					for (BlockFace bf : BlockFace.values()) {
+						Location l = egg.getLocation().add(0, 1, 0).getBlock().getRelative(bf).getLocation();
+						p.getWorld().spawnEntity(l, EntityType.SNOWBALL).setVelocity(Vector.getRandom().normalize());
+					}
+				}
 			}
+		}
+	}
+	@EventHandler
+	public void onEggThrow(PlayerEggThrowEvent e) {
+		if(TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
+			e.setHatching(false);
 		}
 	}
 
