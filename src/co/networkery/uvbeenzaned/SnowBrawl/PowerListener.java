@@ -14,6 +14,7 @@ import org.bukkit.entity.Egg;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -215,16 +216,19 @@ public class PowerListener implements Listener {
 				}
 				if (e.getEntity() instanceof Egg) {
 					Egg egg = (Egg) e.getEntity();
-//					double pitch = ((egg.getLocation().getPitch() + 90) * Math.PI) / 180;
-//					double yaw = ((egg.getLocation().getYaw() + 90) * Math.PI) / 180;
-//					double x = Math.sin(pitch) * Math.cos(yaw);
-//					double y = Math.sin(pitch) * Math.sin(yaw);
-//					double z = Math.cos(pitch);
-//					@SuppressWarnings("unused")
-//					Vector vector = new Vector(x, y, z);
+					double pitch = ((egg.getLocation().getPitch() + 90) * Math.PI) / 180;
+					double yaw = ((egg.getLocation().getYaw() + 90) * Math.PI) / 180;
+					double x = Math.sin(pitch) * Math.cos(yaw);
+					double y = Math.sin(pitch) * Math.sin(yaw);
+					double z = Math.cos(pitch);
+					//@SuppressWarnings("unused")
+					Vector vector = new Vector(x, y, z);
 					for (BlockFace bf : BlockFace.values()) {
+						vector = new Vector((x + bf.getModX()) / 5, (y + bf.getModY()) / 5, (z + bf.getModZ()) / 5);
 						Location l = egg.getLocation().add(0, 1, 0).getBlock().getRelative(bf).getLocation();
-						p.getWorld().spawnEntity(l, EntityType.SNOWBALL).setVelocity(Vector.getRandom().normalize());
+						Snowball s = (Snowball) p.getWorld().spawnEntity(l, EntityType.SNOWBALL);
+						s.setShooter(p);
+						s.setVelocity(vector.normalize());
 					}
 				}
 			}
