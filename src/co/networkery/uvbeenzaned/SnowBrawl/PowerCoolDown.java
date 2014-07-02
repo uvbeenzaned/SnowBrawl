@@ -27,9 +27,8 @@ public class PowerCoolDown {
 			public void run() {
 				for (Entry<String, Integer> p : cooldownplayers.entrySet()) {
 					Stats s = new Stats(Bukkit.getPlayer(p.getKey()));
-					Power pw = new Power(s.getPower(), Bukkit.getPlayer(p.getKey()));
 					if (p.getValue() != 0) {
-						int sec = pw.time() / 1000;
+						int sec = s.getPower().time() / 1000;
 						float val = (float) ((float) 100 / sec) * ((float) p.getValue().intValue() / 100);
 						p.setValue(p.getValue().intValue() - 1);
 						if (val < 1) {
@@ -38,7 +37,7 @@ public class PowerCoolDown {
 					} else {
 						Bukkit.getPlayer(p.getKey()).setLevel(0);
 						Bukkit.getPlayer(p.getKey()).setExp(0);
-						pw.apply();
+						s.getPower().apply();
 						Utilities.reloadSound(Bukkit.getPlayer(p.getKey()));
 						playerstoremove.add(p.getKey());
 					}
@@ -56,14 +55,24 @@ public class PowerCoolDown {
 
 	public static void start(Player p, int ms) {
 		if (!cooldownplayers.containsKey(p.getName())) {
-			if (!isTimerRunning()) {
-				schedule();
-				running = true;
+			Stats s = new Stats(p);
+			if (s.getPower().time() > 0) {
+				if (!isTimerRunning()) {
+					schedule();
+					running = true;
+				}
+				int time = s.getPower().time();
+				if (s.getPower().isTimeReducable() && Round.getPlayerLead(p) != 0) {
+					if ((time / Round.getPlayerLead(p)) > 10000) {
+						time = time / Round.getPlayerLead(p);
+					}
+				}
+				time = time / 1000;
+				cooldownplayers.put(p.getName(), time);
+				Chat.sendPPM(time + " second power cooldown...", p);
+			} else {
+				Chat.sendPPM("Please wait until the cooldown process is over!", p);
 			}
-			cooldownplayers.put(p.getName(), ms / 1000);
-			Chat.sendPPM(ms / 1000 + " second cooldown...", p);
-		} else {
-			Chat.sendPPM("Please wait until the cooldown process is over!", p);
 		}
 	}
 

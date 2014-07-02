@@ -12,12 +12,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Dye;
 
-public class StorePowerMenu implements IMenu {
+public class UpgradeMenu implements IMenu {
 
 	Inventory i;
-
-	public StorePowerMenu(Player p) {
-		i = Bukkit.createInventory(null, 18, "[SnowBrawl] Store: Buy Powers");
+	
+	public UpgradeMenu(Player p) {
+		i = Bukkit.createInventory(null, 18, "[SnowBrawl] Store: Buy Upgrades");
 		int slot = 0;
 		Power pw = null;
 		for (Powers pws : Powers.values()) {
@@ -27,8 +27,8 @@ public class StorePowerMenu implements IMenu {
 				ItemMeta priceditemmeta = priceditem.getItemMeta();
 				List<String> info = new ArrayList<String>();
 				info.add(ChatColor.GREEN + "Cost: " + String.valueOf(pw.getPrice()));
-				info.add(ChatColor.BLUE + "Click for more info about this power.");
-				info.add(ChatColor.LIGHT_PURPLE + "Shift-click this power to buy it!");
+				info.add(ChatColor.BLUE + "Click for more info about this upgrade.");
+				info.add(ChatColor.LIGHT_PURPLE + "Shift-click this upgrade to buy it!");
 				priceditemmeta.setLore(info);
 				priceditem.setItemMeta(priceditemmeta);
 				i.setItem(slot, priceditem);
@@ -37,19 +37,20 @@ public class StorePowerMenu implements IMenu {
 		}
 		i.setItem(17, getCloseButton());
 	}
-
+	
 	@Override
 	public Inventory getMenu() {
 		return i;
 	}
-
+	
 	public static ItemStack getCloseButton() {
 		Dye red = new Dye();
 		red.setColor(DyeColor.RED);
 		ItemStack close = red.toItemStack(1);
 		ItemMeta closemeta = close.getItemMeta();
-		closemeta.setDisplayName(ChatColor.RED + "Close Store Power Menu");
+		closemeta.setDisplayName(ChatColor.RED + "Close Store Upgrade Menu");
 		close.setItemMeta(closemeta);
 		return close;
 	}
+
 }

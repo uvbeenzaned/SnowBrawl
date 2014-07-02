@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
-public class Power {
+public class Power implements IAddon {
 
 	private Powers power;
 	private String powername;
@@ -22,13 +22,13 @@ public class Power {
 	private double price;
 
 	public Power(Powers p, Player pl) {
-		setPower(p);
+		set(p);
 		setPlayer(pl);
 		powername = p.toString();
-		fetchPowerConfiguration();
+		fetchConfiguration();
 	}
 
-	private void fetchPowerConfiguration() {
+	private void fetchConfiguration() {
 		if (Configurations.getPowersconfig().contains(powername)) {
 			setDescription(Configurations.getPowersconfig().getConfigurationSection(powername).getString("description"));
 			setPrice(Configurations.getPowersconfig().getConfigurationSection(powername).getDouble("price"));
@@ -39,16 +39,16 @@ public class Power {
 			Configurations.savePowersConfig();
 		}
 	}
-
-	public Powers getPower() {
+	
+	public Powers getType() {
 		return power;
 	}
 
-	public void setPower(Powers power) {
-		this.power = power;
+	public void set(IAddonDefs power) {
+		this.power = (Powers) power;
 	}
 
-	public String getPowerName() {
+	public String getName() {
 		return powername;
 	}
 
@@ -76,7 +76,7 @@ public class Power {
 		this.price = price;
 	}
 
-	public ArrayList<String> getPowerInfo() {
+	public ArrayList<String> getInfo() {
 		ArrayList<String> info = new ArrayList<String>();
 		info.add(powername + ":");
 		info.add("    Description: " + description);
@@ -135,9 +135,9 @@ public class Power {
 		case SPEED:
 			return 30000;
 		case SLOWDOWN:
-			return 0;
+			return 30000;
 		case BLINDNESS:
-			return 0;
+			return 30000;
 		case SPONTANEOUS_COMBUSTION:
 			return 0;
 		case INSTA_RELOAD:
@@ -154,7 +154,34 @@ public class Power {
 			return 0;
 		}
 	}
-	
+
+	public boolean isTimeReducable() {
+		switch (power) {
+		case BLINDNESS:
+			return true;
+		case ERUPTION:
+			return true;
+		case INSTA_RELOAD:
+			return false;
+		case NONE:
+			return false;
+		case SLOWDOWN:
+			return true;
+		case SMITE:
+			return false;
+		case SNIPER:
+			return true;
+		case SPEED:
+			return false;
+		case SPONTANEOUS_COMBUSTION:
+			return false;
+		case VELOCITY:
+			return false;
+		default:
+			return false;
+		}
+	}
+
 	public ItemStack getPowerItemWithTitle() {
 		ItemStack itemwithinfo;
 		ItemMeta im;
@@ -295,7 +322,7 @@ public class Power {
 		i.setItemMeta(im);
 		return i;
 	}
-	
+
 	private ItemStack eruption() {
 		ItemStack i = new ItemStack(Material.EGG);
 		ItemMeta im = i.getItemMeta();

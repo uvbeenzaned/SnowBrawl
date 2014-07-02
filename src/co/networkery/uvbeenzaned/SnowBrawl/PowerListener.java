@@ -136,9 +136,7 @@ public class PowerListener implements Listener {
 				}
 			}
 			if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-				if (s.usingPower(Powers.SPEED)) {
-					PowerCoolDown.start(p, 30000);
-				}
+				PowerCoolDown.start(p, s.getPower().time());
 			}
 		}
 	}
@@ -156,7 +154,7 @@ public class PowerListener implements Listener {
 					smoke.setY(smoke.getY() + 1);
 					for (int i = 0; i < 8; i++)
 						p.getWorld().playEffect(smoke, Effect.SMOKE, i);
-					PowerCoolDown.start(p, 30000);
+					PowerCoolDown.start(p, s.getPower().time());
 				}
 			}
 		}
@@ -214,29 +212,56 @@ public class PowerListener implements Listener {
 						p.getWorld().playEffect(smoke, Effect.SMOKE, i);
 					arrow.remove();
 				}
-				if (e.getEntity() instanceof Egg) {
-					Egg egg = (Egg) e.getEntity();
-					double pitch = ((egg.getLocation().getPitch() + 90) * Math.PI) / 180;
-					double yaw = ((egg.getLocation().getYaw() + 90) * Math.PI) / 180;
-					double x = Math.sin(pitch) * Math.cos(yaw);
-					double y = Math.sin(pitch) * Math.sin(yaw);
-					double z = Math.cos(pitch);
-					//@SuppressWarnings("unused")
-					Vector vector = new Vector(x, y, z);
-					for (BlockFace bf : BlockFace.values()) {
-						vector = new Vector((x + bf.getModX()) / 5, (y + bf.getModY()) / 5, (z + bf.getModZ()) / 5);
-						Location l = egg.getLocation().add(0, 1, 0).getBlock().getRelative(bf).getLocation();
-						Snowball s = (Snowball) p.getWorld().spawnEntity(l, EntityType.SNOWBALL);
-						s.setShooter(p);
-						s.setVelocity(vector.normalize());
+				ArrayList<Integer> specialSbIds = new ArrayList<Integer>();
+				Stats s = new Stats(p);
+				if (s.usingPower(Powers.ERUPTION)) {
+					if (e.getEntity() instanceof Egg) {
+						Egg egg = (Egg) e.getEntity();
+//						double pitch = ((egg.getLocation().getPitch() + 90) * Math.PI) / 180;
+//						double yaw = ((egg.getLocation().getYaw() + 90) * Math.PI) / 180;
+						double pitch = (90 * Math.PI) / 180;
+						double yaw = (90 * Math.PI) / 180;
+						double x = Math.sin(pitch) * Math.cos(yaw);
+						double y = Math.sin(pitch) * Math.sin(yaw);
+						double z = Math.cos(pitch);
+						Vector vector = new Vector(x, y, z);
+						for (BlockFace bf : BlockFace.values()) {
+							vector = new Vector((x + bf.getModX()) / 5, (y + bf.getModY()) / 5, (z + bf.getModZ()) / 5);
+							Location l = egg.getLocation().add(0, 1, 0).getBlock().getRelative(bf).getLocation();
+							p.getWorld().createExplosion(l, 0F);
+							Snowball sb = (Snowball) p.getWorld().spawnEntity(l, EntityType.SNOWBALL);
+							specialSbIds.add(sb.getEntityId());
+							sb.setFireTicks(1200);
+							sb.setShooter(p);
+							sb.setVelocity(vector.normalize());
+						}
+//						for (int i = 0; i < 8; i++)
+//							p.getWorld().playEffect(egg.getLocation().add(0, 1, 0), Effect.SMOKE, i);
+//						egg.getLocation().getBlock().setType(Material.FIRE);
+						PowerCoolDown.start(p, s.getPower().time());
+					}
+					if (e.getEntity() instanceof Snowball) {
+						Snowball sb = (Snowball) e.getEntity();
+						if (specialSbIds.contains(sb.getEntityId())) {
+							specialSbIds.remove(sb.getEntityId());
+							Location l = sb.getLocation();
+							if (sb.getLocation().getBlock().getType() != Material.AIR) {
+								while (l.getBlock().getType() != Material.AIR) {
+									l.add(0, 1, 0);
+								}
+							}
+							sb.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.FIRE);
+						}
 					}
 				}
+
 			}
 		}
 	}
+
 	@EventHandler
 	public void onEggThrow(PlayerEggThrowEvent e) {
-		if(TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
+		if (TeamCyan.hasArenaPlayer(e.getPlayer()) || TeamLime.hasArenaPlayer(e.getPlayer())) {
 			e.setHatching(false);
 		}
 	}

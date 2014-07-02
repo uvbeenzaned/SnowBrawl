@@ -30,13 +30,18 @@ public class Store {
 
 	public static void setEnabled(boolean enabled) {
 		storeenabled = enabled;
-		if(enabled) {
+		if (enabled) {
 			Stats s = null;
-			for(String p : Configurations.getPlayersconfig().getKeys(false)) {
+			for (String p : Configurations.getPlayersconfig().getKeys(false)) {
 				s = new Stats(p);
-				if(!s.getError()) {
-					if(!s.getPurchasedPowers().contains(s.getPower().toString()) && s.getPower() != Powers.NONE) {
+				if (!s.getError()) {
+					if (!s.getPurchasedPowers().contains(s.getPower().toString()) && s.getPower().getType() != Powers.NONE) {
 						s.setPower(Powers.NONE);
+					}
+					for (String eup : s.getEnabledUpgrades()) {
+						if (!s.getPurchasedUpgrades().contains(eup)) {
+							s.disableUpgrade(Upgrades.valueOf(eup));
+						}
 					}
 				}
 			}
@@ -81,6 +86,34 @@ public class Store {
 				}
 			} else {
 				Chat.sendPPM("You have already purchased the power " + pws.toString() + "!", sender);
+			}
+		} else {
+			Chat.sendPPM("This server does not have a Vault supported economy!  Please report this error to the admin(s).", sender);
+		}
+	}
+
+	public static void purchaseUpgrade(Player sender, Player p, Upgrades u) {
+		if (getEconomy() != null) {
+			Stats s = new Stats(p);
+			Upgrade up = new Upgrade(u, p);
+			EconomyResponse er = null;
+			if (!s.ownsUpgrade(u)) {
+				if (getEconomy().hasAccount(sender.getName())) {
+					if (getEconomy().getBalance(sender.getName()) >= up.getPrice()) {
+						er = getEconomy().withdrawPlayer(sender.getName(), up.getPrice());
+						if (er.transactionSuccess()) {
+							s.addUpgrade(u);
+							Chat.sendPPM("You have just purchased the upgrade " + u.toString() + " for " + String.valueOf(up.getPrice()) + " dollars.", sender);
+						} else {
+							Chat.sendPPM("There was a problem while making your transaction! Please report this error to the admin(s):", sender);
+							Chat.sendPM("    " + er.errorMessage, sender);
+						}
+					} else {
+						Chat.sendPPM("You do not have enough funds to buy this upgrade!", sender);
+					}
+				}
+			} else {
+				Chat.sendPPM("You have already purchased the upgrade " + u.toString() + "!", sender);
 			}
 		} else {
 			Chat.sendPPM("This server does not have a Vault supported economy!  Please report this error to the admin(s).", sender);

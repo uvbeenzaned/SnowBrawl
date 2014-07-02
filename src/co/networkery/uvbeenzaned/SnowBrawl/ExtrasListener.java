@@ -119,12 +119,12 @@ public class ExtrasListener implements Listener {
 	@EventHandler
 	public void onPlayerScrollEvent(PlayerItemHeldEvent e) {
 		if(Arenas.getPlayerScrollList().containsKey(e.getPlayer().getName())) {
-			if(e.getPreviousSlot() > Arenas.getPlayerScrollList().get(e.getPlayer())) {
-				e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer()))).getCyanSide());
-				Arenas.setPlayerScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer()) + 1);
-			} else if(e.getPreviousSlot() < Arenas.getPlayerScrollList().get(e.getPlayer())) {
-				e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer()))).getCyanSide());
-				Arenas.setPlayerScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer()) - 1);
+			if(e.getPreviousSlot() > Arenas.getPlayerScrollList().get(e.getPlayer().getName())) {
+				e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer().getName()))).getCyanSide());
+				Arenas.setPlayerScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer().getName()) + 1);
+			} else if(e.getPreviousSlot() < Arenas.getPlayerScrollList().get(e.getPlayer().getName())) {
+				e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer().getName()))).getCyanSide());
+				Arenas.setPlayerScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer().getName()) - 1);
 			}
 		}
 	}

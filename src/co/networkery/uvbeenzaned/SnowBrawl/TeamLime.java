@@ -194,8 +194,7 @@ public class TeamLime {
 				Bukkit.getServer().getPlayer(p).getInventory().clear();
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Rank.checkRank(Bukkit.getPlayer(p));
-				Power pw = new Power(s.getPower(), Bukkit.getServer().getPlayer(p));
-				pw.apply();
+				s.getPower().apply();
 				Round.giveLineupBook(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).teleport(a.getLimeSide());
 				ChunkStuckFix.checkPlayerStuck(400);

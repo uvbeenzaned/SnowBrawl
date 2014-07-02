@@ -155,7 +155,7 @@ public class Stats {
 
 	public boolean usingPower(Powers p) {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power") != null) {
-			return getPower().equals(p);
+			return getPower().getType().equals(p);
 		}
 		return false;
 	}
@@ -190,19 +190,79 @@ public class Stats {
 		}
 	}
 
-	public Powers getPower() {
+	public Power getPower() {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player).getString("power") != null) {
 			for (Powers pw : Powers.values()) {
 				if (pw.equalsName(Configurations.getPlayersconfig().getConfigurationSection(player).getString("power"))) {
-					return pw;
+					return new Power(pw, Bukkit.getPlayer(player));
 				}
 			}
 		}
-		return Powers.NONE;
+		return new Power(Powers.NONE, Bukkit.getPlayer(player));
 	}
 
 	public void setPower(Powers p) {
 		Configurations.getPlayersconfig().getConfigurationSection(player).set("power", p.toString());
+		Configurations.savePlayersConfig();
+	}
+
+	public boolean usingUpgrade(Upgrades u) {
+		if (getEnabledUpgrades().contains(u.toString())) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean ownsUpgrade(Upgrades u) {
+		if (getPurchasedUpgrades().contains(u.toString())) {
+			return true;
+		}
+		return false;
+	}
+
+	public List<String> getPurchasedUpgrades() {
+		if (Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("purchased-upgrades") != null && !Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("purchased-upgrades").isEmpty()) {
+			return Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("purchased-upgrades");
+		}
+		return new ArrayList<String>();
+	}
+
+	public void addUpgrade(Upgrades u) {
+		List<String> pupgds = getPurchasedUpgrades();
+		if (Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("purchased-upgrades") != null) {
+			if (!getPurchasedUpgrades().contains(u.toString())) {
+				pupgds.add(u.toString());
+				Configurations.getPlayersconfig().getConfigurationSection(player).set("purchased-upgrades", pupgds);
+				Configurations.savePlayersConfig();
+			}
+		} else {
+			Configurations.getPlayersconfig().getConfigurationSection(player).createSection("purchased-upgrades");
+			pupgds.add(u.toString());
+			Configurations.getPlayersconfig().getConfigurationSection(player).set("purchased-upgrades", pupgds);
+			Configurations.savePlayersConfig();
+		}
+	}
+
+	public List<String> getEnabledUpgrades() {
+		if (Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("enabled-upgrades") != null && !Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("enabled-upgrades").isEmpty()) {
+			return Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("enabled-upgrades");
+		}
+		return new ArrayList<String>();
+	}
+
+	public void enableUpgrade(Upgrades u) {
+		if (getPurchasedUpgrades().contains(u.toString())) {
+			List<String> enabledupgrades = Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("enabled-upgrades");
+			enabledupgrades.add(u.toString());
+			Configurations.getPlayersconfig().getConfigurationSection(player).set("enabled-upgrades", enabledupgrades);
+			Configurations.savePlayersConfig();
+		}
+	}
+
+	public void disableUpgrade(Upgrades u) {
+		List<String> enabledupgrades = Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("enabled-upgrades");
+		enabledupgrades.remove(u.toString());
+		Configurations.getPlayersconfig().getConfigurationSection(player).set("enabled-upgrades", enabledupgrades);
 		Configurations.savePlayersConfig();
 	}
 
@@ -223,6 +283,8 @@ public class Stats {
 	public ArrayList<String> getAllStats() {
 		ArrayList<String> s = new ArrayList<String>();
 		String purchasedpowers = "";
+		String enabledupgrades = "";
+		String purchasedupgrades = "";
 		s.add("Stats for " + player + ":");
 		if (Bukkit.getOfflinePlayer(player).isOnline()) {
 			if (TeamCyan.hasPlayer(player)) {
@@ -239,13 +301,21 @@ public class Stats {
 		for (String pw : getPurchasedPowers()) {
 			purchasedpowers += pw + ", ";
 		}
+		for (String u : getEnabledUpgrades()) {
+			enabledupgrades += u + ", ";
+		}
+		for (String u : getPurchasedUpgrades()) {
+			purchasedupgrades += u + ", ";
+		}
 		s.add("    Rank: " + getLastRank());
 		s.add("    Points: " + String.valueOf(getPoints()));
 		s.add("    Hits: " + String.valueOf(getHits()));
 		s.add("    Losses: " + String.valueOf(getLosses()));
 		s.add("    H/L ratio: " + String.valueOf(getKDRatio()));
-		s.add("    Power: " + getPower().toString());
+		s.add("    Power: " + getPower().getName());
 		s.add("    Purchased powers: " + purchasedpowers);
+		s.add("    Enabled upgrades: " + enabledupgrades);
+		s.add("    Purchased upgrades: " + purchasedupgrades);
 		s.add("    Snowballs thrown: " + String.valueOf(getSnowballsThrown()));
 		s.add("    Snowball distance record: " + String.valueOf(getShotDistanceRecord("Snowball")) + " blocks");
 		s.add("    Sniper distance record: " + String.valueOf(getShotDistanceRecord("Sniper Rifle")) + " blocks");
@@ -272,11 +342,11 @@ public class Stats {
 				plcount++;
 			}
 			sbthrown += Configurations.getPlayersconfig().getConfigurationSection(p).getInt("snowballs-thrown");
-			if(snowballdistancerecord < Configurations.getPlayersconfig().getConfigurationSection(p).getLong("snowball-record-distance")) {
+			if (snowballdistancerecord < Configurations.getPlayersconfig().getConfigurationSection(p).getLong("snowball-record-distance")) {
 				snowballdistancerecord = Configurations.getPlayersconfig().getConfigurationSection(p).getLong("snowball-record-distance");
 				sbrecordplayer = p;
 			}
-			if(sniperdistancerecord < Configurations.getPlayersconfig().getConfigurationSection(p).getLong("sniper-record-distance")) {
+			if (sniperdistancerecord < Configurations.getPlayersconfig().getConfigurationSection(p).getLong("sniper-record-distance")) {
 				sniperdistancerecord = Configurations.getPlayersconfig().getConfigurationSection(p).getLong("sniper-record-distance");
 				sniperrecordplayer = p;
 			}

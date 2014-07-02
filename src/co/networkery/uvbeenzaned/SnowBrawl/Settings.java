@@ -40,7 +40,7 @@ public class Settings {
 	public static boolean getStoreEnabled() {
 		return Configurations.getMainConfig().getBoolean("store-enabled");
 	}
-	
+
 	public static void setStoreEnabled(boolean enabled, Player sender) {
 		Configurations.getMainConfig().set("store-enabled", enabled);
 		Configurations.saveMainConfig();

@@ -130,14 +130,14 @@ public class SBCommandExecutor implements CommandExecutor {
 							return true;
 						case "info":
 							if (args.length > 2) {
-								if (Utilities.getPowersList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
+								if (Powers.toStringList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
 									for (Powers value : Powers.values()) {
 										if (value.equalsName(Utilities.convertArgsToString(args, 2))) {
 											Power pw = new Power(value, p);
-											Chat.sendPPM(pw.getPowerInfo().get(0), p);
-											Chat.sendPM(pw.getPowerInfo().get(1), p);
-											Chat.sendPM(pw.getPowerInfo().get(2), p);
-											Chat.sendPM(pw.getPowerInfo().get(3), p);
+											Chat.sendPPM(pw.getInfo().get(0), p);
+											Chat.sendPM(pw.getInfo().get(1), p);
+											Chat.sendPM(pw.getInfo().get(2), p);
+											Chat.sendPM(pw.getInfo().get(3), p);
 											return true;
 										}
 									}
@@ -148,12 +148,12 @@ public class SBCommandExecutor implements CommandExecutor {
 						case "set":
 							if (args.length > 2) {
 								if (!TeamCyan.hasArenaPlayer(p) && !TeamLime.hasArenaPlayer(p)) {
-									if (Utilities.getPowersList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
+									if (Powers.toStringList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
 										for (Powers pw : Powers.values()) {
 											if (pw.equalsName(Utilities.convertArgsToString(args, 2))) {
 												if ((s.ownsPower(pw) || pw.equals(Powers.NONE)) || !Store.isEnabled()) {
 													s.setPower(pw);
-													Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), p);
+													Chat.sendPPM("Your power has been changed to: " + s.getPower().getType().toString(), p);
 													return true;
 												}
 												Chat.sendPPM("You do not own this power.  Please purchase it to use it! /" + cmd.getName() + " power info " + pw.toString() + ".", p);
@@ -170,6 +170,46 @@ public class SBCommandExecutor implements CommandExecutor {
 							return false;
 						}
 						return false;
+					}
+					return false;
+				case "upgrade":
+					if (args.length > 1) {
+						Stats s = new Stats(p);
+						switch (args[1].toLowerCase()) {
+						case "list":
+							Chat.sendPPM("List of upgrades:", p);
+							String upl = "";
+							for (Upgrades u : Upgrades.values()) {
+								if (s.ownsUpgrade(u) || !Store.isEnabled()) {
+									upl = upl + ChatColor.GREEN + u.toString() + ChatColor.RESET + ", ";
+								} else {
+									upl = upl + ChatColor.DARK_GRAY + u.toString() + ChatColor.RESET + ", ";
+								}
+							}
+							Chat.sendPM(upl, p);
+							return true;
+						case "info":
+							if (args.length > 2) {
+								if (Upgrades.toStringList().contains(Utilities.convertArgsToString(args, 2).toLowerCase())) {
+									for (Upgrades value : Upgrades.values()) {
+										if (value.equalsName(Utilities.convertArgsToString(args, 2))) {
+											Upgrade u = new Upgrade(value, p);
+											Chat.sendPPM(u.getInfo().get(0), p);
+											Chat.sendPM(u.getInfo().get(1), p);
+											Chat.sendPM(u.getInfo().get(2), p);
+											Chat.sendPM(u.getInfo().get(3), p);
+											return true;
+										}
+									}
+								}
+								return false;
+							}
+							return false;
+						case "enable":
+							break;
+						case "disable":
+							break;
+						}
 					}
 					return false;
 				case "arena":
@@ -240,6 +280,8 @@ public class SBCommandExecutor implements CommandExecutor {
 											p.teleport(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getCyanSide());
 											return true;
 										}
+										Chat.sendPPM("The arena name that you typed does not exist!", p);
+										return true;
 									}
 									Chat.sendPPM("You may not warp to an arena during a round!", p);
 									return true;
@@ -292,14 +334,15 @@ public class SBCommandExecutor implements CommandExecutor {
 									return true;
 								}
 							case "scroll":
-								if(!Arenas.getPlayerScrollList().containsKey(p.getName())) {
+								if (!Arenas.getPlayerScrollList().containsKey(p.getName())) {
 									Arenas.setPlayerScrollList(p, 0);
 									Chat.sendPPM("You have turned on arena quick scrolling!", p);
+									return true;
 								} else {
 									Arenas.removePlayerFromScrollList(p);
 									Chat.sendPPM("You have turned off arena quick scrolling!", p);
+									return true;
 								}
-								
 							}
 						}
 						Help.printHelp(p);
@@ -316,7 +359,7 @@ public class SBCommandExecutor implements CommandExecutor {
 								switch (args[2].toLowerCase()) {
 								case "power":
 									if (args.length >= 3) {
-										if (Utilities.getPowersList().contains(Utilities.convertArgsToString(args, 3).toLowerCase())) {
+										if (Powers.toStringList().contains(Utilities.convertArgsToString(args, 3).toLowerCase())) {
 											for (Powers pw : Powers.values()) {
 												if (pw.toString().equalsIgnoreCase(Utilities.convertArgsToString(args, 3))) {
 													Store.purchasePower(p, p, pw);
@@ -328,7 +371,19 @@ public class SBCommandExecutor implements CommandExecutor {
 										return true;
 									}
 									return false;
+								case "upgrade":
+									if (Upgrades.toStringList().contains(Utilities.convertArgsToString(args, 3).toLowerCase())) {
+										for (Upgrades u : Upgrades.values()) {
+											if (u.toString().equalsIgnoreCase(Utilities.convertArgsToString(args, 3))) {
+												Store.purchaseUpgrade(p, p, u);
+												return true;
+											}
+										}
+									}
+									Chat.sendPPM("The upgrade " + Utilities.convertArgsToString(args, 3) + " does not exist!", p);
+									return true;
 								}
+								return false;
 							}
 							return false;
 						case "toggle":

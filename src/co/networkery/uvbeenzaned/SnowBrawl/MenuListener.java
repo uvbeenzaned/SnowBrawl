@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
-import org.zonedabone.magicchest.api.InventorySortEvent;
 
 public class MenuListener implements Listener {
 
@@ -90,7 +89,7 @@ public class MenuListener implements Listener {
 									Stats s = new Stats((Player) e.getWhoClicked());
 									s.setPower(pw);
 									e.getWhoClicked().closeInventory();
-									Chat.sendPPM("Your power has been changed to: " + s.getPower().toString(), (Player) e.getWhoClicked());
+									Chat.sendPPM("Your power has been changed to: " + s.getPower().getType().toString(), (Player) e.getWhoClicked());
 								}
 							}
 							if (e.getCurrentItem().isSimilar(PowerMenu.getCloseButton())) {
@@ -115,10 +114,10 @@ public class MenuListener implements Listener {
 										e.getWhoClicked().closeInventory();
 									} else {
 										Power pw = new Power(pws, (Player) e.getWhoClicked());
-										Chat.sendPPM(pw.getPowerInfo().get(0), (Player) e.getWhoClicked());
-										Chat.sendPM(pw.getPowerInfo().get(1), (Player) e.getWhoClicked());
-										Chat.sendPM(pw.getPowerInfo().get(2), (Player) e.getWhoClicked());
-										Chat.sendPM(pw.getPowerInfo().get(3), (Player) e.getWhoClicked());
+										Chat.sendPPM(pw.getInfo().get(0), (Player) e.getWhoClicked());
+										Chat.sendPM(pw.getInfo().get(1), (Player) e.getWhoClicked());
+										Chat.sendPM(pw.getInfo().get(2), (Player) e.getWhoClicked());
+										Chat.sendPM(pw.getInfo().get(3), (Player) e.getWhoClicked());
 										e.getWhoClicked().closeInventory();
 									}
 								}
@@ -132,12 +131,4 @@ public class MenuListener implements Listener {
 			}
 		}
 	}
-
-	@EventHandler
-	public void onInventorySort(InventorySortEvent e) {
-		if (e.getInventory().getTitle().startsWith("[SB]") || e.getInventory().getTitle().startsWith("[SnowBrawl]")) {
-			e.setCancelled(true);
-		}
-	}
-
 }

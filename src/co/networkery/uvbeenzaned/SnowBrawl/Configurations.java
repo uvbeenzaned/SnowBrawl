@@ -8,16 +8,19 @@ public class Configurations {
 	private static Configuration arenasconfig;
 	private static Configuration playersconfig;
 	private static Configuration powersconfig;
+	private static Configuration upgradesconfig;
 
 	public static void loadAllConfigurations(SB sb) {
 		setMainConfig(new Configuration(sb, "config.yml"));
 		setArenasconfig(new Configuration(sb, "arenas.yml"));
 		setPlayersconfig(new Configuration(sb, "players.yml"));
 		setPowersconfig(new Configuration(sb, "powers.yml"));
+		setUpgradesconfig(new Configuration(sb, "upgrades.yml"));
 		config.saveDefaultConfig();
 		arenasconfig.saveDefaultConfig();
 		playersconfig.saveDefaultConfig();
 		powersconfig.saveDefaultConfig();
+		upgradesconfig.saveDefaultConfig();
 	}
 
 	public static void reloadAllConfigurations() {
@@ -25,6 +28,7 @@ public class Configurations {
 		arenasconfig.reloadConfig();
 		playersconfig.reloadConfig();
 		powersconfig.reloadConfig();
+		upgradesconfig.reloadConfig();
 	}
 
 	public static void saveAllConfigurations() {
@@ -32,6 +36,7 @@ public class Configurations {
 		arenasconfig.saveConfig();
 		playersconfig.saveConfig();
 		powersconfig.saveConfig();
+		upgradesconfig.saveConfig();
 	}
 
 	/**
@@ -108,5 +113,24 @@ public class Configurations {
 	 */
 	public static void setPowersconfig(Configuration powersconfig) {
 		Configurations.powersconfig = powersconfig;
+	}
+
+	/**
+	 * @return the upgradesconfig
+	 */
+	public static FileConfiguration getUpgradesconfig() {
+		return upgradesconfig.getConfig();
+	}
+
+	public static void saveUpgradesConfig() {
+		upgradesconfig.saveConfig();
+	}
+
+	/**
+	 * @param upgradesconfig
+	 *            the upgradesconfig to set
+	 */
+	public static void setUpgradesconfig(Configuration upgradesconfig) {
+		Configurations.upgradesconfig = upgradesconfig;
 	}
 }
