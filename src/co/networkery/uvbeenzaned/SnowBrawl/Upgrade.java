@@ -1,12 +1,14 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -92,6 +94,40 @@ public class Upgrade implements IAddon {
 		}
 		return info;
 	}
+	
+	public List<Powers> getPowerRequirements() {
+		List<Powers> powers = new ArrayList<Powers>();
+		switch(upgrade) {
+		case BINOCULARS:
+			powers.add(Powers.NONE);
+			break;
+		case BURN_SAVE:
+			powers.add(Powers.NONE);
+			break;
+		case EXTENDED_SNIPER_MAGAZINE:
+			powers.add(Powers.SNIPER);
+			break;
+		case HIGHER_ERUPTION_DENSITY:
+			powers.add(Powers.ERUPTION);
+			break;
+		case POWER_RELOAD_TIME_REDUCTION:
+			for(Powers pws : Powers.values()) {
+				if(!pws.equals(Powers.NONE))
+					powers.add(pws);
+			}
+			break;
+		case SNIPER_RIFLE_SILENCER:
+			powers.add(Powers.SNIPER);
+			break;
+		case SOFT_FALL_BOOTS:
+			powers.add(Powers.NONE);
+			break;
+		default:
+			break;
+		
+		}
+		return powers;
+	}
 
 	public void apply() {
 		switch (upgrade) {
@@ -130,11 +166,39 @@ public class Upgrade implements IAddon {
 			break;
 		}
 	}
+	
+	public ItemStack getItem() {
+		switch(upgrade) {
+		case BINOCULARS:
+			return binoculars();
+		case SOFT_FALL_BOOTS:
+			return softFallBoots();
+		default:
+			return null;
+		}
+	}
+	
+	public ItemStack getItemWithTitle() {
+		switch(upgrade) {
+		case BINOCULARS:
+			return binoculars();
+		case SOFT_FALL_BOOTS:
+			return softFallBoots();
+		default:
+			ItemStack i = new ItemStack(Material.ANVIL, 1);
+			ItemMeta im = i.getItemMeta();
+			im.setDisplayName(upgradename);
+			return null;
+		}
+	}
 
 	// upgrade functions
 
 	private ItemStack binoculars() {
 		ItemStack i = new ItemStack(Material.GLASS_BOTTLE, 1);
+		ItemMeta im = i.getItemMeta();
+		im.setDisplayName("Binoculars");
+		i.setItemMeta(im);
 		return i;
 	}
 
@@ -146,6 +210,9 @@ public class Upgrade implements IAddon {
 	private ItemStack softFallBoots() {
 		ItemStack i = new ItemStack(Material.DIAMOND_BOOTS, 1);
 		i.addEnchantment(Enchantment.PROTECTION_FALL, 3);
+		ItemMeta im = i.getItemMeta();
+		im.setDisplayName("Soft Fall Boots");
+		i.setItemMeta(im);
 		return i;
 	}
 
@@ -164,5 +231,4 @@ public class Upgrade implements IAddon {
 	private void applyPlayerEffects(PotionEffect pe) {
 		getPlayer().addPotionEffect(pe);
 	}
-
 }

@@ -15,40 +15,66 @@ import org.bukkit.material.Dye;
 public class UpgradeMenu implements IMenu {
 
 	Inventory i;
-	
+	Stats s;
+
 	public UpgradeMenu(Player p) {
-		i = Bukkit.createInventory(null, 18, "[SnowBrawl] Store: Buy Upgrades");
+		i = Bukkit.createInventory(null, 18, "[SnowBrawl] Enable/Disable Upgrades");
+		s = new Stats(p);
 		int slot = 0;
-		Power pw = null;
-		for (Powers pws : Powers.values()) {
-			pw = new Power(pws, p);
-			if (pw.getType() != Powers.NONE) {
-				ItemStack priceditem = pw.getPowerItemWithTitle();
-				ItemMeta priceditemmeta = priceditem.getItemMeta();
+		Upgrade u = null;
+		if (Store.isEnabled()) {
+			for (Upgrades upgs : Upgrades.values()) {
+				if (s.ownsUpgrade(upgs)) {
+					u = new Upgrade(upgs, p);
+					ItemStack item = u.getItemWithTitle();
+					ItemMeta itemmeta = item.getItemMeta();
+					List<String> info = new ArrayList<String>();
+					if (s.usingUpgrade(upgs)) {
+						info.add(ChatColor.GREEN + "Enabled");
+						info.add(ChatColor.BLUE + "Click to enable this power!");
+					} else {
+						info.add(ChatColor.RED + "Disabled");
+						info.add(ChatColor.BLUE + "Click to disable this power!");
+					}
+					itemmeta.setLore(info);
+					item.setItemMeta(itemmeta);
+					i.setItem(slot, item);
+					slot++;
+				}
+			}
+		} else {
+			for (Upgrades upgs : Upgrades.values()) {
+				u = new Upgrade(upgs, p);
+				ItemStack item = u.getItemWithTitle();
+				ItemMeta itemmeta = item.getItemMeta();
 				List<String> info = new ArrayList<String>();
-				info.add(ChatColor.GREEN + "Cost: " + String.valueOf(pw.getPrice()));
-				info.add(ChatColor.BLUE + "Click for more info about this upgrade.");
-				info.add(ChatColor.LIGHT_PURPLE + "Shift-click this upgrade to buy it!");
-				priceditemmeta.setLore(info);
-				priceditem.setItemMeta(priceditemmeta);
-				i.setItem(slot, priceditem);
+				if (s.usingUpgrade(upgs)) {
+					info.add(ChatColor.GREEN + "Enabled");
+					info.add(ChatColor.BLUE + "Click to enable this power!");
+				} else {
+					info.add(ChatColor.RED + "Disabled");
+					info.add(ChatColor.BLUE + "Click to disable this power!");
+				}
+				itemmeta.setLore(info);
+				item.setItemMeta(itemmeta);
+				i.setItem(slot, item);
 				slot++;
 			}
 		}
 		i.setItem(17, getCloseButton());
 	}
-	
+
 	@Override
 	public Inventory getMenu() {
 		return i;
 	}
-	
+
 	public static ItemStack getCloseButton() {
 		Dye red = new Dye();
 		red.setColor(DyeColor.RED);
 		ItemStack close = red.toItemStack(1);
 		ItemMeta closemeta = close.getItemMeta();
-		closemeta.setDisplayName(ChatColor.RED + "Close Store Upgrade Menu");
+		closemeta.setDisplayName(ChatColor.RED + "Close Upgrade Menu");
 		close.setItemMeta(closemeta);
 		return close;
 	}

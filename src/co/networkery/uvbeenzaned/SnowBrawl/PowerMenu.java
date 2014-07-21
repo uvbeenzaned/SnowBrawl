@@ -25,16 +25,16 @@ public class PowerMenu implements IMenu {
 				for (Powers pws : Powers.values()) {
 					if (s.getPurchasedPowers().contains(pws.toString())) {
 						power = new Power(pws, p);
-						i.setItem(slot, power.getPowerItemWithTitle());
+						i.setItem(slot, power.getItemWithTitle());
 						slot++;
 					}
 				}
 				power = new Power(Powers.NONE, p);
-				i.setItem(slot, power.getPowerItemWithTitle());
+				i.setItem(slot, power.getItemWithTitle());
 			} else {
 				for (Powers pw : Powers.values()) {
 					power = new Power(pw, p);
-					i.setItem(slot, power.getPowerItemWithTitle());
+					i.setItem(slot, power.getItemWithTitle());
 					slot++;
 				}
 			}

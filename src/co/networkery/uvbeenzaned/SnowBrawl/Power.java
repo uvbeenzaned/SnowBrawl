@@ -182,7 +182,28 @@ public class Power implements IAddon {
 		}
 	}
 
-	public ItemStack getPowerItemWithTitle() {
+	public ItemStack getItem() {
+		switch (power) {
+		case SPEED:
+			return speed();
+		case SLOWDOWN:
+			return slowdown();
+		case BLINDNESS:
+			return blindness();
+		case SPONTANEOUS_COMBUSTION:
+			return spontaneousCombustion();
+		case SNIPER:
+			return sniperRifle();
+		case SMITE:
+			return smite();
+		case ERUPTION:
+			return eruption();
+		default:
+			return null;
+		}
+	}
+	
+	public ItemStack getItemWithTitle() {
 		ItemStack itemwithinfo;
 		ItemMeta im;
 		switch (power) {

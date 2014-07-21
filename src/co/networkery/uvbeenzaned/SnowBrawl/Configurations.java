@@ -21,6 +21,8 @@ public class Configurations {
 		playersconfig.saveDefaultConfig();
 		powersconfig.saveDefaultConfig();
 		upgradesconfig.saveDefaultConfig();
+		//JSONObject json = new JSONObject();
+		//JSONParser jp = new JSONParser();
 	}
 
 	public static void reloadAllConfigurations() {

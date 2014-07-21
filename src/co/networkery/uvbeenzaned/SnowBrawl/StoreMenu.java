@@ -36,7 +36,7 @@ public class StoreMenu {
 	public static ItemStack getStoreUpgradeButton() {
 		ItemStack curritem = new ItemStack(Material.ANVIL, 1);
 		ItemMeta curritemmeta = curritem.getItemMeta();
-		curritemmeta.setDisplayName(ChatColor.STRIKETHROUGH + "Buy Upgrades..." + ChatColor.RESET + " (Coming soon)");
+		curritemmeta.setDisplayName("Buy Upgrades...");
 		curritem.setItemMeta(curritemmeta);
 		return curritem;
 	}

@@ -3,6 +3,7 @@ package co.networkery.uvbeenzaned.SnowBrawl;
 import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public interface IAddon {
 	public IAddonDefs getType();
@@ -15,5 +16,7 @@ public interface IAddon {
 	public double getPrice();
 	public void setPrice(double pr);
 	public ArrayList<String> getInfo();
-	public void apply(); 
+	public void apply();
+	public ItemStack getItem();
+	public ItemStack getItemWithTitle();
 }

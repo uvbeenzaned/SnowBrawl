@@ -126,6 +126,27 @@ public class MenuListener implements Listener {
 								e.getWhoClicked().closeInventory();
 							}
 						}
+						if (e.getInventory().getTitle().equals("[SnowBrawl] Store: Buy Upgrades")) {
+							for (Upgrades upgs : Upgrades.values()) {
+								ItemMeta im = e.getCurrentItem().getItemMeta();
+								if (im.getDisplayName().equals(upgs.toString())) {
+									if (e.isShiftClick()) {
+										Store.purchaseUpgrade((Player) e.getWhoClicked(), (Player) e.getWhoClicked(), upgs);
+										e.getWhoClicked().closeInventory();
+									} else {
+										Upgrade u = new Upgrade(upgs, (Player) e.getWhoClicked());
+										Chat.sendPPM(u.getInfo().get(0), (Player) e.getWhoClicked());
+										Chat.sendPM(u.getInfo().get(1), (Player) e.getWhoClicked());
+										Chat.sendPM(u.getInfo().get(2), (Player) e.getWhoClicked());
+										Chat.sendPM(u.getInfo().get(3), (Player) e.getWhoClicked());
+										e.getWhoClicked().closeInventory();
+									}
+								}
+							}
+							if (e.getCurrentItem().isSimilar(StoreUpgradeMenu.getCloseButton())) {
+								e.getWhoClicked().closeInventory();
+							}
+						}
 					}
 				}
 			}
