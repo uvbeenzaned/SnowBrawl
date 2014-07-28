@@ -17,5 +17,5 @@ Power Reload Time Reduction:
   description: Knock off 1/5 of any reload time for select powers!
   price: 1000.0
 Burn Save:
-  description: Have you fallen into lava and can't get up? This adds 5 seconds of fire protection upon recieving fire/lava damage. One use per round.
+  description: Have you fallen into lava and can't get up? This adds 5 seconds of fire protection upon receiving fire/lava damage. One use per round.
   price: 500.0

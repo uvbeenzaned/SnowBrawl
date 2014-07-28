@@ -49,6 +49,7 @@ public class MenuListener implements Listener {
 						e.getPlayer().openInventory(upm.getMenu());
 						e.setCancelled(true);
 					} else {
+						e.setCancelled(true);
 						Chat.sendPPM("You have not purchased any upgrades to enable or disable!", e.getPlayer());
 					}
 				}

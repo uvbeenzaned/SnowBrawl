@@ -40,7 +40,12 @@ public class Store {
 					}
 					for (String eup : s.getEnabledUpgrades()) {
 						if (!s.getPurchasedUpgrades().contains(eup)) {
-							s.disableUpgrade(Upgrades.valueOf(eup));
+							for (Upgrades u : Upgrades.values()) {
+								if (eup.equalsIgnoreCase(u.toString())) {
+									s.disableUpgrade(u);
+									break;
+								}
+							}
 						}
 					}
 				}

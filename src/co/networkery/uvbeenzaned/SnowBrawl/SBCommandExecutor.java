@@ -457,6 +457,7 @@ public class SBCommandExecutor implements CommandExecutor {
 						Round.setGameActive(false);
 						TeamCyan.teleportAllPlayersToLobby();
 						TeamLime.teleportAllPlayersToLobby();
+						Board.clearOutPlayers();
 						Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has manually stopped all round progress!");
 						return true;
 					}

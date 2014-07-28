@@ -266,9 +266,14 @@ public class Stats {
 	public void enableUpgrade(Upgrades u) {
 		if (getPurchasedUpgrades().contains(u.toString()) || !Store.isEnabled()) {
 			List<String> enabledupgrades = Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("enabled-upgrades");
-			enabledupgrades.add(u.toString());
-			Configurations.getPlayersconfig().getConfigurationSection(player).set("enabled-upgrades", enabledupgrades);
-			Configurations.savePlayersConfig();
+			Upgrade upgs = new Upgrade(u, Bukkit.getPlayer(player));
+			if (!upgs.getPowerConflicts().contains(getPower().getType())) {
+				enabledupgrades.add(u.toString());
+				Configurations.getPlayersconfig().getConfigurationSection(player).set("enabled-upgrades", enabledupgrades);
+				Configurations.savePlayersConfig();
+			} else {
+				Chat.sendPM("Cannot enable the upgrade " + u.toString() + " because it conflicts with the power " + getPower().getName(), Bukkit.getPlayer(player));
+			}
 		}
 	}
 

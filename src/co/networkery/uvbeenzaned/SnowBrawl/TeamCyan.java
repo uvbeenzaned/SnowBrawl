@@ -202,11 +202,16 @@ public class TeamCyan {
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Rank.checkRank(Bukkit.getPlayer(p));
 				s.getPower().apply();
-				for(String upgs : s.getEnabledUpgrades()) {
-					for(Upgrades ups : Upgrades.values()) {
-						if(upgs.equalsIgnoreCase(ups.toString())) {
+				for (String upgs : s.getEnabledUpgrades()) {
+					for (Upgrades ups : Upgrades.values()) {
+						if (upgs.equalsIgnoreCase(ups.toString())) {
 							Upgrade u = new Upgrade(ups, Bukkit.getPlayer(p));
-							u.apply();
+							if (!u.getPowerConflicts().contains(s.getPower().getType())) {
+								u.apply();
+							} else {
+								s.disableUpgrade(ups);
+								Chat.sendPM("Cannot enable the upgrade " + u.toString() + " because it conflicts with the power " + s.getPower().getName(), Bukkit.getPlayer(p));
+							}
 						}
 					}
 				}
