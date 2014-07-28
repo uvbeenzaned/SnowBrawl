@@ -94,37 +94,41 @@ public class Upgrade implements IAddon {
 		}
 		return info;
 	}
-	
+
 	public List<Powers> getPowerRequirements() {
 		List<Powers> powers = new ArrayList<Powers>();
-		switch(upgrade) {
+		switch (upgrade) {
 		case BINOCULARS:
 			powers.add(Powers.NONE);
 			break;
-/*		case BURN_SAVE:
+		case BURN_SAVE:
 			powers.add(Powers.NONE);
 			break;
-		case EXTENDED_SNIPER_MAGAZINE:
-			powers.add(Powers.SNIPER);
-			break;
-		case HIGHER_ERUPTION_DENSITY:
-			powers.add(Powers.ERUPTION);
-			break;
-		case POWER_RELOAD_TIME_REDUCTION:
-			for(Powers pws : Powers.values()) {
-				if(!pws.equals(Powers.NONE))
-					powers.add(pws);
-			}
-			break;
-		case SNIPER_RIFLE_SILENCER:
-			powers.add(Powers.SNIPER);
-			break;*/
+		/*
+		 * case EXTENDED_SNIPER_MAGAZINE: powers.add(Powers.SNIPER); break; case
+		 * HIGHER_ERUPTION_DENSITY: powers.add(Powers.ERUPTION); break; case
+		 * POWER_RELOAD_TIME_REDUCTION: for(Powers pws : Powers.values()) {
+		 * if(!pws.equals(Powers.NONE)) powers.add(pws); } break; case
+		 * SNIPER_RIFLE_SILENCER: powers.add(Powers.SNIPER); break;
+		 */
 		case SOFT_FALL_BOOTS:
 			powers.add(Powers.NONE);
 			break;
 		default:
 			break;
-		
+
+		}
+		return powers;
+	}
+	
+	public List<Powers> getPowerConflicts() {
+		List<Powers> powers = new ArrayList<Powers>();
+		switch(upgrade) {
+		case BINOCULARS:
+			powers.add(Powers.SNIPER);
+			break;
+		default:
+			break;
 		}
 		return powers;
 	}
@@ -134,21 +138,14 @@ public class Upgrade implements IAddon {
 		case BINOCULARS:
 			addToInventory(binoculars());
 			break;
-/*		case BURN_SAVE:
-			// no function on normal apply
-			break;
-		case EXTENDED_SNIPER_MAGAZINE:
-			// no function required
-			break;
-		case HIGHER_ERUPTION_DENSITY:
-			// no function required			
-			break;
-		case POWER_RELOAD_TIME_REDUCTION:
-			// no function required
-			break;
-		case SNIPER_RIFLE_SILENCER:
-			// no function required
-			break;*/
+		case BURN_SAVE:
+			/*
+			 * // no function on normal apply break; case
+			 * EXTENDED_SNIPER_MAGAZINE: // no function required break; case
+			 * HIGHER_ERUPTION_DENSITY: // no function required break; case
+			 * POWER_RELOAD_TIME_REDUCTION: // no function required break; case
+			 * SNIPER_RIFLE_SILENCER: // no function required break;
+			 */
 		case SOFT_FALL_BOOTS:
 			player.getInventory().setBoots(softFallBoots());
 			break;
@@ -159,16 +156,16 @@ public class Upgrade implements IAddon {
 
 	public void applySpecific() {
 		switch (upgrade) {
-/*		case BURN_SAVE:
+		case BURN_SAVE:
 			applyPlayerEffects(burnSave());
-			break;*/
+			break;
 		default:
 			break;
 		}
 	}
-	
+
 	public ItemStack getItem() {
-		switch(upgrade) {
+		switch (upgrade) {
 		case BINOCULARS:
 			return binoculars();
 		case SOFT_FALL_BOOTS:
@@ -177,9 +174,9 @@ public class Upgrade implements IAddon {
 			return null;
 		}
 	}
-	
+
 	public ItemStack getItemWithTitle() {
-		switch(upgrade) {
+		switch (upgrade) {
 		case BINOCULARS:
 			return binoculars();
 		case SOFT_FALL_BOOTS:
@@ -222,11 +219,6 @@ public class Upgrade implements IAddon {
 			getPlayer().getInventory().remove(i.getType());
 		}
 		getPlayer().getInventory().addItem(i);
-	}
-
-	// 5-8 are the armor slots
-	private void setToSlot(int slot, ItemStack item) {
-		getPlayer().getInventory().setItem(slot, item);
 	}
 
 	private void applyPlayerEffects(PotionEffect pe) {

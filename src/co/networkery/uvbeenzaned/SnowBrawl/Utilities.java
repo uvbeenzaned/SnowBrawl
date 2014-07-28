@@ -109,6 +109,7 @@ public class Utilities {
 			TeamLime.awardTeamPoints();
 			Round.giveLeadPoints();
 			Board.clearOutPlayers();
+			StaticUpgradeData.clearBurnSaveUses();
 			Round.setGameActive(false);
 			Round.startTimerRound();
 		} else if (TeamLime.isArenaPlayersEmpty()) {
@@ -119,6 +120,7 @@ public class Utilities {
 			TeamCyan.awardTeamPoints();
 			Round.giveLeadPoints();
 			Board.clearOutPlayers();
+			StaticUpgradeData.clearBurnSaveUses();
 			Round.setGameActive(false);
 			Round.startTimerRound();
 		}
