@@ -48,6 +48,7 @@ public class TeamCyan {
 			Chat.sendAllTeamsMsg(p.getName() + ChatColor.RESET + " has joined team CYAN.");
 			Board.addPlayer(p);
 			PowerMenu.giveInteractItem(p);
+			UpgradeMenu.giveInteractItem(p);
 			StoreMenu.giveInteractItem(p);
 			Round.giveLineupBook(p);
 			if (!TeamLime.isEmpty()) {
@@ -70,6 +71,7 @@ public class TeamCyan {
 			p.getInventory().setChestplate(new ItemStack(Material.AIR));
 			p.getInventory().remove(Material.SNOW_BALL);
 			p.getInventory().remove(Material.ENCHANTED_BOOK);
+			p.getInventory().remove(Material.ANVIL);
 			p.getInventory().remove(Material.CHEST);
 			p.getInventory().remove(Material.WRITTEN_BOOK);
 			if (TeamCyan.isEmpty() && !TeamLime.isEmpty()) {
@@ -147,10 +149,12 @@ public class TeamCyan {
 			}
 			p.setHealth(p.getMaxHealth());
 			p.getInventory().clear();
+			p.getInventory().setBoots(new ItemStack(Material.AIR));
 			Rank.checkRank(p);
 			p.teleport(Lobby.getLobbyspawnlocation());
 			Board.outPlayer(p);
 			PowerMenu.giveInteractItem(p);
+			UpgradeMenu.giveInteractItem(p);
 			StoreMenu.giveInteractItem(p);
 			Round.giveLineupBook(p);
 		}
@@ -198,6 +202,14 @@ public class TeamCyan {
 				Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
 				Rank.checkRank(Bukkit.getPlayer(p));
 				s.getPower().apply();
+				for(String upgs : s.getEnabledUpgrades()) {
+					for(Upgrades ups : Upgrades.values()) {
+						if(upgs.equalsIgnoreCase(ups.toString())) {
+							Upgrade u = new Upgrade(ups, Bukkit.getPlayer(p));
+							u.apply();
+						}
+					}
+				}
 				Round.giveLineupBook(Bukkit.getServer().getPlayer(p));
 				Bukkit.getServer().getPlayer(p).teleport(a.getCyanSide());
 				ChunkStuckFix.checkPlayerStuck(400);

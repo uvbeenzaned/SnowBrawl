@@ -101,7 +101,7 @@ public class Upgrade implements IAddon {
 		case BINOCULARS:
 			powers.add(Powers.NONE);
 			break;
-		case BURN_SAVE:
+/*		case BURN_SAVE:
 			powers.add(Powers.NONE);
 			break;
 		case EXTENDED_SNIPER_MAGAZINE:
@@ -118,7 +118,7 @@ public class Upgrade implements IAddon {
 			break;
 		case SNIPER_RIFLE_SILENCER:
 			powers.add(Powers.SNIPER);
-			break;
+			break;*/
 		case SOFT_FALL_BOOTS:
 			powers.add(Powers.NONE);
 			break;
@@ -134,7 +134,7 @@ public class Upgrade implements IAddon {
 		case BINOCULARS:
 			addToInventory(binoculars());
 			break;
-		case BURN_SAVE:
+/*		case BURN_SAVE:
 			// no function on normal apply
 			break;
 		case EXTENDED_SNIPER_MAGAZINE:
@@ -148,20 +148,20 @@ public class Upgrade implements IAddon {
 			break;
 		case SNIPER_RIFLE_SILENCER:
 			// no function required
-			break;
+			break;*/
 		case SOFT_FALL_BOOTS:
-			setToSlot(8, softFallBoots());
+			player.getInventory().setBoots(softFallBoots());
 			break;
 		default:
 			break;
 		}
 	}
 
-	public void applySpecific(Upgrades u) {
-		switch (u) {
-		case BURN_SAVE:
+	public void applySpecific() {
+		switch (upgrade) {
+/*		case BURN_SAVE:
 			applyPlayerEffects(burnSave());
-			break;
+			break;*/
 		default:
 			break;
 		}
@@ -188,7 +188,8 @@ public class Upgrade implements IAddon {
 			ItemStack i = new ItemStack(Material.ANVIL, 1);
 			ItemMeta im = i.getItemMeta();
 			im.setDisplayName(upgradename);
-			return null;
+			i.setItemMeta(im);
+			return i;
 		}
 	}
 

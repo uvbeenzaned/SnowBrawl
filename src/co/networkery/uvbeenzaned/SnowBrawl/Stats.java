@@ -167,6 +167,19 @@ public class Stats {
 		return false;
 	}
 
+	public boolean ownsPowers(List<Powers> powers) {
+		boolean result = false;
+		for (Powers pws : powers) {
+			if (!ownsPower(pws)) {
+				result = false;
+				break;
+			} else {
+				result = ownsPower(pws);
+			}
+		}
+		return result;
+	}
+
 	public List<String> getPurchasedPowers() {
 		if (Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("purchased-powers") != null) {
 			return Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("purchased-powers");
@@ -251,7 +264,7 @@ public class Stats {
 	}
 
 	public void enableUpgrade(Upgrades u) {
-		if (getPurchasedUpgrades().contains(u.toString())) {
+		if (getPurchasedUpgrades().contains(u.toString()) || !Store.isEnabled()) {
 			List<String> enabledupgrades = Configurations.getPlayersconfig().getConfigurationSection(player).getStringList("enabled-upgrades");
 			enabledupgrades.add(u.toString());
 			Configurations.getPlayersconfig().getConfigurationSection(player).set("enabled-upgrades", enabledupgrades);

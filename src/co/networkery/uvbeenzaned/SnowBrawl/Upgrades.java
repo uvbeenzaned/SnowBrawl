@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Upgrades implements IAddonDefs {
-	SOFT_FALL_BOOTS("Soft Fall Boots"), HIGHER_ERUPTION_DENSITY("Higher Eruption Density"), SNIPER_RIFLE_SILENCER("Sniper Rifle Silencer"), EXTENDED_SNIPER_MAGAZINE("Extended Sniper Magazine"), BINOCULARS("Binoculars"), POWER_RELOAD_TIME_REDUCTION("Power Reload Time Reduction"), BURN_SAVE("Burn Save");
+	SOFT_FALL_BOOTS("Soft Fall Boots"), /*HIGHER_ERUPTION_DENSITY("Higher Eruption Density"),*/ /*SNIPER_RIFLE_SILENCER("Sniper Rifle Silencer"),*/ /*EXTENDED_SNIPER_MAGAZINE("Extended Sniper Magazine"),*/ BINOCULARS("Binoculars") /*POWER_RELOAD_TIME_REDUCTION("Power Reload Time Reduction"),*/ /*BURN_SAVE("Burn Save")*/;
 
 	private final String name;
 

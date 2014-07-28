@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -18,23 +19,45 @@ public class UpgradeMenu implements IMenu {
 	Stats s;
 
 	public UpgradeMenu(Player p) {
-		i = Bukkit.createInventory(null, 18, "[SnowBrawl] Enable/Disable Upgrades");
+		i = Bukkit.createInventory(null, 18, "[SnowBrawl] E/D Upgrades");
 		s = new Stats(p);
 		int slot = 0;
 		Upgrade u = null;
-		if (Store.isEnabled()) {
-			for (Upgrades upgs : Upgrades.values()) {
-				if (s.ownsUpgrade(upgs)) {
+		if (!s.getError()) {
+			if (Store.isEnabled()) {
+				for (Upgrades upgs : Upgrades.values()) {
+					if (s.ownsUpgrade(upgs)) {
+						u = new Upgrade(upgs, p);
+						if (s.ownsPowers(u.getPowerRequirements()) || u.getPowerRequirements().contains(Powers.NONE)) {
+							ItemStack item = u.getItemWithTitle();
+							ItemMeta itemmeta = item.getItemMeta();
+							List<String> info = new ArrayList<String>();
+							if (s.usingUpgrade(upgs)) {
+								info.add(ChatColor.GREEN + "Enabled");
+								info.add(ChatColor.BLUE + "Click to disable this upgrade!");
+							} else {
+								info.add(ChatColor.RED + "Disabled");
+								info.add(ChatColor.BLUE + "Click to enable this upgrade!");
+							}
+							itemmeta.setLore(info);
+							item.setItemMeta(itemmeta);
+							i.setItem(slot, item);
+							slot++;
+						}
+					}
+				}
+			} else {
+				for (Upgrades upgs : Upgrades.values()) {
 					u = new Upgrade(upgs, p);
 					ItemStack item = u.getItemWithTitle();
 					ItemMeta itemmeta = item.getItemMeta();
 					List<String> info = new ArrayList<String>();
 					if (s.usingUpgrade(upgs)) {
 						info.add(ChatColor.GREEN + "Enabled");
-						info.add(ChatColor.BLUE + "Click to enable this power!");
+						info.add(ChatColor.BLUE + "Click to disable this upgrade!");
 					} else {
 						info.add(ChatColor.RED + "Disabled");
-						info.add(ChatColor.BLUE + "Click to disable this power!");
+						info.add(ChatColor.BLUE + "Click to enable this upgrade!");
 					}
 					itemmeta.setLore(info);
 					item.setItemMeta(itemmeta);
@@ -42,26 +65,10 @@ public class UpgradeMenu implements IMenu {
 					slot++;
 				}
 			}
+			i.setItem(17, getCloseButton());
 		} else {
-			for (Upgrades upgs : Upgrades.values()) {
-				u = new Upgrade(upgs, p);
-				ItemStack item = u.getItemWithTitle();
-				ItemMeta itemmeta = item.getItemMeta();
-				List<String> info = new ArrayList<String>();
-				if (s.usingUpgrade(upgs)) {
-					info.add(ChatColor.GREEN + "Enabled");
-					info.add(ChatColor.BLUE + "Click to enable this power!");
-				} else {
-					info.add(ChatColor.RED + "Disabled");
-					info.add(ChatColor.BLUE + "Click to disable this power!");
-				}
-				itemmeta.setLore(info);
-				item.setItemMeta(itemmeta);
-				i.setItem(slot, item);
-				slot++;
-			}
+			Chat.sendPPM("You don't have any stats on this server and so you cannot enable or disable upgrades!", p);
 		}
-		i.setItem(17, getCloseButton());
 	}
 
 	@Override
@@ -77,6 +84,18 @@ public class UpgradeMenu implements IMenu {
 		closemeta.setDisplayName(ChatColor.RED + "Close Upgrade Menu");
 		close.setItemMeta(closemeta);
 		return close;
+	}
+
+	public static ItemStack getInteractItem() {
+		ItemStack interactitem = new ItemStack(Material.ANVIL, 1);
+		ItemMeta interactitemmeta = interactitem.getItemMeta();
+		interactitemmeta.setDisplayName("Enable/Disable Upgrades...");
+		interactitem.setItemMeta(interactitemmeta);
+		return interactitem;
+	}
+
+	public static void giveInteractItem(Player p) {
+		p.getInventory().setItem(7, getInteractItem());
 	}
 
 }

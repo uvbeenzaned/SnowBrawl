@@ -60,7 +60,7 @@ public class StoreMenu {
 	}
 
 	public static void giveInteractItem(Player p) {
-		p.getInventory().setItem(6, getInteractItem());
+		p.getInventory().setItem(5, getInteractItem());
 	}
 
 }

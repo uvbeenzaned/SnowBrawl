@@ -67,7 +67,7 @@ public class PowerMenu implements IMenu {
 	}
 
 	public static void giveInteractItem(Player p) {
-		p.getInventory().setItem(7, getInteractItem());
+		p.getInventory().setItem(6, getInteractItem());
 	}
 
 }

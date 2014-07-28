@@ -206,8 +206,38 @@ public class SBCommandExecutor implements CommandExecutor {
 							}
 							return false;
 						case "enable":
+							if (args.length > 2) {
+								for (Upgrades u : Upgrades.values()) {
+									if (u.toString().equalsIgnoreCase(args[2])) {
+										if (s.ownsUpgrade(u)) {
+											s.enableUpgrade(u);
+											Chat.sendPPM("Enabled " + u.toString() + " upgrade.", p);
+											return true;
+										}
+										Chat.sendPPM("You don't own the " + u.toString() + " upgrade!", p);
+										return true;
+									}
+								}
+								Chat.sendPPM("That upgrade doesn't exist!", p);
+								return true;
+							}
 							break;
 						case "disable":
+							if (args.length > 2) {
+								for (Upgrades u : Upgrades.values()) {
+									if (u.toString().equalsIgnoreCase(args[2])) {
+										if (s.ownsUpgrade(u)) {
+											s.disableUpgrade(u);
+											Chat.sendPPM("Disabled " + u.toString() + " upgrade.", p);
+											return true;
+										}
+										Chat.sendPPM("You don't own the " + u.toString() + " upgrade!", p);
+										return true;
+									}
+								}
+								Chat.sendPPM("That upgrade doesn't exist!", p);
+								return true;
+							}
 							break;
 						}
 					}
