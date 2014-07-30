@@ -104,9 +104,11 @@ public class Upgrade implements IAddon {
 		case BURN_SAVE:
 			powers.add(Powers.NONE);
 			break;
+		case HIGHER_ERUPTION_DENSITY:
+			powers.add(Powers.ERUPTION);
+			break;
 		/*
 		 * case EXTENDED_SNIPER_MAGAZINE: powers.add(Powers.SNIPER); break; case
-		 * HIGHER_ERUPTION_DENSITY: powers.add(Powers.ERUPTION); break; case
 		 * POWER_RELOAD_TIME_REDUCTION: for(Powers pws : Powers.values()) {
 		 * if(!pws.equals(Powers.NONE)) powers.add(pws); } break; case
 		 * SNIPER_RIFLE_SILENCER: powers.add(Powers.SNIPER); break;
@@ -120,10 +122,10 @@ public class Upgrade implements IAddon {
 		}
 		return powers;
 	}
-	
+
 	public List<Powers> getPowerConflicts() {
 		List<Powers> powers = new ArrayList<Powers>();
-		switch(upgrade) {
+		switch (upgrade) {
 		case BINOCULARS:
 			powers.add(Powers.SNIPER);
 			break;
@@ -139,6 +141,9 @@ public class Upgrade implements IAddon {
 			addToInventory(binoculars());
 			break;
 		case BURN_SAVE:
+			break;
+		case HIGHER_ERUPTION_DENSITY:
+			break;
 			/*
 			 * // no function on normal apply break; case
 			 * EXTENDED_SNIPER_MAGAZINE: // no function required break; case
