@@ -217,27 +217,35 @@ public class PowerListener implements Listener {
 				if (s.usingPower(Powers.ERUPTION)) {
 					if (e.getEntity() instanceof Egg) {
 						Egg egg = (Egg) e.getEntity();
-//						double pitch = ((egg.getLocation().getPitch() + 90) * Math.PI) / 180;
-//						double yaw = ((egg.getLocation().getYaw() + 90) * Math.PI) / 180;
+						// double pitch = ((egg.getLocation().getPitch() + 90) *
+						// Math.PI) / 180;
+						// double yaw = ((egg.getLocation().getYaw() + 90) *
+						// Math.PI) / 180;
 						double pitch = (90 * Math.PI) / 180;
 						double yaw = (90 * Math.PI) / 180;
 						double x = Math.sin(pitch) * Math.cos(yaw);
 						double y = Math.sin(pitch) * Math.sin(yaw);
 						double z = Math.cos(pitch);
 						Vector vector = new Vector(x, y, z);
-						for (BlockFace bf : BlockFace.values()) {
-							vector = new Vector((x + bf.getModX()) / 5, (y + bf.getModY()) / 5, (z + bf.getModZ()) / 5);
-							Location l = egg.getLocation().add(0, 1, 0).getBlock().getRelative(bf).getLocation();
-							p.getWorld().createExplosion(l, 0F);
-							Snowball sb = (Snowball) p.getWorld().spawnEntity(l, EntityType.SNOWBALL);
-							specialSbIds.add(sb.getEntityId());
-							sb.setFireTicks(1200);
-							sb.setShooter(p);
-							sb.setVelocity(vector.normalize());
+						for(int offset = 0; offset < 4; offset++) {
+							for (BlockFace bf : BlockFace.values()) {
+								if (!bf.equals(BlockFace.SELF)) {
+									vector = new Vector((x + bf.getModX()) / offset, (y + bf.getModY()), (z + bf.getModZ()) / offset);
+									//Location l = egg.getLocation().add(0, 1, 0).getBlock().getRelative(bf).getLocation();
+									Location l = egg.getLocation().getBlock().getRelative(bf).getLocation();
+									p.getWorld().createExplosion(l, 0F);
+									Snowball sb = (Snowball) p.getWorld().spawnEntity(l, EntityType.SNOWBALL);
+									specialSbIds.add(sb.getEntityId());
+									sb.setFireTicks(1200);
+									sb.setShooter(p);
+									sb.setVelocity(vector.normalize());
+								}
+							}
 						}
-//						for (int i = 0; i < 8; i++)
-//							p.getWorld().playEffect(egg.getLocation().add(0, 1, 0), Effect.SMOKE, i);
-//						egg.getLocation().getBlock().setType(Material.FIRE);
+						// for (int i = 0; i < 8; i++)
+						// p.getWorld().playEffect(egg.getLocation().add(0, 1,
+						// 0), Effect.SMOKE, i);
+						// egg.getLocation().getBlock().setType(Material.FIRE);
 						PowerCoolDown.start(p, s.getPower().time());
 					}
 					if (e.getEntity() instanceof Snowball) {
