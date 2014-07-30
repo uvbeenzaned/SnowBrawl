@@ -79,7 +79,7 @@ public class UpgradeListener implements Listener {
 								Upgrade u = new Upgrade(Upgrades.BURN_SAVE, p);
 								u.applySpecific();
 								StaticUpgradeData.useBurnSave(p);
-								Chat.sendPPM(ChatColor.MAGIC + " You have just used your one-time burn save! " + ChatColor.MAGIC, p);
+								Chat.sendPPM(ChatColor.MAGIC + "|" + ChatColor.RESET + " You have just used your one-time burn save! " + ChatColor.MAGIC + "|", p);
 							}
 						}
 					}

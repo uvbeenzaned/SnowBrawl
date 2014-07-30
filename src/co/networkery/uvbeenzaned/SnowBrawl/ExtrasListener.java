@@ -150,7 +150,6 @@ public class ExtrasListener implements Listener {
 //					Chat.sendPM(ChatColor.GOLD + "[" + ChatColor.RESET + ChatColor.BOLD + ChatColor.BLUE + Rank.getRankName(e.getPlayer().getName()) + ChatColor.RESET + ChatColor.GOLD + "]" + ChatColor.RESET + "<" + cc + e.getPlayer().getName() + ChatColor.RESET + "> " + e.getMessage(), p);
 //				}
 //			}
-			e.setCancelled(true);
 		}
 		if (TeamLime.hasPlayer(e.getPlayer().getName())) {
 			cc = ChatColor.GREEN;
