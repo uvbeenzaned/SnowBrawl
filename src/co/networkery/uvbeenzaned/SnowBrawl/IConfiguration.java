@@ -4,12 +4,12 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 public interface IConfiguration {
 
-	public void reloadConfig();
+    public void reloadConfig();
 
-	public FileConfiguration getConfig();
+    public FileConfiguration getConfig();
 
-	public void saveConfig();
+    public void saveConfig();
 
-	public void saveDefaultConfig();
+    public void saveDefaultConfig();
 
 }

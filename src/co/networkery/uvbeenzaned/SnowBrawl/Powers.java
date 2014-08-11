@@ -4,28 +4,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Powers implements IAddonDefs {
-	SPEED("Speed"), SLOWDOWN("Slowdown"), BLINDNESS("Blindness"), SPONTANEOUS_COMBUSTION("Spontaneous Combustion"), INSTA_RELOAD("Insta-reload"), SNIPER("Sniper"), SMITE("Smite"), VELOCITY("Velocity"), ERUPTION("Eruption"), NONE("None");
+    SPEED("Speed"), SLOWDOWN("Slowdown"), BLINDNESS("Blindness"), SPONTANEOUS_COMBUSTION("Spontaneous Combustion"), INSTA_RELOAD("Insta-reload"), SNIPER("Sniper"), SMITE("Smite"), VELOCITY("Velocity"), ERUPTION("Eruption"), NONE("None");
 
-	private final String name;
+    private final String name;
 
-	private Powers(String s) {
-		name = s;
-	}
+    private Powers(String s) {
+        name = s;
+    }
 
-	public boolean equalsName(String otherName) {
-		return (otherName == null) ? false : name.equalsIgnoreCase(otherName);
-	}
+    public static List<String> toStringList() {
+        List<String> pwl = new ArrayList<String>();
+        for (Powers pw : values()) {
+            pwl.add(pw.toString().toLowerCase());
+        }
+        return pwl;
+    }
 
-	public String toString() {
-		return name;
-	}
+    public boolean equalsName(String otherName) {
+        return (otherName == null) ? false : name.equalsIgnoreCase(otherName);
+    }
 
-	public static List<String> toStringList() {
-		List<String> pwl = new ArrayList<String>();
-		for (Powers pw : values()) {
-			pwl.add(pw.toString().toLowerCase());
-		}
-		return pwl;
-	}
+    public String toString() {
+        return name;
+    }
 
 }

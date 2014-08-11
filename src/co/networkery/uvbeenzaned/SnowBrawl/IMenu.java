@@ -4,5 +4,5 @@ import org.bukkit.inventory.Inventory;
 
 public interface IMenu {
 
-	Inventory getMenu();
+    Inventory getMenu();
 }
