@@ -29,6 +29,14 @@ projectBuilder.xml
 # PDT-specific
 .buildpath
 
+# Intellij
+.idea/
+out/
+meta-inf/
+*.iml
+*.iws
+*.class
+
 
 #################
 ## Visual Studio
