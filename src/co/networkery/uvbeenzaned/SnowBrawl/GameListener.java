@@ -4,12 +4,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
+import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -94,28 +96,33 @@ public class GameListener implements Listener {
                             if (!TeamLime.hasArenaPlayer(plhit) || !TeamLime.hasArenaPlayer(plenemy)) {
                                 if ((e.getEntity() instanceof Player && (e.getDamager() instanceof Snowball || e.getDamager() instanceof Arrow))) {
                                     e.setCancelled(true);
-                                    long shotdistance = Utilities.getBlockDistance(plenemy.getLocation(), plhit.getLocation());
-                                    Chat.sendAllTeamsMsg(plenemy.getName() + ChatColor.RED + " -> " + plhit.getName() + ChatColor.GOLD + " [" + ChatColor.DARK_PURPLE + String.valueOf(shotdistance) + " blocks, " + method + ChatColor.GOLD + "]");
                                     Stats s = new Stats(plhit);
-                                    s.removePoints(1);
-                                    Chat.sendPPM(ChatColor.RED + "-1" + ChatColor.RESET + " point!", plhit);
-                                    s.incrementLossCount();
-                                    Utilities.playEffects(plenemy, plhit);
-                                    Utilities.removeSnowballReloadPlayer(plhit);
-                                    TeamCyan.removeArenaPlayer(plhit);
-                                    TeamLime.removeArenaPlayer(plhit);
-                                    Rank.checkRank(plhit);
-                                    s = new Stats(plenemy);
-                                    s.addPoints(1);
-                                    Chat.sendPPM(ChatColor.GOLD + "+1" + ChatColor.RESET + " point!", plenemy);
-                                    s.incrementHitsCount();
-                                    s.checkShotDistanceRecord(method, shotdistance);
-                                    Round.addPlayerLead(plenemy, 1);
-                                    Rank.checkRank(plenemy);
-                                    if (!TeamCyan.isArenaPlayersEmpty() && !TeamLime.isArenaPlayersEmpty()) {
-                                        Chat.sendAllTeamsMsg(String.valueOf(TeamCyan.getPlayersinarena().size()) + " CYAN" + ChatColor.RESET + " vs " + String.valueOf(TeamLime.getPlayersinarena().size()) + " LIME");
+                                    if(s.usingPower(Powers.ABSORPTION) && Utilities.hasSnowballReloadPlayer(plhit) && !plhit.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 20)) {
+                                        plhit.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
+                                        Utilities.playerEnderAbsorptionEffect(plhit);
+                                    } else {
+                                        long shotdistance = Utilities.getBlockDistance(plenemy.getLocation(), plhit.getLocation());
+                                        Chat.sendAllTeamsMsg(plenemy.getName() + ChatColor.RED + " -> " + plhit.getName() + ChatColor.GOLD + " [" + ChatColor.DARK_PURPLE + String.valueOf(shotdistance) + " blocks, " + method + ChatColor.GOLD + "]");
+                                        s.removePoints(1);
+                                        Chat.sendPPM(ChatColor.RED + "-1" + ChatColor.RESET + " point!", plhit);
+                                        s.incrementLossCount();
+                                        Utilities.playEffects(plenemy, plhit);
+                                        Utilities.removeSnowballReloadPlayer(plhit);
+                                        TeamCyan.removeArenaPlayer(plhit);
+                                        TeamLime.removeArenaPlayer(plhit);
+                                        Rank.checkRank(plhit);
+                                        s = new Stats(plenemy);
+                                        s.addPoints(1);
+                                        Chat.sendPPM(ChatColor.GOLD + "+1" + ChatColor.RESET + " point!", plenemy);
+                                        s.incrementHitsCount();
+                                        s.checkShotDistanceRecord(method, shotdistance);
+                                        Round.addPlayerLead(plenemy, 1);
+                                        Rank.checkRank(plenemy);
+                                        if (!TeamCyan.isArenaPlayersEmpty() && !TeamLime.isArenaPlayersEmpty()) {
+                                            Chat.sendAllTeamsMsg(String.valueOf(TeamCyan.getPlayersinarena().size()) + " CYAN" + ChatColor.RESET + " vs " + String.valueOf(TeamLime.getPlayersinarena().size()) + " LIME");
+                                        }
+                                        Utilities.checkTeams();
                                     }
-                                    Utilities.checkTeams();
                                 }
                                 if ((e.getEntity() instanceof Player && e.getDamager() instanceof Player)) {
                                     e.setCancelled(true);

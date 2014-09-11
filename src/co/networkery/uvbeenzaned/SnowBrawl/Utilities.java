@@ -1,8 +1,10 @@
 package co.networkery.uvbeenzaned.SnowBrawl;
 
 import org.bukkit.*;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -17,6 +19,7 @@ public class Utilities {
     private static ArrayList<String> playerstoremove = new ArrayList<String>();
     private static BukkitTask task = null;
     private static boolean running = false;
+
     public Utilities(Plugin pl) {
         p = pl;
     }
@@ -72,6 +75,10 @@ public class Utilities {
         }
     }
 
+    public static boolean hasSnowballReloadPlayer(Player p) {
+        return reloadplayers.containsKey(p.getName());
+    }
+
     public static void removeSnowballReloadPlayer(Player p) {
         if (reloadplayers.containsKey(p.getName()))
             reloadplayers.remove(p.getName());
@@ -100,6 +107,7 @@ public class Utilities {
             TeamLime.teleportAllPlayersToLobby();
             TeamLime.awardTeamPoints();
             Round.giveLeadPoints();
+            Board.resetScoreBoardTitle();
             Board.clearOutPlayers();
             StaticUpgradeData.clearBurnSaveUses();
             Round.setGameActive(false);
@@ -111,6 +119,7 @@ public class Utilities {
             TeamLime.teleportAllPlayersToLobby();
             TeamCyan.awardTeamPoints();
             Round.giveLeadPoints();
+            Board.resetScoreBoardTitle();
             Board.clearOutPlayers();
             StaticUpgradeData.clearBurnSaveUses();
             Round.setGameActive(false);
@@ -119,14 +128,33 @@ public class Utilities {
     }
 
     public static void playEffects(Player hit, Player dead) {
+        if(TeamCyan.hasArenaPlayer(dead)) {
+            Firework fw = dead.getWorld().spawn(dead.getLocation(), Firework.class);
+            FireworkMeta fwm = fw.getFireworkMeta();
+            FireworkEffect effect = FireworkEffect.builder().withColor(Color.AQUA).with(FireworkEffect.Type.BURST).withTrail().build();
+            fwm.addEffects(effect);
+            fwm.setPower(0);
+            fw.setFireworkMeta(fwm);
+
+        } else if(TeamLime.hasArenaPlayer(dead)) {
+            Firework fw = dead.getWorld().spawn(dead.getLocation(), Firework.class);
+            FireworkMeta fwm = fw.getFireworkMeta();
+            FireworkEffect effect = FireworkEffect.builder().withColor(Color.LIME).with(FireworkEffect.Type.BURST).withTrail().build();
+            fwm.addEffects(effect);
+            fwm.setPower(0);
+            fw.setFireworkMeta(fwm);
+        }
         hit.getWorld().playSound(hit.getLocation(), Sound.NOTE_PIANO, 10, 1);
         hit.getWorld().playSound(hit.getLocation(), Sound.NOTE_PIANO, 10, 2);
         hit.getWorld().playSound(hit.getLocation(), Sound.NOTE_PIANO, 10, 3);
         hit.getWorld().playSound(hit.getLocation(), Sound.NOTE_PIANO, 10, 4);
-        Location l = dead.getLocation();
-        dead.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 0);
-        l.setY(dead.getLocation().getY() + 1);
-        dead.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 0);
+    }
+
+    public static void playerEnderAbsorptionEffect(Player p) {
+        Location l = p.getLocation();
+        p.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 0);
+        l.setY(p.getLocation().getY() + 1);
+        p.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 0);
     }
 
     public static void reloadSound(Player p) {

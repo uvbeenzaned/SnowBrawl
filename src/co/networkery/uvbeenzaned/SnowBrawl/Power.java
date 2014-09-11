@@ -35,7 +35,7 @@ public class Power implements IAddon {
         } else {
             Configurations.getPowersconfig().createSection(powername);
             Configurations.getPowersconfig().getConfigurationSection(powername).set("description", "This power is missing a description.");
-            Configurations.getPowersconfig().getConfigurationSection(powername).set("price", (double) 0.0);
+            Configurations.getPowersconfig().getConfigurationSection(powername).set("price", 0.0);
             Configurations.savePowersConfig();
         }
     }
@@ -77,7 +77,7 @@ public class Power implements IAddon {
     }
 
     public ArrayList<String> getInfo() {
-        ArrayList<String> info = new ArrayList<String>();
+        ArrayList<String> info = new ArrayList<>();
         info.add(powername + ":");
         info.add("    Description: " + description);
         if (Store.isEnabled()) {
@@ -150,6 +150,8 @@ public class Power implements IAddon {
                 return 0;
             case ERUPTION:
                 return 30000;
+            case ABSORPTION:
+                return 60000;
             default:
                 return 0;
         }
@@ -176,6 +178,8 @@ public class Power implements IAddon {
             case SPONTANEOUS_COMBUSTION:
                 return false;
             case VELOCITY:
+                return false;
+            case ABSORPTION:
                 return false;
             default:
                 return false;
@@ -256,9 +260,15 @@ public class Power implements IAddon {
                 itemwithinfo.setItemMeta(im);
                 return itemwithinfo;
             case ERUPTION:
-                itemwithinfo = new ItemStack(Material.EGG, 1);
+                itemwithinfo = eruption();
                 im = itemwithinfo.getItemMeta();
                 im.setDisplayName("Eruption");
+                itemwithinfo.setItemMeta(im);
+                return itemwithinfo;
+            case ABSORPTION:
+                itemwithinfo = new ItemStack(Material.SPONGE, 1);
+                im = itemwithinfo.getItemMeta();
+                im.setDisplayName("Absorption");
                 itemwithinfo.setItemMeta(im);
                 return itemwithinfo;
             case NONE:

@@ -322,7 +322,7 @@ public class SBCommandExecutor implements CommandExecutor {
                                         return true;
                                     case "remove":
                                         if (args.length > 2) {
-                                            if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
+                                            if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null) {
                                                 if (Round.getMapLineup().contains(Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)).getName())) {
                                                     Round.removeMapFromLineup(Utilities.convertArgsToString(args, 2));
                                                 }
@@ -336,7 +336,7 @@ public class SBCommandExecutor implements CommandExecutor {
                                         return false;
                                     case "toggle":
                                         if (args.length > 2) {
-                                            if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null && Configurations.getArenasconfig().contains(Utilities.convertArgsToString(args, 2))) {
+                                            if (Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2)) != null) {
                                                 Arena atoggle = Arena.getInstanceFromConfig(Utilities.convertArgsToString(args, 2));
                                                 if (p.isOp() || atoggle.getAuthors().contains(p.getName())) {
                                                     if (atoggle.getEnabled()) {
@@ -345,7 +345,7 @@ public class SBCommandExecutor implements CommandExecutor {
                                                         if (Round.getMapLineup().contains(atoggle.getName())) {
                                                             Round.removeMapFromLineup(atoggle.getName());
                                                         }
-                                                        Chat.sendPPM("Disabled " + Utilities.convertArgsToString(args, 2) + " and removed from current circulation.", p);
+                                                        Chat.sendPPM("Disabled " + atoggle.getName() + " and removed from current circulation.", p);
                                                         return true;
                                                     } else {
                                                         atoggle.setEnabled(true);
@@ -353,11 +353,11 @@ public class SBCommandExecutor implements CommandExecutor {
                                                         if (!Round.getMapLineup().contains(atoggle.getName())) {
                                                             Round.addMapToLineup(atoggle.getName());
                                                         }
-                                                        Chat.sendPPM("Enabled " + Utilities.convertArgsToString(args, 2) + " for circulation.", p);
+                                                        Chat.sendPPM("Enabled " + atoggle.getName() + " for circulation.", p);
                                                         return true;
                                                     }
                                                 }
-                                                Chat.sendPPM("You are not allowed to disable an arena that you did not assist/create!", p);
+                                                Chat.sendPPM("You are not allowed to disable an arena that you did not assist with/create!", p);
                                                 return true;
                                             }
                                             Chat.sendPPM(Utilities.convertArgsToString(args, 2) + " does not exist in the config!", p);

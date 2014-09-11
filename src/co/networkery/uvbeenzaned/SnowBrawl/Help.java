@@ -19,7 +19,7 @@ public class Help {
     public static void printHelp(Player p) {
         List<String> cmds = new ArrayList<String>();
         Chat.sendPM(ChatColor.DARK_PURPLE + "<" + ChatColor.GOLD + "----" + ChatColor.AQUA + "SnowBrawl" + ChatColor.GOLD + "----" + ChatColor.DARK_PURPLE + ">", p);
-        Chat.sendPM(" v" + ChatColor.GOLD + version + ChatColor.RESET + " - Made by " + ChatColor.AQUA + "uvbeenzaned " + ChatColor.RESET + "with the assistance of " + ChatColor.GREEN + "Toxic_Fuel" + ChatColor.RESET + ".", p);
+        Chat.sendPM(" v" + ChatColor.GOLD + version + ChatColor.RESET + " - Made by " + ChatColor.AQUA + "uvbeenzaned " + ChatColor.RESET + " and " + ChatColor.GREEN + "Toxic_Fuel" + ChatColor.RESET + ".", p);
         Chat.sendPM(ChatColor.DARK_PURPLE + "<" + ChatColor.GOLD + "-" + ChatColor.DARK_PURPLE + "> " + ChatColor.AQUA + "SnowBrawl Help" + ChatColor.DARK_PURPLE + " <" + ChatColor.GOLD + "-" + ChatColor.DARK_PURPLE + ">", p);
         cmds.add(cmd + "help - Shows this help page.");
         cmds.add(cmd + "lobby - Teleports player to game lobby.");
@@ -38,7 +38,6 @@ public class Help {
         cmds.add(cmd + "stats - Shows plugin stats and also is used for other stats below.");
         cmds.add("        <player> - Shows a players stats.");
         cmds.add(cmd + "ranks - Opens a menu of rank chestplates with info about each rank.");
-        cmds.add("        top <amount> - Shows top 5 players unless amount argument is provided.");
         cmds.add(cmd + "round - Command to access all round operations and info.");
         cmds.add("        lineup - Shows the next 5 maps coming up.");
         for (String c : cmds) {
