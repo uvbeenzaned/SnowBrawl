@@ -107,7 +107,6 @@ public class Utilities {
             TeamLime.teleportAllPlayersToLobby();
             TeamLime.awardTeamPoints();
             Round.giveLeadPoints();
-            Board.resetScoreBoardTitle();
             Board.clearOutPlayers();
             StaticUpgradeData.clearBurnSaveUses();
             Round.setGameActive(false);
@@ -119,7 +118,6 @@ public class Utilities {
             TeamLime.teleportAllPlayersToLobby();
             TeamCyan.awardTeamPoints();
             Round.giveLeadPoints();
-            Board.resetScoreBoardTitle();
             Board.clearOutPlayers();
             StaticUpgradeData.clearBurnSaveUses();
             Round.setGameActive(false);

@@ -41,7 +41,6 @@ public class Round {
             TeamCyan.teleportAllPlayersToArena(a);
             TeamLime.teleportAllPlayersToArena(a);
             String arenamsg = ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName();
-            Board.appendScoreBoardTitle(ChatColor.GOLD + "[" + ChatColor.DARK_PURPLE + "Current Arena" + ChatColor.GOLD + "] " + ChatColor.RESET + a.getName() + " ", true);
             Chat.sendAllTeamsMsg(arenamsg);
             Chat.sendAllTeamsMsg("    Description: " + a.getDescription());
             Chat.sendAllTeamsMsg("    Author(s): " + a.getAuthorsString());
