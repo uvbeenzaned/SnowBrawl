@@ -111,7 +111,7 @@ public class Upgrade implements IAddon {
                 powers.add(Powers.NONE);
                 break;
         /*
-		 * case EXTENDED_SNIPER_MAGAZINE: powers.add(Powers.SNIPER); break; 
+         * case EXTENDED_SNIPER_MAGAZINE: powers.add(Powers.SNIPER); break;
 		 * if(!pws.equals(Powers.NONE)) powers.add(pws); } break; case
 		 * SNIPER_RIFLE_SILENCER: powers.add(Powers.SNIPER); break;
 		 */

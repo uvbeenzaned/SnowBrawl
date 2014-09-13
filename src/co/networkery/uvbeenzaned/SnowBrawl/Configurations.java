@@ -10,6 +10,10 @@ public class Configurations {
     private static Configuration powersconfig;
     private static Configuration upgradesconfig;
 
+    /**
+     * Load all configurations for every module.
+     * @param sb The main SnowBrawl class.
+     */
     public static void loadAllConfigurations(SB sb) {
         setMainConfig(new Configuration(sb, "config.yml"));
         setArenasconfig(new Configuration(sb, "arenas.yml"));
@@ -21,10 +25,11 @@ public class Configurations {
         playersconfig.saveDefaultConfig();
         powersconfig.saveDefaultConfig();
         upgradesconfig.saveDefaultConfig();
-        //JSONObject json = new JSONObject();
-        //JSONParser jp = new JSONParser();
     }
 
+    /**
+     * Reload all configurations for every module.
+     */
     public static void reloadAllConfigurations() {
         config.reloadConfig();
         arenasconfig.reloadConfig();
@@ -33,6 +38,9 @@ public class Configurations {
         upgradesconfig.reloadConfig();
     }
 
+    /**
+     * Save all configurations for every module.
+     */
     public static void saveAllConfigurations() {
         config.saveConfig();
         arenasconfig.saveConfig();

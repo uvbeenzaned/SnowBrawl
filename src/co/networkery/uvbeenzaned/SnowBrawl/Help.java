@@ -12,10 +12,18 @@ public class Help {
     private static final String cmd = "    /sb ";
     private static String version = "";
 
+    /**
+     * The constructor the help class.
+     * @param pl The plugin to initialize this class with.
+     */
     public Help(Plugin pl) {
         version = pl.getDescription().getVersion().toString();
     }
 
+    /**
+     * Print the plugin commands to a player.
+     * @param p The player to print to.
+     */
     public static void printHelp(Player p) {
         List<String> cmds = new ArrayList<String>();
         Chat.sendPM(ChatColor.DARK_PURPLE + "<" + ChatColor.GOLD + "----" + ChatColor.AQUA + "SnowBrawl" + ChatColor.GOLD + "----" + ChatColor.DARK_PURPLE + ">", p);
@@ -45,6 +53,10 @@ public class Help {
         }
     }
 
+    /**
+     * Print special commands to ops.
+     * @param p The player to print to.
+     */
     public static void printOpCommands(Player p) {
         if (p.isOp()) {
             List<String> cmds = new ArrayList<String>();

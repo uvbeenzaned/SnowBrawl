@@ -17,6 +17,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class GameListener implements Listener {
 
+    /**
+     * The constructor the game listener.
+     * @param p The plugin to initialize this class with.
+     */
     public GameListener(JavaPlugin p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
@@ -81,14 +85,6 @@ public class GameListener implements Listener {
                     }
                 }
             }
-//			if (method == "Sniper Rifle") {
-//				if (TeamCyan.hasArenaPlayer(plenemy) && TeamCyan.hasArenaPlayer(plhit)) {
-//					e.setCancelled(true);
-//				}
-//				if (TeamLime.hasArenaPlayer(plenemy) && TeamLime.hasArenaPlayer(plhit)) {
-//					e.setCancelled(true);
-//				}
-//			}
             if (plhit != plenemy && plhit != null) {
                 if (TeamCyan.hasArenaPlayer(plhit) || TeamLime.hasArenaPlayer(plhit)) {
                     if (TeamCyan.hasArenaPlayer(plenemy) || TeamLime.hasArenaPlayer(plenemy)) {
@@ -97,7 +93,7 @@ public class GameListener implements Listener {
                                 if ((e.getEntity() instanceof Player && (e.getDamager() instanceof Snowball || e.getDamager() instanceof Arrow))) {
                                     e.setCancelled(true);
                                     Stats s = new Stats(plhit);
-                                    if(s.usingPower(Powers.ABSORPTION) && Utilities.hasSnowballReloadPlayer(plhit) && !plhit.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 20)) {
+                                    if (s.usingPower(Powers.ABSORPTION) && Utilities.hasSnowballReloadPlayer(plhit) && !plhit.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 20)) {
                                         plhit.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
                                         Utilities.playerEnderAbsorptionEffect(plhit);
                                     } else {

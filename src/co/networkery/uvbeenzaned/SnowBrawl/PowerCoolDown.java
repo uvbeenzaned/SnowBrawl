@@ -16,6 +16,7 @@ public class PowerCoolDown {
     private static ArrayList<String> playerstoremove = new ArrayList<String>();
     private static BukkitTask task = null;
     private static boolean running = false;
+
     public PowerCoolDown(Plugin pl) {
         p = pl;
     }

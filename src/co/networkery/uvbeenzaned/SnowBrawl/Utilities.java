@@ -126,7 +126,7 @@ public class Utilities {
     }
 
     public static void playEffects(Player hit, Player dead) {
-        if(TeamCyan.hasArenaPlayer(dead)) {
+        if (TeamCyan.hasArenaPlayer(dead)) {
             Firework fw = dead.getWorld().spawn(dead.getLocation(), Firework.class);
             FireworkMeta fwm = fw.getFireworkMeta();
             FireworkEffect effect = FireworkEffect.builder().withColor(Color.AQUA).with(FireworkEffect.Type.BURST).withTrail().build();
@@ -134,7 +134,7 @@ public class Utilities {
             fwm.setPower(0);
             fw.setFireworkMeta(fwm);
 
-        } else if(TeamLime.hasArenaPlayer(dead)) {
+        } else if (TeamLime.hasArenaPlayer(dead)) {
             Firework fw = dead.getWorld().spawn(dead.getLocation(), Firework.class);
             FireworkMeta fwm = fw.getFireworkMeta();
             FireworkEffect effect = FireworkEffect.builder().withColor(Color.LIME).with(FireworkEffect.Type.BURST).withTrail().build();

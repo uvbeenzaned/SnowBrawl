@@ -18,10 +18,20 @@ public class Arenas implements Listener {
     private static List<Arena> arenawizardlist = new ArrayList<Arena>();
     private static Map<String, Integer> playerarenascroll = new HashMap<String, Integer>();
 
+    /**
+     * The initializer for this arena manager.
+     *
+     * @param p The main plugin instance.
+     */
     public Arenas(JavaPlugin p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
 
+    /**
+     * Get a list of all arenas by name.
+     *
+     * @return List of all registered arenas.
+     */
     public static List<String> getNameList() {
         List<String> n = new ArrayList<String>();
         for (String key : Configurations.getArenasconfig().getKeys(false)) {
@@ -31,6 +41,11 @@ public class Arenas implements Listener {
         return n;
     }
 
+    /**
+     * Starts the arena wizard for a player to add an arena in.
+     *
+     * @param p The player with which this wizard session will be running.
+     */
     public static void startArenaWizard(Player p) {
         wizardplayers.put(p.getName(), 1);
         Arena a = new Arena();
@@ -39,18 +54,39 @@ public class Arenas implements Listener {
         Chat.sendPPM("Please type an arena name to use:", p);
     }
 
+    /**
+     * Get the players on the arena tp scroll list.
+     *
+     * @return A map of players and the index of the arena they are one.
+     */
     public static Map<String, Integer> getPlayerScrollList() {
         return playerarenascroll;
     }
 
-    public static void setPlayerScrollList(Player p, int aindex) {
+    /**
+     * Add a player to the arena tp scroll list.
+     *
+     * @param p      The player to add to the scroll list.
+     * @param aindex The index of the arena to place the player on.
+     */
+    public static void addPlayerToScrollList(Player p, int aindex) {
         playerarenascroll.put(p.getName(), aindex);
     }
 
+    /**
+     * Remove a player from the arena tp scroll list.
+     *
+     * @param p The player to remove.
+     */
     public static void removePlayerFromScrollList(Player p) {
         playerarenascroll.remove(p.getName());
     }
 
+    /**
+     * The chat event handler for the arena addition wizard.
+     *
+     * @param e The AsyncPlayerChatEvent arguments.
+     */
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         if (wizardplayers.containsKey(e.getPlayer().getName())) {

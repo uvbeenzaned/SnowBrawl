@@ -14,6 +14,7 @@ public class Stats {
 
     /**
      * Find stats based on an online player.
+     *
      * @param p The player to check against.
      */
     public Stats(Player p) {
@@ -24,8 +25,9 @@ public class Stats {
     }
 
     /**
-     * Find stats based on a players name. Use getError() to check to see if there was an error finding stats.
-     * @param p The players name to check against.
+     * Find stats based on a players name. Use getError() to check for an error finding stats.
+     *
+     * @param p      The players name to check against.
      * @param sender The player who is looking up the stats of another player.
      */
     public Stats(String p, Player sender) {
@@ -39,7 +41,8 @@ public class Stats {
     }
 
     /**
-     * Find stats based on a players name. Use getError() to check to see if there was an error finding stats.
+     * Find stats based on a players name. Use getError() to check for an error finding stats.
+     *
      * @param p The players name to check against.
      */
     public Stats(String p) {
@@ -52,6 +55,7 @@ public class Stats {
 
     /**
      * Gets stats of everyone who has played.
+     *
      * @return A string containing all global stats.
      */
     public static ArrayList<String> getGlobalStats() {
@@ -95,6 +99,7 @@ public class Stats {
 
     /**
      * Get if there was an error while finding stats for this player.
+     *
      * @return True if there was an error, false if there wasn't one.
      */
     public boolean getError() {
@@ -103,6 +108,7 @@ public class Stats {
 
     /**
      * Gets the players total points.
+     *
      * @return This players points.
      */
     public int getPoints() {
@@ -111,6 +117,7 @@ public class Stats {
 
     /**
      * Set this players points.
+     *
      * @param p What to set the points to.
      */
     public void setPoints(int p) {
@@ -121,6 +128,7 @@ public class Stats {
 
     /**
      * Add points to this players existing points.
+     *
      * @param p The points to add.
      */
     public void addPoints(int p) {
@@ -129,6 +137,7 @@ public class Stats {
 
     /**
      * Take points away from this player.
+     *
      * @param p How many points to remove.
      */
     public void removePoints(int p) {
@@ -149,6 +158,7 @@ public class Stats {
 
     /**
      * Get how many times a player has been hit in all.
+     *
      * @return The amount of hits.
      */
     public int getHits() {
@@ -157,6 +167,7 @@ public class Stats {
 
     /**
      * Set how many times this player has hit someone else.
+     *
      * @param k The amount of hits.
      */
     public void setHits(int k) {
@@ -165,7 +176,7 @@ public class Stats {
     }
 
     /**
-     * Up the hit count of this player by 1.
+     * Increment the hit count of this player by 1.
      */
     public void incrementHitsCount() {
         Configurations.getPlayersconfig().getConfigurationSection(player).set("hits", getHits() + 1);
@@ -175,6 +186,7 @@ public class Stats {
 
     /**
      * Get how many times this player has lost to another player.
+     *
      * @return The loss count.
      */
     public int getLosses() {
@@ -183,6 +195,7 @@ public class Stats {
 
     /**
      * Set how many times this player has lost to another player.
+     *
      * @param d The loss count to set.
      */
     public void setLosses(int d) {
@@ -200,6 +213,7 @@ public class Stats {
 
     /**
      * Get this players hit to lose ratio.
+     *
      * @return The hits to losses ratio.
      */
     public float getKDRatio() {
@@ -208,6 +222,7 @@ public class Stats {
 
     /**
      * Get how many snowballs this player has thrown.
+     *
      * @return The amount of snowballs thrown.
      */
     public int getSnowballsThrown() {
@@ -216,6 +231,7 @@ public class Stats {
 
     /**
      * Set how many snowballs this player has thrown.
+     *
      * @param a The amount to set.
      */
     public void setSnowballsThrown(int a) {
@@ -225,6 +241,7 @@ public class Stats {
 
     /**
      * How many snowballs to add to this players snowballs thrown count.
+     *
      * @param a Snowballs to add.
      */
     public void addSnowballsThrown(int a) {
@@ -233,6 +250,7 @@ public class Stats {
 
     /**
      * Remove snowballs from this players thrown count.
+     *
      * @param a The amount to remove.
      */
     public void removeSnowballsThrown(int a) {
@@ -241,7 +259,8 @@ public class Stats {
 
     /**
      * Check to see if a new distance record was made.
-     * @param method The method used to make this distance record. (options: Snowball, Sniper Rifle)
+     *
+     * @param method   The method used to make this distance record. (options: Snowball, Sniper Rifle)
      * @param distance The distance in blocks the shot was.
      */
     public void checkShotDistanceRecord(String method, long distance) {
@@ -259,6 +278,7 @@ public class Stats {
 
     /**
      * Get this players shot distance record.
+     *
      * @param method The method to lookup. (options: Snowball, Sniper Rifle)
      * @return The distance of the record.
      */
@@ -274,6 +294,7 @@ public class Stats {
 
     /**
      * Get the last rank that this player was.
+     *
      * @return The rank name of this player.
      */
     public String getLastRank() {
@@ -286,6 +307,7 @@ public class Stats {
 
     /**
      * Set the last rank of this player.
+     *
      * @param r The name of the rank to use.
      */
     public void setRank(String r) {
@@ -294,6 +316,7 @@ public class Stats {
 
     /**
      * Check to see if this player is using a specific power.
+     *
      * @param p The power to check against.
      * @return True if the player is using this power, false if not.
      */
@@ -306,6 +329,7 @@ public class Stats {
 
     /**
      * Check to see if this player has purchased a specific power.
+     *
      * @param p The power to check against.
      * @return True if the player owns this power, false if not.
      */
@@ -318,6 +342,7 @@ public class Stats {
 
     /**
      * Check to see if this player has purchased a specific set of powers.
+     *
      * @param powers The powers to check against.
      * @return True if the player owns these powers, false if not.
      */
@@ -336,6 +361,7 @@ public class Stats {
 
     /**
      * Get all the powers this player has purchased.
+     *
      * @return The purchased powers.
      */
     public List<String> getPurchasedPowers() {
@@ -347,6 +373,7 @@ public class Stats {
 
     /**
      * Add a power to this players purchased powers.
+     *
      * @param p The power to add.
      */
     public void addPower(Powers p) {
@@ -367,6 +394,7 @@ public class Stats {
 
     /**
      * Get the power this player currently is using.
+     *
      * @return The power being used.
      */
     public Power getPower() {
@@ -382,6 +410,7 @@ public class Stats {
 
     /**
      * Set power the player will be using.
+     *
      * @param p The power to set.
      */
     public void setPower(Powers p) {
@@ -391,6 +420,7 @@ public class Stats {
 
     /**
      * Check to see if this player is using a specific upgrade.
+     *
      * @param u The upgrade to check against.
      * @return True if the upgrade is being used, false if not.
      */
@@ -403,6 +433,7 @@ public class Stats {
 
     /**
      * Check to see if this player has purchased a specific upgrade.
+     *
      * @param u The upgrade to check against.
      * @return True if the upgrade has been purchased, false if not.
      */
@@ -415,6 +446,7 @@ public class Stats {
 
     /**
      * Get this players purchased upgrades.
+     *
      * @return The purchased upgrades.
      */
     public List<String> getPurchasedUpgrades() {
@@ -426,6 +458,7 @@ public class Stats {
 
     /**
      * The upgrade to add to this players purchased upgrades.
+     *
      * @param u The upgrade to check against.
      */
     public void addUpgrade(Upgrades u) {
@@ -446,6 +479,7 @@ public class Stats {
 
     /**
      * Get all the upgrades that this player has enabled.
+     *
      * @return The enabled upgrades.
      */
     public List<String> getEnabledUpgrades() {
@@ -457,6 +491,7 @@ public class Stats {
 
     /**
      * Enable an upgrade for this player.
+     *
      * @param u The upgrade to enable.
      */
     public void enableUpgrade(Upgrades u) {
@@ -475,6 +510,7 @@ public class Stats {
 
     /**
      * Disable an upgrade for this player.
+     *
      * @param u The upgrade to disable.
      */
     public void disableUpgrade(Upgrades u) {
@@ -486,6 +522,7 @@ public class Stats {
 
     /**
      * Get the arenas that this player has created/assisted in.
+     *
      * @return A list of arenas.
      */
     public ArrayList<String> getArenasList() {
@@ -504,6 +541,7 @@ public class Stats {
 
     /**
      * Get all the stats of this player.
+     *
      * @return The full stats of this player.
      */
     public ArrayList<String> getAllStats() {

@@ -66,7 +66,7 @@ public class TeamLime {
             removePlayer(p);
             Board.removePlayer(p);
             Chat.sendPPM("You've left team LIME.", p);
-            Chat.sendTeamCyanMsg(p.getName() + ChatColor.RESET + " has left team LIME.");
+            Chat.sendTeamLimeMsg(p.getName() + ChatColor.RESET + " has left team LIME.");
             p.teleport(Lobby.getLobbyspawnlocation());
             p.getInventory().setChestplate(new ItemStack(Material.AIR));
             p.getInventory().remove(Material.SNOW_BALL);

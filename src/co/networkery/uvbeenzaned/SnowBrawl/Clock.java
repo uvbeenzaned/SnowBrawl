@@ -10,10 +10,19 @@ public class Clock {
     private static int cntdwn = 0;
     private static BukkitTask task = null;
     private static boolean running = false;
+
+    /**
+     * The game clock constructor.
+     *
+     * @param pl The plugin to initialize this class with.
+     */
     public Clock(Plugin pl) {
         p = pl;
     }
 
+    /**
+     * The central game clock scheduler.
+     */
     private static void schedule() {
         task = p.getServer().getScheduler().runTaskTimerAsynchronously(p, new Runnable() {
             public void run() {
@@ -34,6 +43,9 @@ public class Clock {
         }, 20L, 20L);
     }
 
+    /**
+     * Start the round game clock.
+     */
     public static void startTimer() {
         if (!isRunning()) {
             cntdwn = Settings.getRoundstartdelay() / 1000;
@@ -42,6 +54,9 @@ public class Clock {
         }
     }
 
+    /**
+     * Stop the game clock.
+     */
     public static void stopTimer() {
         if (task != null && isRunning()) {
             task.cancel();
@@ -51,6 +66,11 @@ public class Clock {
 
     }
 
+    /**
+     * Check to see if the game clock is running.
+     *
+     * @return True if the game clock is running, false if not.
+     */
     public static boolean isRunning() {
         return running;
     }

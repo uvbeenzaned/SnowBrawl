@@ -20,6 +20,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ExtrasListener implements Listener {
 
+    /**
+     * The constructor the extras game listener.
+     * @param p The plugin to initialize this class with.
+     */
     public ExtrasListener(JavaPlugin p) {
         p.getServer().getPluginManager().registerEvents(this, p);
     }
@@ -117,10 +121,10 @@ public class ExtrasListener implements Listener {
         if (Arenas.getPlayerScrollList().containsKey(e.getPlayer().getName())) {
             if (e.getPreviousSlot() > Arenas.getPlayerScrollList().get(e.getPlayer().getName())) {
                 e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer().getName()))).getCyanSide());
-                Arenas.setPlayerScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer().getName()) + 1);
+                Arenas.addPlayerToScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer().getName()) + 1);
             } else if (e.getPreviousSlot() < Arenas.getPlayerScrollList().get(e.getPlayer().getName())) {
                 e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer().getName()))).getCyanSide());
-                Arenas.setPlayerScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer().getName()) - 1);
+                Arenas.addPlayerToScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer().getName()) - 1);
             }
         }
     }
