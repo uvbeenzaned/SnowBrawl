@@ -29,10 +29,19 @@ import org.bukkit.entity.Player;
 
 public class Lobby {
 
+    /**
+     * Get the location that all game players will go to on spawn and when games are over.
+     * @return The location of the lobby.
+     */
     public static Location getLobbyspawnlocation() {
         return LocationSerializer.str2loc(Configurations.getMainConfig().getString("lobby-spawn-location"));
     }
 
+    /**
+     * Set the location that all game players will go to on spawn and when games are over.
+     * @param l A location to set.
+     * @param sender The person who set this location.
+     */
     public static void setLobbyspawnlocation(Location l, Player sender) {
         Configurations.getMainConfig().set("lobby-spawn-location", LocationSerializer.loc2str(l));
         Configurations.saveMainConfig();

@@ -29,6 +29,11 @@ import org.bukkit.Location;
 
 public class LocationSerializer {
 
+    /**
+     * Convert a String to a Bukkit Location object.
+     * @param str The String to serialize.
+     * @return The serialized Location object.
+     */
     public static Location str2loc(String str) {
         String str2loc[] = str.split(":");
         Location loc = new Location(Bukkit.getServer().getWorld(str2loc[0]), 0, 0, 0);
@@ -40,6 +45,11 @@ public class LocationSerializer {
         return loc;
     }
 
+    /**
+     * Convert a Location to a String for data storage.
+     * @param loc The location to de-serialize.
+     * @return The de-serialized location.
+     */
     public static String loc2str(Location loc) {
         return loc.getWorld().getName() + ":" + loc.getX() + ":" + loc.getY() + ":" + loc.getZ() + ":" + loc.getPitch() + ":" + loc.getYaw();
     }

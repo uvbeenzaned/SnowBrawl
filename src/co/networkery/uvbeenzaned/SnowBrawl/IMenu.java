@@ -28,5 +28,9 @@ import org.bukkit.inventory.Inventory;
 
 public interface IMenu {
 
+    /**
+     * Returns the inventory that represents this menu.
+     * @return
+     */
     Inventory getMenu();
 }

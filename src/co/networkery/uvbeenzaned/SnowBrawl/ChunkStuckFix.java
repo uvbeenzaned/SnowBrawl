@@ -30,6 +30,9 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
+/**
+ * Fix for falling through the world because chunks don't normally load fast enough to catch the player.
+ */
 public class ChunkStuckFix {
 
     private static Plugin p = null;
