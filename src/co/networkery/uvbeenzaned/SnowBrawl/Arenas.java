@@ -40,7 +40,6 @@ public class Arenas implements Listener {
 
     private static Map<String, Integer> wizardplayers = new HashMap<String, Integer>();
     private static List<Arena> arenawizardlist = new ArrayList<Arena>();
-    private static Map<String, Integer> playerarenascroll = new HashMap<String, Integer>();
 
     /**
      * The initializer for this arena manager.
@@ -76,34 +75,6 @@ public class Arenas implements Listener {
         a.setSender(p);
         arenawizardlist.add(a);
         Chat.sendPPM("Please type an arena name to use:", p);
-    }
-
-    /**
-     * Get the players on the arena tp scroll list.
-     *
-     * @return A map of players and the index of the arena they are one.
-     */
-    public static Map<String, Integer> getPlayerScrollList() {
-        return playerarenascroll;
-    }
-
-    /**
-     * Add a player to the arena tp scroll list.
-     *
-     * @param p      The player to add to the scroll list.
-     * @param aindex The index of the arena to place the player on.
-     */
-    public static void addPlayerToScrollList(Player p, int aindex) {
-        playerarenascroll.put(p.getName(), aindex);
-    }
-
-    /**
-     * Remove a player from the arena tp scroll list.
-     *
-     * @param p The player to remove.
-     */
-    public static void removePlayerFromScrollList(Player p) {
-        playerarenascroll.remove(p.getName());
     }
 
     /**

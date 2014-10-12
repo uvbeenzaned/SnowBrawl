@@ -38,7 +38,10 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -46,6 +49,7 @@ public class ExtrasListener implements Listener {
 
     /**
      * The constructor the extras game listener.
+     *
      * @param p The plugin to initialize this class with.
      */
     public ExtrasListener(JavaPlugin p) {
@@ -80,10 +84,18 @@ public class ExtrasListener implements Listener {
         if (e.getEntity().getShooter() instanceof Player) {
             Player p = (Player) e.getEntity().getShooter();
             if (e.getEntityType() == EntityType.SNOWBALL && (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p))) {
+                Stats s = new Stats(p);
+                if (s.usingPower(Powers.ABSORPTION)) {
+                    if (p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 21)) {
+                        StaticData.disallowAbsorption(p);
+                    }
+                    if (!p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 21)) {
+                        StaticData.allowAbsorption(p);
+                    }
+                }
                 if (!p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 1)) {
                     Utilities.reloadSnowballs(p);
                 }
-                Stats s = new Stats(p);
                 s.addSnowballsThrown(1);
                 if (p.isOp()) {
                     e.getEntity().setFireTicks(600);
@@ -136,19 +148,6 @@ public class ExtrasListener implements Listener {
                         s.update();
                     }
                 }
-            }
-        }
-    }
-
-    @EventHandler
-    public void onPlayerScrollEvent(PlayerItemHeldEvent e) {
-        if (Arenas.getPlayerScrollList().containsKey(e.getPlayer().getName())) {
-            if (e.getPreviousSlot() > Arenas.getPlayerScrollList().get(e.getPlayer().getName())) {
-                e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer().getName()))).getCyanSide());
-                Arenas.addPlayerToScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer().getName()) + 1);
-            } else if (e.getPreviousSlot() < Arenas.getPlayerScrollList().get(e.getPlayer().getName())) {
-                e.getPlayer().teleport(Arena.getInstanceFromConfig(Arenas.getNameList().get(Arenas.getPlayerScrollList().get(e.getPlayer().getName()))).getCyanSide());
-                Arenas.addPlayerToScrollList(e.getPlayer(), Arenas.getPlayerScrollList().get(e.getPlayer().getName()) - 1);
             }
         }
     }

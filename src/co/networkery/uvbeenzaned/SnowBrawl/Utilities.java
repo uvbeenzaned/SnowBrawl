@@ -72,7 +72,7 @@ public class Utilities {
                     stopReloadTimer();
                 }
             }
-        }, 20L, 20L);
+        }, 0L, 20L);
     }
 
     public static void reloadSnowballs(Player p) {
@@ -120,6 +120,9 @@ public class Utilities {
     }
 
     public static void giveSnowballs(Player p) {
+        Stats s = new Stats(p);
+        if (s.usingPower(Powers.ABSORPTION))
+            StaticData.disallowAbsorption(p);
         p.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 64));
     }
 
@@ -132,7 +135,8 @@ public class Utilities {
             TeamLime.awardTeamPoints();
             Round.giveLeadPoints();
             Board.clearOutPlayers();
-            StaticUpgradeData.clearBurnSaveUses();
+            StaticData.clearBurnSaveUses();
+            StaticData.clearAbsorptionList();
             Round.setGameActive(false);
             Round.startTimerRound();
         } else if (TeamLime.isArenaPlayersEmpty()) {
@@ -143,9 +147,20 @@ public class Utilities {
             TeamCyan.awardTeamPoints();
             Round.giveLeadPoints();
             Board.clearOutPlayers();
-            StaticUpgradeData.clearBurnSaveUses();
+            StaticData.clearBurnSaveUses();
+            StaticData.clearAbsorptionList();
             Round.setGameActive(false);
             Round.startTimerRound();
+        }
+    }
+
+    public static void checkPlayerInventoryItems(Player p) {
+        if (!p.getInventory().contains(PowerMenu.getInteractItem())) {
+            p.getInventory().clear();
+            PowerMenu.giveInteractItem(p);
+            UpgradeMenu.giveInteractItem(p);
+            StoreMenu.giveInteractItem(p);
+            Round.giveLineupBook(p);
         }
     }
 

@@ -73,7 +73,7 @@ public class PowerCoolDown {
                     stopCoolDownTimer();
                 }
             }
-        }, 20L, 20L);
+        }, 0L, 20L);
     }
 
     public static void start(Player p, int ms) {

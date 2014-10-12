@@ -38,6 +38,7 @@ public class Help {
 
     /**
      * The constructor the help class.
+     *
      * @param pl The plugin to initialize this class with.
      */
     public Help(Plugin pl) {
@@ -46,6 +47,7 @@ public class Help {
 
     /**
      * Print the plugin commands to a player.
+     *
      * @param p The player to print to.
      */
     public static void printHelp(Player p) {
@@ -79,6 +81,7 @@ public class Help {
 
     /**
      * Print special commands to ops.
+     *
      * @param p The player to print to.
      */
     public static void printOpCommands(Player p) {
@@ -100,7 +103,6 @@ public class Help {
             cmds.add("        add - Starts arena wizard.");
             cmds.add("        remove <arena name> - Removes specified arena from configuration.");
             cmds.add("        toggle <arena name> - Enable/Disable the map from circulation.");
-            cmds.add("        scroll - Turns on quick scroll mode to find an arena quickly.");
             cmds.add(cmd + "store - Command for accessing all store options.");
             cmds.add("        toggle - Turn the Store off/on making all the powers free or purchasable.");
             for (String c : cmds) {

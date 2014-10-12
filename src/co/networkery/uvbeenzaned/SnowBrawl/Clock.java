@@ -24,6 +24,7 @@
 
 package co.networkery.uvbeenzaned.SnowBrawl;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -56,6 +57,10 @@ public class Clock {
                     } else {
                         Board.prependScoreBoardTitle(ChatColor.BLUE + "Round " + ChatColor.RED + "-> " + ChatColor.BLUE + String.valueOf(cntdwn), true);
                     }
+                    for (String p : TeamCyan.getPlayers())
+                        Utilities.checkPlayerInventoryItems(Bukkit.getPlayer(p));
+                    for (String p : TeamLime.getPlayers())
+                        Utilities.checkPlayerInventoryItems(Bukkit.getPlayer(p));
                     cntdwn--;
                 } else {
                     if (cntdwn <= 0) {
@@ -64,7 +69,7 @@ public class Clock {
                     }
                 }
             }
-        }, 20L, 20L);
+        }, 0L, 20L);
     }
 
     /**

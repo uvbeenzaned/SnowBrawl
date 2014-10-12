@@ -36,6 +36,7 @@ public class Configurations {
 
     /**
      * Load all configurations for every module.
+     *
      * @param sb The main SnowBrawl class.
      */
     public static void loadAllConfigurations(SB sb) {

@@ -33,60 +33,70 @@ public interface IAddon {
 
     /**
      * Get the type of addon this instance is.
+     *
      * @return Returns the type of addon this is.
      */
     public IAddonDefs getType();
 
     /**
      * Set what type of addon this is.
+     *
      * @param a The IAddonDefs this will be set to.
      */
     public void set(IAddonDefs a);
 
     /**
      * Get the name of the specific addon this is.
+     *
      * @return The name of this specific addon.
      */
     public String getName();
 
     /**
      * Get the player that this addon applies to.
+     *
      * @return The player that this addon applies to.
      */
     public Player getPlayer();
 
     /**
      * Set the player that this addon will apply to.
+     *
      * @param p The player to set this addon to.
      */
     public void setPlayer(Player p);
 
     /**
      * Get the description of this specific addon.
+     *
      * @return The descripption of this addon.
      */
     public String getDescription();
 
     /**
      * Set the description of this addon.
+     *
      * @param d The description to give to this addon.
      */
     public void setDescription(String d);
 
     /**
      * Get the cost of this addon for in-game purchasing.
+     *
      * @return The cost of this addon.
      */
     public double getPrice();
 
     /**
      * Set the cost of this addon for in-game purcahing.
+     *
      * @param pr The price to set this addon to.
      */
     public void setPrice(double pr);
 
     /**
      * A list of strings with information about this addon.
+     *
      * @return
      */
     public ArrayList<String> getInfo();
@@ -98,12 +108,14 @@ public interface IAddon {
 
     /**
      * Get the item that represents this addon.
+     *
      * @return An ItemStack that represents this addon.
      */
     public ItemStack getItem();
 
     /**
      * Get the item that represents this addon but with a special title.
+     *
      * @return The specially titled item.
      */
     public ItemStack getItemWithTitle();

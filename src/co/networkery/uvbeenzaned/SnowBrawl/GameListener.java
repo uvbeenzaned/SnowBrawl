@@ -43,6 +43,7 @@ public class GameListener implements Listener {
 
     /**
      * The constructor the game listener.
+     *
      * @param p The plugin to initialize this class with.
      */
     public GameListener(JavaPlugin p) {
@@ -117,7 +118,7 @@ public class GameListener implements Listener {
                                 if ((e.getEntity() instanceof Player && (e.getDamager() instanceof Snowball || e.getDamager() instanceof Arrow))) {
                                     e.setCancelled(true);
                                     Stats s = new Stats(plhit);
-                                    if (s.usingPower(Powers.ABSORPTION) && Utilities.hasSnowballReloadPlayer(plhit) && !plhit.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 20)) {
+                                    if (s.usingPower(Powers.ABSORPTION) && Utilities.hasSnowballReloadPlayer(plhit) && StaticData.canUseAbsorption(plhit)) {
                                         plhit.getInventory().addItem(new ItemStack(Material.SNOW_BALL, 1));
                                         Utilities.playerEnderAbsorptionEffect(plhit);
                                     } else {

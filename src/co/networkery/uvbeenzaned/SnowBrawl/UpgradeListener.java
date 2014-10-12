@@ -96,13 +96,13 @@ public class UpgradeListener implements Listener {
             Stats s = new Stats(p);
             if (!s.getError()) {
                 if (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p)) {
-                    if (!StaticUpgradeData.hasUsedRoundBurnSave(p)) {
+                    if (!StaticData.hasUsedRoundBurnSave(p)) {
                         if (s.usingUpgrade(Upgrades.BURN_SAVE)) {
                             if (e.getCause().equals(DamageCause.LAVA) || e.getCause().equals(DamageCause.FIRE) || e.getCause().equals(DamageCause.FIRE_TICK)) {
                                 e.setCancelled(true);
                                 Upgrade u = new Upgrade(Upgrades.BURN_SAVE, p);
                                 u.applySpecific();
-                                StaticUpgradeData.useBurnSave(p);
+                                StaticData.useBurnSave(p);
                                 Chat.sendPPM(ChatColor.MAGIC + "|" + ChatColor.RESET + " You have just used your one-time burn save! " + ChatColor.MAGIC + "|", p);
                             }
                         }

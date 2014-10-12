@@ -31,6 +31,7 @@ public class LocationSerializer {
 
     /**
      * Convert a String to a Bukkit Location object.
+     *
      * @param str The String to serialize.
      * @return The serialized Location object.
      */
@@ -47,6 +48,7 @@ public class LocationSerializer {
 
     /**
      * Convert a Location to a String for data storage.
+     *
      * @param loc The location to de-serialize.
      * @return The de-serialized location.
      */

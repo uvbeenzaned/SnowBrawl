@@ -31,6 +31,7 @@ public class Lobby {
 
     /**
      * Get the location that all game players will go to on spawn and when games are over.
+     *
      * @return The location of the lobby.
      */
     public static Location getLobbyspawnlocation() {
@@ -39,7 +40,8 @@ public class Lobby {
 
     /**
      * Set the location that all game players will go to on spawn and when games are over.
-     * @param l A location to set.
+     *
+     * @param l      A location to set.
      * @param sender The person who set this location.
      */
     public static void setLobbyspawnlocation(Location l, Player sender) {

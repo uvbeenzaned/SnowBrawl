@@ -242,7 +242,7 @@ public class Arena {
     }
 
     /**
-     * Validate this arenas parameters.
+     * Validate this arena's parameters.
      *
      * @return True if passed check, false if not.
      */

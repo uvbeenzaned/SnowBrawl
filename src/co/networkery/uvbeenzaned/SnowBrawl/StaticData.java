@@ -29,9 +29,10 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaticUpgradeData {
+public class StaticData {
 
     private static List<String> burnsaveuses = new ArrayList<String>();
+    private static List<String> absorptionallowed = new ArrayList<String>();
 
     public static boolean hasUsedRoundBurnSave(Player p) {
         return burnsaveuses.contains(p.getName());
@@ -43,6 +44,24 @@ public class StaticUpgradeData {
 
     public static void clearBurnSaveUses() {
         burnsaveuses.clear();
+    }
+
+    public static void allowAbsorption(Player p) {
+        if (!absorptionallowed.contains(p.getName()))
+            absorptionallowed.add(p.getName());
+    }
+
+    public static void disallowAbsorption(Player p) {
+        if (absorptionallowed.contains(p.getName()))
+            absorptionallowed.remove(p.getName());
+    }
+
+    public static boolean canUseAbsorption(Player p) {
+        return absorptionallowed.contains(p.getName());
+    }
+
+    public static void clearAbsorptionList() {
+        absorptionallowed.clear();
     }
 
 }
