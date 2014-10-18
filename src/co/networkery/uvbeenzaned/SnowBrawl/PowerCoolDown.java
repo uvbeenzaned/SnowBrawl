@@ -86,10 +86,10 @@ public class PowerCoolDown {
                 }
                 int time = s.getPower().time();
                 if (s.getEnabledUpgrades().contains(Upgrades.POWER_RELOAD_TIME_REDUCTION) && s.getPower().isTimeReducable()) {
-                    double reducer = 0.85;
+                    double reducer = 0.80;
                     for (int r = 0; r < Round.getPlayerLead(p); r++) {
                         reducer -= 0.05;
-                        time = (int) (time * reducer);
+                        time = (int) Math.floor(time * reducer);
                     }
                 }
                 time /= 1000;

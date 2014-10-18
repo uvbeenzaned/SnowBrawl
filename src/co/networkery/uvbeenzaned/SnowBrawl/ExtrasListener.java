@@ -78,7 +78,7 @@ public class ExtrasListener implements Listener {
             e.setCancelled(true);
         }
     }
-
+    
     @EventHandler
     public void onSnowballThrow(ProjectileLaunchEvent e) {
         if (e.getEntity().getShooter() instanceof Player) {
@@ -86,10 +86,9 @@ public class ExtrasListener implements Listener {
             if (e.getEntityType() == EntityType.SNOWBALL && (TeamCyan.hasArenaPlayer(p) || TeamLime.hasArenaPlayer(p))) {
                 Stats s = new Stats(p);
                 if (s.usingPower(Powers.ABSORPTION)) {
-                    if (p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 21)) {
+                    if (p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 1)) {
                         StaticData.disallowAbsorption(p);
-                    }
-                    if (!p.getInventory().containsAtLeast(new ItemStack(Material.SNOW_BALL), 21)) {
+                    } else {
                         StaticData.allowAbsorption(p);
                     }
                 }
