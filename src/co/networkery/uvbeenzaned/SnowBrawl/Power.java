@@ -149,6 +149,9 @@ public class Power implements IAddon {
             case ERUPTION:
                 addToInventory(eruption());
                 break;
+            case SWAPPER:
+                swapper();
+                break;
             default:
                 break;
         }
@@ -205,6 +208,8 @@ public class Power implements IAddon {
                 return false;
             case ABSORPTION:
                 return false;
+            case SWAPPER:
+                return false;
             default:
                 return false;
         }
@@ -226,6 +231,8 @@ public class Power implements IAddon {
                 return smite();
             case ERUPTION:
                 return eruption();
+            case SWAPPER:
+                return swapper();
             default:
                 return null;
         }
@@ -293,6 +300,12 @@ public class Power implements IAddon {
                 itemwithinfo = new ItemStack(Material.SPONGE, 1);
                 im = itemwithinfo.getItemMeta();
                 im.setDisplayName("Absorption");
+                itemwithinfo.setItemMeta(im);
+                return itemwithinfo;
+            case SWAPPER:
+                itemwithinfo = swapper();
+                im = itemwithinfo.getItemMeta();
+                im.setDisplayName("Swapper");
                 itemwithinfo.setItemMeta(im);
                 return itemwithinfo;
             case NONE:
@@ -382,6 +395,14 @@ public class Power implements IAddon {
         ItemStack i = new ItemStack(Material.EGG);
         ItemMeta im = i.getItemMeta();
         im.setDisplayName("Eruption");
+        i.setItemMeta(im);
+        return i;
+    }
+
+    private ItemStack swapper() {
+        ItemStack i = new ItemStack(Material.ENDER_PEARL);
+        ItemMeta im = i.getItemMeta();
+        im.setDisplayName("Swapper");
         i.setItemMeta(im);
         return i;
     }

@@ -78,7 +78,7 @@ public class ExtrasListener implements Listener {
             e.setCancelled(true);
         }
     }
-    
+
     @EventHandler
     public void onSnowballThrow(ProjectileLaunchEvent e) {
         if (e.getEntity().getShooter() instanceof Player) {

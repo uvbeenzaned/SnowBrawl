@@ -34,6 +34,7 @@ import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TeamLime {
 
@@ -248,6 +249,17 @@ public class TeamLime {
                 removeArenaPlayer(Bukkit.getServer().getPlayer(p));
             }
         }
+    }
+
+    public static String getRandomPlayer() {
+        Random r = new Random(System.currentTimeMillis());
+        int rnum = r.nextInt(getPlayers().size());
+        for (int i = 0; i < getPlayers().size(); i++) {
+            if(i == rnum) {
+                return getPlayers().get(i - 1);
+            }
+        }
+        return null;
     }
 
     public static void awardTeamPoints() {

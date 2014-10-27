@@ -89,6 +89,27 @@ public class PowerListener implements Listener {
                         e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(2));
                     }
                 }
+                if(e.getEntityType() == EntityType.ENDER_PEARL) {
+                    if(s.usingPower(Powers.SWAPPER)) {
+                        if(e.getEntityType() == EntityType.ENDER_PEARL) {
+                            e.setCancelled(true);
+                            if(p.isOnGround() && !p.getLocation().getBlock().getType().equals(Material.LAVA) && !p.getLocation().getBlock().getType().equals(Material.STATIONARY_LAVA) && !p.getLocation().getBlock().getType().equals(Material.WATER) && !p.getLocation().getBlock().getType().equals(Material.STATIONARY_WATER)) {
+                                p.getInventory().remove(Material.ENDER_PEARL);
+                                if(TeamCyan.hasArenaPlayer(p)) {
+                                    Location p1 = p.getLocation();
+                                    Location p2 = Bukkit.getPlayer(TeamLime.getRandomPlayer()).getLocation();
+                                    p.teleport(p2);
+                                    Bukkit.getPlayer(TeamLime.getRandomPlayer()).teleport(p1);
+                                } else if(TeamLime.hasArenaPlayer(p)) {
+                                    Location p1 = p.getLocation();
+                                    Location p2 = Bukkit.getPlayer(TeamCyan.getRandomPlayer()).getLocation();
+                                    p.teleport(p2);
+                                    Bukkit.getPlayer(TeamCyan.getRandomPlayer()).teleport(p1);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
