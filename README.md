@@ -23,4 +23,4 @@ License
 My project is under the [MIT License](http://opensource.org/licenses/MIT). I hate licenses and this is the one that I found that doesn't feel like as much of a license as others do.
 
 ###### Brief License Summary:
-Do whatever on earth it is you want to do with this plugin regardless of how you do it. I don't care! As long as you know that you can't blame when something bad happens.
+Do whatever on earth it is you want to do with this plugin regardless of how you do it. I don't care! As long as you know that you can't blame me when something bad happens.
