@@ -285,7 +285,7 @@ public class Power implements IAddon {
                 itemwithinfo.setItemMeta(im);
                 return itemwithinfo;
             case VELOCITY:
-                itemwithinfo = new ItemStack(Material.FIRE, 1);
+                itemwithinfo = new ItemStack(Material.NETHER_STAR, 1);
                 im = itemwithinfo.getItemMeta();
                 im.setDisplayName("Velocity");
                 itemwithinfo.setItemMeta(im);

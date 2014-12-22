@@ -89,22 +89,26 @@ public class PowerListener implements Listener {
                         e.getEntity().setVelocity(p.getLocation().getDirection().normalize().multiply(2));
                     }
                 }
-                if(e.getEntityType() == EntityType.ENDER_PEARL) {
-                    if(s.usingPower(Powers.SWAPPER)) {
-                        if(e.getEntityType() == EntityType.ENDER_PEARL) {
+                if (e.getEntityType() == EntityType.ENDER_PEARL) {
+                    if (s.usingPower(Powers.SWAPPER)) {
+                        if (e.getEntityType() == EntityType.ENDER_PEARL) {
                             e.setCancelled(true);
-                            if(p.isOnGround() && !p.getLocation().getBlock().getType().equals(Material.LAVA) && !p.getLocation().getBlock().getType().equals(Material.STATIONARY_LAVA) && !p.getLocation().getBlock().getType().equals(Material.WATER) && !p.getLocation().getBlock().getType().equals(Material.STATIONARY_WATER)) {
+                            if (p.isOnGround() && !p.getLocation().getBlock().getType().equals(Material.LAVA) && !p.getLocation().getBlock().getType().equals(Material.STATIONARY_LAVA) && !p.getLocation().getBlock().getType().equals(Material.WATER) && !p.getLocation().getBlock().getType().equals(Material.STATIONARY_WATER)) {
                                 p.getInventory().remove(Material.ENDER_PEARL);
-                                if(TeamCyan.hasArenaPlayer(p)) {
+                                if (TeamCyan.hasArenaPlayer(p)) {
                                     Location p1 = p.getLocation();
                                     Location p2 = Bukkit.getPlayer(TeamLime.getRandomPlayer()).getLocation();
+                                    Player p2p = Bukkit.getPlayer(TeamLime.getRandomPlayer());
                                     p.teleport(p2);
-                                    Bukkit.getPlayer(TeamLime.getRandomPlayer()).teleport(p1);
-                                } else if(TeamLime.hasArenaPlayer(p)) {
+                                    p2p.teleport(p1);
+                                    Chat.sendPPM("You have swapped positions with " + p2p.getName() + ".", p);
+                                } else if (TeamLime.hasArenaPlayer(p)) {
                                     Location p1 = p.getLocation();
                                     Location p2 = Bukkit.getPlayer(TeamCyan.getRandomPlayer()).getLocation();
+                                    Player p2p = Bukkit.getPlayer(TeamCyan.getRandomPlayer());
                                     p.teleport(p2);
                                     Bukkit.getPlayer(TeamCyan.getRandomPlayer()).teleport(p1);
+                                    Chat.sendPPM("You have swapped positions with " + p.getName() + ".", p2p);
                                 }
                             }
                         }
@@ -290,7 +294,7 @@ public class PowerListener implements Listener {
                                     l.add(0, 1, 0);
                                 }
                             }
-                            sb.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.FIRE);
+                            //sb.getLocation().getBlock().getRelative(BlockFace.DOWN).setType(Material.FIRE);
                         }
                     }
                 }

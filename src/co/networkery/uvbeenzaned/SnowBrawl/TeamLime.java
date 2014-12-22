@@ -164,23 +164,25 @@ public class TeamLime {
     }
 
     public static void removeArenaPlayer(Player p) {
-        playersinarena.remove(p.getName());
-        if (PowerCoolDown.hasCoolDownPlayer(p)) {
-            PowerCoolDown.removeCoolDownPlayer(p);
+        if (hasArenaPlayer(p)) {
+            playersinarena.remove(p.getName());
+            if (PowerCoolDown.hasCoolDownPlayer(p)) {
+                PowerCoolDown.removeCoolDownPlayer(p);
+            }
+            for (PotionEffect pe : p.getActivePotionEffects()) {
+                p.removePotionEffect(pe.getType());
+            }
+            p.setHealth((double) 20);
+            p.getInventory().clear();
+            p.getInventory().setBoots(new ItemStack(Material.AIR));
+            Rank.checkRank(p);
+            p.teleport(Lobby.getLobbyspawnlocation());
+            Board.outPlayer(p);
+            PowerMenu.giveInteractItem(p);
+            UpgradeMenu.giveInteractItem(p);
+            StoreMenu.giveInteractItem(p);
+            Round.giveLineupBook(p);
         }
-        for (PotionEffect pe : p.getActivePotionEffects()) {
-            p.removePotionEffect(pe.getType());
-        }
-        p.setHealth(p.getMaxHealth());
-        p.getInventory().clear();
-        p.getInventory().setBoots(new ItemStack(Material.AIR));
-        Rank.checkRank(p);
-        p.teleport(Lobby.getLobbyspawnlocation());
-        Board.outPlayer(p);
-        PowerMenu.giveInteractItem(p);
-        UpgradeMenu.giveInteractItem(p);
-        StoreMenu.giveInteractItem(p);
-        Round.giveLineupBook(p);
     }
 
     public static boolean hasArenaPlayer(Player p) {
@@ -219,7 +221,7 @@ public class TeamLime {
                 Stats s = new Stats(Bukkit.getServer().getPlayer(p));
                 addArenaPlayer(Bukkit.getServer().getPlayer(p));
                 Bukkit.getServer().getPlayer(p).setGameMode(GameMode.SURVIVAL);
-                Bukkit.getServer().getPlayer(p).setFlying(false);
+                //Bukkit.getServer().getPlayer(p).setFlying(false);
                 Bukkit.getServer().getPlayer(p).getInventory().clear();
                 Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
                 Rank.checkRank(Bukkit.getPlayer(p));
@@ -255,7 +257,7 @@ public class TeamLime {
         Random r = new Random(System.currentTimeMillis());
         int rnum = r.nextInt(getPlayers().size());
         for (int i = 0; i < getPlayers().size(); i++) {
-            if(i == rnum) {
+            if (i == rnum) {
                 return getPlayers().get(i - 1);
             }
         }

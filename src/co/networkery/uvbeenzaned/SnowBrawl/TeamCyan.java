@@ -172,7 +172,7 @@ public class TeamCyan {
             for (PotionEffect pe : p.getActivePotionEffects()) {
                 p.removePotionEffect(pe.getType());
             }
-            p.setHealth(p.getMaxHealth());
+            p.setHealth((double) 20);
             p.getInventory().clear();
             p.getInventory().setBoots(new ItemStack(Material.AIR));
             Rank.checkRank(p);
@@ -222,7 +222,7 @@ public class TeamCyan {
                 Stats s = new Stats(Bukkit.getServer().getPlayer(p));
                 addArenaPlayer(Bukkit.getServer().getPlayer(p));
                 Bukkit.getServer().getPlayer(p).setGameMode(GameMode.SURVIVAL);
-                Bukkit.getServer().getPlayer(p).setFlying(false);
+                //Bukkit.getServer().getPlayer(p).setFlying(false);
                 Bukkit.getServer().getPlayer(p).getInventory().clear();
                 Utilities.giveSnowballs(Bukkit.getServer().getPlayer(p));
                 Rank.checkRank(Bukkit.getPlayer(p));
@@ -259,7 +259,7 @@ public class TeamCyan {
         Random r = new Random(System.currentTimeMillis());
         int rnum = r.nextInt(getPlayers().size());
         for (int i = 0; i < getPlayers().size(); i++) {
-            if(i == rnum) {
+            if (i == rnum) {
                 return getPlayers().get(i - 1);
             }
         }

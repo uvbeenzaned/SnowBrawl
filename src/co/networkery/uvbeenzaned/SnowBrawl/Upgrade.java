@@ -171,7 +171,7 @@ public class Upgrade implements IAddon {
             case HIGHER_ERUPTION_DENSITY:
                 break;
         /*
-		 * // no function on normal apply break; case EXTENDED_SNIPER_MAGAZINE:
+         * // no function on normal apply break; case EXTENDED_SNIPER_MAGAZINE:
 		 * // no function required break; case HIGHER_ERUPTION_DENSITY: // no
 		 * function required break; case SNIPER_RIFLE_SILENCER: // no function
 		 * required break;
