@@ -13,6 +13,10 @@ Documentation
 ------
 * Doxygen: [docs.networkery.co/SnowBrawl](http://docs.networkery.co/SnowBrawl/)
 
+Releases
+------
+[Releases Page](https://github.com/uvbeenzaned/SnowBrawl/releases)
+
 Project Contributors
 ------
 * uvbeenzaned (aka. Kyle) - Main Developer
