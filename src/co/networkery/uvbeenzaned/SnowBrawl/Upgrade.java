@@ -134,11 +134,6 @@ public class Upgrade implements IAddon {
             case POWER_RELOAD_TIME_REDUCTION:
                 powers.add(Powers.NONE);
                 break;
-        /*
-         * case EXTENDED_SNIPER_MAGAZINE: powers.add(Powers.SNIPER); break;
-		 * if(!pws.equals(Powers.NONE)) powers.add(pws); } break; case
-		 * SNIPER_RIFLE_SILENCER: powers.add(Powers.SNIPER); break;
-		 */
             case SOFT_FALL_BOOTS:
                 powers.add(Powers.NONE);
                 break;
@@ -170,12 +165,6 @@ public class Upgrade implements IAddon {
                 break;
             case HIGHER_ERUPTION_DENSITY:
                 break;
-        /*
-         * // no function on normal apply break; case EXTENDED_SNIPER_MAGAZINE:
-		 * // no function required break; case HIGHER_ERUPTION_DENSITY: // no
-		 * function required break; case SNIPER_RIFLE_SILENCER: // no function
-		 * required break;
-		 */
             case POWER_RELOAD_TIME_REDUCTION:
                 break;
             case SOFT_FALL_BOOTS:
