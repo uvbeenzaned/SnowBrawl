@@ -1,3 +1,5 @@
+[New Location](http://kzo.io/uvbeenzaned/SnowBrawl)
+
 ![Networkery Logo](http://dw.networkery.co/pictures/networkery.png)
 ![SnowBrawl Logo](http://dw.networkery.co/pictures/SnowBrawl%20Logo%20WIP%2050%25.png)
 ---
